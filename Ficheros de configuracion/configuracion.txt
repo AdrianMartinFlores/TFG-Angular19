@@ -1,0 +1,12 @@
+Para poder iniciar este proyecto necesitas seguir los siguientes pasos:
+
+-Backend->
+Para el backedn tiene que tener instalado Xampp:
+(https://www.apachefriends.org/es/index.html)
+Iniciar Apache y MySQL con el puerto:
+Para Apache el puerto 80, 443
+Para MySQL el puerto 3306.
+
+Luego inicia PhpMyAdmin desde la configuración de PhpMyAdmin en el boton 
+Admin de Xampp
+
