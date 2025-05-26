@@ -1,0 +1,62 @@
+/* Estilos para el contenedor del navbar */
+.navbar {
+  background-color: #007bff; /* Azul principal */
+  padding: 15px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid #0056b3;
+}
+
+/* Estilos para la lista de navegación */
+.navbar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+/* Estilos para los elementos de la lista */
+.navbar ul li {
+  display: inline;
+}
+
+/* Estilos para los botones */
+.navbar ul li .btn {
+  background-color: #ffffff; /* Fondo blanco */
+  color: #007bff; /* Texto azul */
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Efecto hover para los botones */
+.navbar ul li .btn:hover {
+  background-color: #0056b3; /* Azul oscuro */
+  color: #ffffff; /* Texto blanco */
+  transform: scale(1.05); /* Aumentar ligeramente el tamaño */
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .navbar ul li .btn {
+    width: 100%; /* Botones ocupan todo el ancho */
+    text-align: center;
+  }
+}

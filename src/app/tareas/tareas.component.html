@@ -1,0 +1,40 @@
+<app-nav></app-nav>
+<div class="tareas-container">
+  <h1>Gestión de Tareas</h1>
+  <p>Aquí puedes gestionar tus tareas diarias.</p>
+
+  <!-- Formulario para crear o editar tareas -->
+  <form (submit)="guardarTarea($event)">
+    <input type="hidden" [(ngModel)]="tareaSeleccionada.id" name="id" />
+    <div class="form-group">
+      <label for="titulo">Nombre de la Tarea</label>
+      <input type="text" id="titulo" [(ngModel)]="tareaSeleccionada.titulo" name="titulo" required>
+    </div>
+    <div class="form-group">
+      <label for="descripcion">Descripción de la tarea</label>
+      <textarea name="descripcion" id="descripcion" [(ngModel)]="tareaSeleccionada.descripcion" required></textarea>
+    </div>
+    <button type="submit" class="btn">Guardar Tarea</button>
+  </form>
+
+  <h2>Tareas Pendientes</h2>
+  <ul class="tareas-list">
+    <li *ngFor="let tarea of tareasPendientes" [class.completed]="tarea.completada">
+      <h3>{{ tarea.titulo }}</h3>
+      <p>{{ tarea.descripcion }}</p>
+      <button (click)="completarTarea(tarea)" class="btn btn-success">Completar</button>
+      <button (click)="editarTarea(tarea)" class="btn">Editar</button>
+      <button (click)="eliminarTarea(tarea.id)" class="btn btn-danger">Eliminar</button>
+    </li>
+  </ul>
+
+  <h2>Tareas Completadas</h2>
+  <ul class="tareas-list">
+    <li *ngFor="let tarea of tareasCompletadas" class="completed">
+      <h3>{{ tarea.titulo }}</h3>
+      <p>{{ tarea.descripcion }}</p>
+      <button (click)="marcarComoNoTerminada(tarea)" class="btn btn-warning">No Terminada</button>
+    </li>
+  </ul>
+</div>
+

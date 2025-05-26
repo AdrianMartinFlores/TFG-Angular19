@@ -1,0 +1,18 @@
+<div class="registro-container">
+    <h2>Registro</h2>
+    <form (ngSubmit)="registroUsuario()">
+      <div class="form-group">
+        <label for="email">Correo Electrónico</label>
+        <input type="email" [(ngModel)]="email" name="email" id="email" placeholder="Ingresa tu correo" maxlength="40" required>
+      </div>
+      <div class="form-group">
+        <input type="text" [(ngModel)]="nombre" name="nombre" id="nombre" placeholder="Ingresa tu nombre" maxlength="20" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" [(ngModel)]="password" name="password" id="password" placeholder="Ingresa tu contraseña" maxlength="40" required>
+      </div>
+      <button type="submit" class="btn">Registrar</button>
+    </form>
+  </div>
+  <button routerLink="/" class="btn">Volver</button>

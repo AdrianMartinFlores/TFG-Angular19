@@ -1,0 +1,67 @@
+<app-nav></app-nav>
+<div class="temporizadores-container">
+  <h1 class="title">Gestión de Temporizadores</h1>
+
+  <!-- Formulario para crear o editar temporizadores -->
+  <form (submit)="guardarTemporizador()" #temporizadorForm="ngForm" class="temporizador-form">
+    <div class="form-group">
+      <label for="titulo">Título</label>
+      <input id="titulo" [(ngModel)]="nuevoTemporizador.titulo" name="titulo" required placeholder="Introduce un título" />
+    </div>
+    <div class="form-group time-inputs">
+      <div>
+        <label for="horas">Horas</label>
+        <input id="horas" type="number" [(ngModel)]="nuevoTemporizador.horas" name="horas" min="0" placeholder="0" />
+      </div>
+      <div>
+        <label for="minutos">Minutos</label>
+        <input id="minutos" type="number" [(ngModel)]="nuevoTemporizador.minutos" name="minutos" min="0" max="59" placeholder="0" />
+      </div>
+      <div>
+        <label for="segundos">Segundos</label>
+        <input id="segundos" type="number" [(ngModel)]="nuevoTemporizador.segundos" name="segundos" min="0" max="59" placeholder="0" />
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" [disabled]="!temporizadorForm.valid || !esDuracionValida()">
+        {{ editando ? 'Actualizar Temporizador' : 'Crear Temporizador' }}
+      </button>
+      <button type="button" class="btn btn-secondary" *ngIf="editando" (click)="cancelarEdicion()">Cancelar</button>
+    </div>
+  </form>
+
+  <!-- Lista de temporizadores -->
+  <ul class="temporizadores-list">
+    <li *ngFor="let temporizador of temporizadores" class="temporizador-item">
+      <div class="temporizador-info">
+        <strong class="temporizador-title">{{ temporizador.titulo }}</strong>
+        <span class="temporizador-total">
+          Tiempo total: {{ formatearTiempo(temporizador.duracion) }}
+        </span>
+        <span 
+          class="temporizador-time"
+          *ngIf="temporizador.tiempoRestante !== undefined; else noTiempo"
+          [ngClass]="{
+            'critical': temporizador.tiempoRestante <= 10,
+            'warning': temporizador.tiempoRestante > 10 && temporizador.tiempoRestante <= 30
+          }"
+        >
+          Tiempo restante: {{ formatearTiempo(temporizador.tiempoRestante) }}
+        </span>
+        <ng-template #noTiempo>
+          <span class="temporizador-time">Sin tiempo restante</span>
+        </ng-template>
+      </div>
+      <div class="temporizador-actions">
+        <button (click)="iniciarCuentaAtras(temporizador)" class="btn btn-primary" *ngIf="!temporizador.enEjecucion">Iniciar</button>
+        <button (click)="pausarCuentaAtras(temporizador)" class="btn btn-warning" *ngIf="temporizador.enEjecucion">Pausar</button>
+        <button (click)="editarTemporizador(temporizador)" class="btn btn-secondary">Editar</button>
+        <button *ngIf="temporizador.id" (click)="borrarTemporizador(temporizador.id)" class="btn btn-danger">Borrar</button>
+      </div>
+    </li>
+  </ul>
+</div>
+<audio id="notificacion-audio" src="assets/sounds/notificacion.mp3" preload="auto"></audio>
+
+
+

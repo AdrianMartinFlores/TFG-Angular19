@@ -1,0 +1,156 @@
+/* Contenedor principal */
+.temporizadores-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Título */
+.title {
+  text-align: center;
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Formulario */
+.temporizador-form {
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.time-inputs {
+  display: flex;
+  gap: 10px;
+}
+
+.time-inputs div {
+  flex: 1;
+}
+
+/* Botones */
+.form-actions {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  color: black;
+}
+
+.btn-warning:hover {
+  background-color: #e0a800;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* Lista de temporizadores */
+.temporizadores-list {
+  list-style: none;
+  padding: 0;
+}
+
+.temporizador-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.temporizador-info {
+  flex: 1;
+}
+
+.temporizador-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.temporizador-time {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #007bff;
+  text-align: right;
+  margin-top: 5px;
+}
+
+.temporizador-time.critical {
+  color: #dc3545; /* Rojo para tiempos críticos */
+}
+
+.temporizador-time.warning {
+  color: #ffc107; /* Amarillo para tiempos moderados */
+}
+
+.temporizador-total {
+  font-size: 1rem;
+  color: #555;
+  display: block;
+  margin-top: 5px;
+}
+
+.temporizador-actions {
+  display: flex;
+  gap: 10px;
+}

@@ -1,0 +1,92 @@
+/* Contenedor principal del menú de autenticación */
+.auth-menu {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.auth-menu h1 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.auth-menu p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+button.btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button.primary-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+button.primary-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+button.secondary-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+button.secondary-btn:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+/* Contenedor de la descripción de la aplicación */
+.app-description {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    text-align: left;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.app-description h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.app-description ul {
+    list-style: none;
+    padding: 0;
+    color: #555;
+}
+
+.app-description ul li {
+    margin-bottom: 15px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.app-description ul li strong {
+    color: #007bff;
+}
