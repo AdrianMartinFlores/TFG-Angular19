@@ -13,3 +13,7 @@
     </form>
     <router-outlet></router-outlet>
   <button routerLink="/" class="btn">Volver</button>
+  <!-- Muestra el mensaje si existe -->
+  <div *ngIf="mensaje" class="alert alert-danger text-center mt-3">
+  {{ mensaje }}
+</div>

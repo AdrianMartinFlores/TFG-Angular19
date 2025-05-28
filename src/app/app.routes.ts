@@ -6,12 +6,16 @@ import { MenuComponent } from './menu/menu.component';
 import { TareasComponent } from './tareas/tareas.component';
 import { AuthGuard } from './auth.guard';
 import { TemporizadoresComponent } from './temporizadores/temporizadores.component';
+import { AlarmaComponent } from './alarma/alarma.component';
+import { ControlDeJornadaComponent } from './control-de-jornada/control-de-jornada.component';
 
 export const routes: Routes = [
   { path: '', component: AutenticacionComponent },
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent },
   { path: 'menu', component: MenuComponent, canActivate: [AuthGuard] },
-  { path: 'tareas', component: TareasComponent, canActivate: [AuthGuard] }, // Ruta protegida
-  { path: 'temporizadores', component: TemporizadoresComponent, canActivate: [AuthGuard] }, // Ruta protegida
+  { path: 'tareas', component: TareasComponent, canActivate: [AuthGuard] },
+  { path: 'temporizadores', component: TemporizadoresComponent, canActivate: [AuthGuard] },
+  { path: 'alarma', component: AlarmaComponent, canActivate: [AuthGuard] },
+  { path: 'control-de-jornada', component: ControlDeJornadaComponent, canActivate: [AuthGuard] },
 ];

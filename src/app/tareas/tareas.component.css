@@ -1,10 +1,93 @@
+/* Contenedor principal */
 .tareas-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .form-group {
+  max-width: 800px;
+  margin: 40px auto 60px auto;
+  padding: 32px 24px 32px 24px;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px #0002;
+  color: #222;
+  background: #23272f;
+}
+
+/* Títulos */
+.tareas-container h1,
+.tareas-container h2 {
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 24px;
+  margin-top: 0;
+}
+form {
+  margin-bottom: 30px;
+}
+/* Lista de tareas */
+.lista-tareas,
+.tareas-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px 0;
+} 
+
+/* Cada tarea pendiente */
+.tarea-item {
+  border: 1.5px solid #007bff60;
+  border-radius: 12px;
+  margin-bottom: 28px;
+  padding: 22px 20px;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  transition: box-shadow 0.2s;
+  box-shadow: 0 2px 8px #0001;
+}
+
+/* Título de la tarea */
+.tarea-titulo {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #007bff;
+  margin: 0 14px 0 0;
+}
+
+/* Descripción de la tarea */
+.tarea-desc {
+  font-size: 1rem;
+  color: #444;
+  margin: 0 14px;
+  flex: 1;
+}
+
+/* Botones de acción */
+.tarea-actions button {
+  margin-left: 10px;
+  font-size: 1rem;
+  padding: 8px 14px;
+}
+
+/* Tareas completadas */
+.tareas-list li.completed {
+  border: 1.5px solid #28a7467c;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  padding: 18px;
+}
+
+.tareas-list li.completed h3 {
+  font-size: 1.1rem;
+  color: #28a74673;
+  margin: 0 0 5px 0;
+}
+
+.tareas-list li.completed p {
+  font-size: 1rem;
+  color: #444;
+  margin: 0 0 10px 0;
+}
+
+.form-group {
     margin-bottom: 15px;
   }
   
@@ -12,7 +95,7 @@
     width: 100%;
     padding: 10px;
     margin-top: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid bl;
     border-radius: 5px;
   }
   
@@ -33,20 +116,106 @@
     background-color: #dc3545;
     color: white;
   }
-  
-  .tareas-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .tareas-list li {
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
 
-  .tareas-list li.completed {
-    background-color: #e6ffe6; /* Verde claro para tareas completadas */
-    text-decoration: line-through;
+.lista-grupos {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.grupo-item {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1.5px solid #ffff006b;
+  border-radius: 12px;
+  padding: 18px 20px;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  transition: box-shadow 0.2s;
+  box-shadow: 0 2px 8px #0001;
+}
+
+.grupo-nombre {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #007bff;
+  margin: 0 14px 0 0;
+}
+
+.grupo-actions button {
+  margin-left: 10px;
+  font-size: 1rem;
+  padding: 8px 14px;
+}
+
+.dark-mode .tareas-container {
+  background: #23272f ;
+  color: #e0e0e0 ;
+}
+
+.dark-mode .tarea-item {
+  background: #2a3b4d !important;   /* Azul oscuro diferente */
+  border: 1px solid #39506a !important;
+  color: #e0e0e0 !important;
+  transition: background 0.2s, border 0.2s;
+}
+
+.dark-mode .tarea-item:hover {
+  background: #32445a !important;
+  border-color: #4fc3f7 !important;
+}
+
+.dark-mode .tarea-titulo {
+  color: #4fc3f7 !important;
+}
+
+
+.dark-mode .tareas-list li.completed {
+  background-color: #26332d !important;
+  border: 1px solid #3a4d3a !important;
+  color: #b0bec5 !important;
+}
+
+.dark-mode .form-group label {
+  color: #e0e0e0 !important;
+}
+
+.dark-mode input,
+.dark-mode textarea {
+  background: #23272f !important;
+  color: #e0e0e0 !important;
+  border: 1px solid #444 !important;
+}
+
+.dark-mode button.btn {
+  background-color: #007bff !important;
+  color: #fff !important;
+}
+
+.dark-mode button.btn-danger {
+  background-color: #dc3545 !important;
+  color: #fff !important;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .tareas-container {
+    padding: 12px 4px;
   }
+  .tarea-item {
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px 8px;
+  }
+  .tarea-actions button {
+    margin-left: 0;
+    margin-top: 8px;
+  }
+}

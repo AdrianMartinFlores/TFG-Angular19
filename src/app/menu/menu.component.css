@@ -5,7 +5,7 @@
     text-align: center;
     border: 1px solid #ccc;
     border-radius: 10px;
-    background-color: #f9f9f9;
+    /* background-color: #f9f9f9; */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
@@ -33,7 +33,7 @@
     padding: 10px 20px;
     border: 1px solid #ddd;
     border-radius: 5px 5px 0 0;
-    background-color: #f1f1f1;
+    /* background-color: #f1f1f1; */
   }
   
   .tabs li.active {
@@ -46,6 +46,12 @@
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 0 0 5px 5px;
-    background-color: #fff;
+    /* background-color: #fff; */
     text-align: left;
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: white;
   }

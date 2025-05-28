@@ -103,9 +103,6 @@ export class TemporizadoresComponent {
             console.error('Error al reproducir el sonido:', err);
           });
         }
-
-        // Mostrar alerta
-        alert(`El temporizador "${temporizador.titulo}" ha terminado.`);
       }
     }, 1000);
   }
