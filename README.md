@@ -53,6 +53,12 @@ ng version
 navega hasta la carpeta del proyecto, y ejecuta en la terminal:
 npm install
 
+En el backend hay que instalar JWT para que funcione el token de acceso
+
+cd C:\xampp\htdocs\TFG\TfgAngular19\Backend
+
+composer require firebase/php-jwt
+
 Despues de instalar todas las dependencias inicia el proyecto:
 ng serve
 
