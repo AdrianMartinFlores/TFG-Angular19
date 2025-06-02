@@ -1,0 +1,32 @@
+<app-nav></app-nav>
+<div class="menu-container">
+<h1>Bienvenido a tu aplicacion de control de horario de trabajo y gestor de tareas</h1>
+<p>Aqui podras controlar y registrar tu horario de trabajo, organizar las tareas pendientes y crear alarmas y temporizadores</p>
+
+<div class="menu-sections">
+    <div class="menu-section">
+      <h2 (click)="toggleFunciones()">Funciones principales de la aplicación</h2>
+      <div *ngIf="mostrarFunciones" class="tabs-container">
+        <ul class="tabs">
+          <li (click)="seleccionarTab('tareas')" [class.active]="tabSeleccionado === 'tareas'">Gestión de Tareas</li>
+          <li (click)="seleccionarTab('horarios')" [class.active]="tabSeleccionado === 'horarios'">Control de Horarios</li>
+          <li (click)="seleccionarTab('alarmas')" [class.active]="tabSeleccionado === 'alarmas'">Alarmas y Temporizadores</li>
+        </ul>
+        <div class="tab-content">
+          <div *ngIf="tabSeleccionado === 'tareas'">
+            <h3>Gestión de Tareas</h3>
+            <p>Organiza tus tareas diarias, crea listas y establece prioridades.</p>
+          </div>
+          <div *ngIf="tabSeleccionado === 'horarios'">
+            <h3>Control de Horarios</h3>
+            <p>Registra tus horarios de trabajo y lleva un seguimiento de tus actividades.</p>
+          </div>
+          <div *ngIf="tabSeleccionado === 'alarmas'">
+            <h3>Alarmas y Temporizadores</h3>
+            <p>Configura alarmas y temporizadores para gestionar tu tiempo de manera eficiente.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

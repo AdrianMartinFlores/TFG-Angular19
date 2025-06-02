@@ -1,0 +1,19 @@
+<div class="login-container">
+    <h2>Iniciar Sesión</h2>
+    <form (ngSubmit)="iniciarSesion()">
+      <div class="form-group">
+        <label for="email">Correo Electrónico</label>
+        <input type="email" [(ngModel)]="email" name="email" id="email" placeholder="Ingresa tu correo" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" [(ngModel)]="password" name="password" id="password" placeholder="Ingresa tu contraseña" required>
+      </div>
+      <button type="submit" class="btn">Ingresar</button>
+    </form>
+    <router-outlet></router-outlet>
+  <button routerLink="/" class="btn">Volver</button>
+  <!-- Muestra el mensaje si existe -->
+  <div *ngIf="mensaje" class="alert alert-danger text-center mt-3">
+  {{ mensaje }}
+</div>

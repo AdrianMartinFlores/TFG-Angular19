@@ -1,0 +1,182 @@
+/* === ESTILOS GLOBALES Y REUTILIZABLES === */
+
+/* Modo oscuro global */
+.dark-mode {
+  background-color: #181c24 !important;
+  color: #e0e0e0 !important;
+}
+.dark-mode input,
+.dark-mode select,
+.dark-mode textarea {
+  background-color: #23272f !important;
+  color: #e0e0e0 !important;
+  border: 1px solid #444 !important;
+}
+.dark-mode input::placeholder {
+  color: #888 !important;
+}
+.dark-mode .alert {
+  background: #23272f !important;
+  color: #ff5252 !important;
+  border: 1px solid #444 !important;
+}
+.dark-mode h1, .dark-mode h2, .dark-mode h3 {
+  color: #4fc3f7 !important;
+}
+.dark-mode p, .dark-mode label, .dark-mode span, .dark-mode li {
+  color: #b0bec5 !important;
+}
+
+/* Títulos */
+h1, h2, h3 {
+  color: #007bff;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+/* Formularios y campos */
+.form-group {
+  margin-bottom: 18px;
+}
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #007bff;
+  background: #181b20;
+  color: #fff;
+  box-sizing: border-box;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+.form-control:focus {
+  border-color: #007bff;
+  outline: none;
+}
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #bfc6d1;
+  font-size: 0.95rem;
+}
+
+/* Botones reutilizables */
+.btn, .boton {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  margin-top: 10px;
+}
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  width: auto;
+}
+.btn-primary, .boton-primario { background: #007bff; color: #fff; }
+.btn-primary:hover, .boton-primario:hover { background: #0056b3; }
+.btn-success { background: #28a745; color: #fff; }
+.btn-success:hover { background: #218838; }
+.btn-danger { background: #dc3545; color: #fff; }
+.btn-danger:hover { background: #a71d2a; }
+.btn-secondary, .boton-secundario { background: #6c757d; color: #fff; }
+.btn-secondary:hover, .boton-secundario:hover { background: #495057; }
+.btn-warning { background: #ffc107; color: #23272f; }
+.btn-warning:hover { background: #e0a800; }
+
+/* Listas reutilizables */
+.comun-lista, .menu-lista, .tabs {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.comun-item, .menu-item, .tabs li {
+  border-radius: 10px;
+  border: rgb(149, 149, 167) solid 1.5px;
+  margin-bottom: 8px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #181b20;
+  color: #bfc6d1;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+.tabs {
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 0;
+}
+.tabs li.active {
+  background-color: #007bff;
+  color: white;
+  border-bottom: 2px solid white;
+}
+.tab-content {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 0 0 5px 5px;
+  background-color: #181b20;
+  color: #bfc6d1;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+/* Acciones */
+.comun-actions button {
+  margin-left: 8px;
+}
+
+/* Alertas */
+.alert {
+  margin-top: 10px;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 1rem;
+}
+.alert-info { background: #e7f3fe; color: #31708f; }
+.alert-danger { background: #f8d7da; color: #721c24; }
+.alert-success { background: #d4edda; color: #155724; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .tabs {
+    flex-direction: column;
+    gap: 10px;
+    border-bottom: none;
+  }
+  .tabs li {
+    border-radius: 5px;
+    border-bottom: 1px solid #ddd;
+  }
+}
+@media (max-width: 768px) {
+  .btn, .boton {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+  .form-control {
+    font-size: 0.9rem;
+  }
+}
+@media (max-width: 480px) {
+  .btn, .boton {
+    font-size: 0.8rem;
+    padding: 7px;
+  }
+  .form-control {
+    font-size: 0.85rem;
+  }
+}
