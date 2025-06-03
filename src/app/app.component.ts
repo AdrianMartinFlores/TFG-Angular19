@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   title = 'TFG';
   usuario_id: number | null = null;
   private notifiedAlarmas: Set<number> = new Set();
-  private audio = new Audio('assets/sounds/notificacion.mp3'); // Usa el mismo sonido que temporizadores
+  private audio = new Audio('assets/sounds/notificacion.mp3'); 
 
   constructor(private alarmaService: AlarmaService) {}
 

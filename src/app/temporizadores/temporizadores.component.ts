@@ -37,7 +37,7 @@ export class TemporizadoresComponent {
   cargarTemporizadores() {
     this.http
       .get<Temporizador[]>(
-        'http://localhost/TFG/TfgAngular19/Backend/Temporizadores.php',
+        'http://localhost/TFG/Backend/Temporizadores.php',
         {
           params: {
             usuario_id: this.nuevoTemporizador.usuario_id.toString(),
@@ -57,7 +57,7 @@ export class TemporizadoresComponent {
   crearTemporizador() {
     this.http
       .post(
-        'http://localhost/TFG/TfgAngular19/Backend/Temporizadores.php',
+        'http://localhost/TFG/Backend/Temporizadores.php',
         this.nuevoTemporizador
       )
       .subscribe({
@@ -124,7 +124,7 @@ export class TemporizadoresComponent {
   }
 
   borrarTemporizador(id: number) {
-    this.http.delete(`http://localhost/TFG/TfgAngular19/Backend/Temporizadores.php`, {
+    this.http.delete(`http://localhost/TFG/Backend/Temporizadores.php`, {
       body: { id, usuario_id: this.nuevoTemporizador.usuario_id }
     }).subscribe({
       next: () => {
@@ -143,13 +143,13 @@ export class TemporizadoresComponent {
     this.nuevoTemporizador.duracion = horas * 3600 + minutos * 60 + segundos;
 
     if (this.editando) {
-      this.http.put('http://localhost/TFG/TfgAngular19/Backend/Temporizadores.php', this.nuevoTemporizador)
+      this.http.put('http://localhost/TFG/Backend/Temporizadores.php', this.nuevoTemporizador)
         .subscribe(() => {
           this.cargarTemporizadores();
           this.cancelarEdicion();
         });
     } else {
-      this.http.post('http://localhost/TFG/TfgAngular19/Backend/Temporizadores.php', this.nuevoTemporizador)
+      this.http.post('http://localhost/TFG/Backend/Temporizadores.php', this.nuevoTemporizador)
         .subscribe(() => {
           this.cargarTemporizadores();
           this.nuevoTemporizador = { titulo: '', duracion: 0, usuario_id: 1 };

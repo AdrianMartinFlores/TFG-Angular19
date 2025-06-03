@@ -31,25 +31,18 @@ form {
 
 /* Cada tarea pendiente */
 .tarea-item {
-  border: 1.5px solid #007bff60;
-  border-radius: 12px;
-  margin-bottom: 28px;
-  padding: 22px 20px;
-  font-size: 1.1rem;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 18px;
-  transition: box-shadow 0.2s;
-  box-shadow: 0 2px 8px #0001;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  padding: 18px 16px;
+  box-shadow: 0 2px 8px #0002;
+  transition: box-shadow 0.2s, background 0.2s;
+  border: 2px solid #444;
 }
 
 /* Título de la tarea */
 .tarea-titulo {
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: #007bff;
-  margin: 0 14px 0 0;
+  font-weight: bold;
+  font-size: 1.2em;
 }
 
 /* Descripción de la tarea */
@@ -202,6 +195,42 @@ form {
 .dark-mode button.btn-danger {
   background-color: #dc3545 !important;
   color: #fff !important;
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+}
+.modal-tarea {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: #23272f;
+  color: #fff;
+  padding: 32px 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 32px #0008;
+  z-index: 1001;
+  min-width: 320px;
+  max-width: 90vw;
+}
+.modal-tarea .form-group {
+  margin-bottom: 16px;
+}
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+.tarea-grupo {
+  display: block;
+  font-size: 0.95rem;
+  color: #ffc107;
+  margin-bottom: 4px;
 }
 
 /* Responsive */

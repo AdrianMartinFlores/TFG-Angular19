@@ -10,7 +10,7 @@ import { GrupoTareasService } from '../grupo-tareas.service';
 @Component({
   selector: 'app-tareas',
   standalone: true,
-  imports: [FormsModule, CommonModule, NavComponent],
+  imports: [FormsModule, CommonModule, NavComponent, ],
   templateUrl: './tareas.component.html',
   styleUrl: './tareas.component.css',
 })
@@ -18,7 +18,7 @@ export class TareasComponent {
   tareas: any[] = [];
   tareasPendientes: any[] = [];
   tareasCompletadas: any[] = [];
-  tareaSeleccionada: any = { id: null, titulo: '', descripcion: '', completada: false };
+  tareaSeleccionada: any = { id: null, titulo: '', descripcion: '', completada: false, color: '#23272f' };
   usuario_id: number = 1;
   grupos: any[] = [];
   grupoSeleccionado: number|null = null;
@@ -28,6 +28,9 @@ export class TareasComponent {
   mensajeGrupo: string = '';
   grupoEditandoId: number | null = null;
   nuevoNombreGrupoEditando: string = '';
+
+  tareaModalAbierto = false;
+  tareaModal: any = {};
 
   constructor(
     private router: Router,
@@ -54,25 +57,33 @@ export class TareasComponent {
   }
 
   cargarTareas() {
-    const url = 'http://localhost/TFG/TfgAngular19/Backend/Tareas.php';
+    const url = 'http://localhost/TFG/Backend/Tareas.php';
 
     this.http.get<Tarea[]>(url, {
       params: { usuario_id: this.usuario_id.toString() }
     }).subscribe({
       next: (data) => {
-        console.log('Tareas obtenidas:', data);
+        // Asegura que cada tarea tenga un color válido
+        data.forEach(t => {
+          if (!t.color || !/^#[0-9A-Fa-f]{6}$/.test(t.color)) {
+            t.color = '#23272f';
+          }
+        });
         this.tareasPendientes = data.filter(tarea => !tarea.completada);
         this.tareasCompletadas = data.filter(tarea => tarea.completada);
       },
       error: (error) => {
-        console.error('Error al cargar las tareas:', error);
+        // Manejo de error
       },
     });
   }
 
   guardarTarea(event: Event) {
     event.preventDefault();
-    const url = 'http://localhost/TFG/TfgAngular19/Backend/Tareas.php';
+    if (!this.tareaSeleccionada.color || !/^#[0-9A-Fa-f]{6}$/.test(this.tareaSeleccionada.color)) {
+      this.tareaSeleccionada.color = '#23272f';
+    }
+    const url = 'http://localhost/TFG/Backend/Tareas.php';
     const method = this.tareaSeleccionada.id ? 'PUT' : 'POST';
 
     this.http.request(method, url, {
@@ -80,8 +91,12 @@ export class TareasComponent {
     }).subscribe({
       next: (res: any) => {
         if (res.success) {
-          this.cargarTareas();
-          this.tareaSeleccionada = { id: null, titulo: '', descripcion: '', completada: false };
+          if (this.grupoSeleccionado) {
+            this.cargarTareasPorGrupo();
+          } else {
+            this.cargarTareas();
+          }
+          this.tareaSeleccionada = { id: null, titulo: '', descripcion: '', completada: false, color: '#23272f' };
           this.mensaje = '';
         } else {
           this.mensaje = res.message || 'Error al guardar la tarea';
@@ -89,7 +104,6 @@ export class TareasComponent {
       },
       error: (error) => {
         this.mensaje = 'Error al guardar la tarea';
-        console.error('Error al guardar la tarea:', error);
       },
     });
   }
@@ -99,7 +113,7 @@ export class TareasComponent {
   }
 
   eliminarTarea(id: number) {
-    const url = 'http://localhost/TFG/TfgAngular19/Backend/Tareas.php';
+    const url = 'http://localhost/TFG/Backend/Tareas.php';
 
     this.http.request('DELETE', url, {
       body: { id, usuario_id: this.usuario_id }
@@ -115,7 +129,7 @@ export class TareasComponent {
   }
 
   completarTarea(tarea: Tarea) {
-    const url = 'http://localhost/TFG/TfgAngular19/Backend/Tareas.php';
+    const url = 'http://localhost/TFG/Backend/Tareas.php';
     const body = {
       id: tarea.id,
       completada: true,
@@ -136,7 +150,7 @@ export class TareasComponent {
   }
 
   marcarComoNoTerminada(tarea: Tarea) {
-    const url = 'http://localhost/TFG/TfgAngular19/Backend/Tareas.php';
+    const url = 'http://localhost/TFG/Backend/Tareas.php';
     const body = {
       id: tarea.id,
       completada: false,
@@ -202,7 +216,7 @@ export class TareasComponent {
   }
 
   cargarTareasPorGrupo() {
-    const url = 'http://localhost/TFG/TfgAngular19/Backend/Tareas.php';
+    const url = 'http://localhost/TFG/Backend/Tareas.php';
     const params: any = { usuario_id: this.usuario_id.toString() };
     if (this.grupoSeleccionado) {
       params.grupo_id = this.grupoSeleccionado;
@@ -216,6 +230,39 @@ export class TareasComponent {
         console.error('Error al cargar las tareas:', error);
       },
     });
+  }
+
+  abrirModalTarea(tarea: any) {
+    this.tareaModal = { ...tarea, color: tarea.color || '#23272f' };
+    this.tareaModalAbierto = true;
+  }
+
+  cerrarModalTarea() {
+    this.tareaModalAbierto = false;
+    this.tareaModal = {};
+  }
+
+  guardarTareaDesdeModal(event: Event) {
+    event.preventDefault();
+    this.tareaSeleccionada = { ...this.tareaModal };
+    this.guardarTarea(event);
+    this.cerrarModalTarea();
+  }
+
+  getNombreGrupo(grupo_id: number): string {
+    const grupo = this.grupos.find(g => g.id === grupo_id);
+    return grupo ? grupo.nombre : 'Sin grupo';
+  }
+
+  getTextColor(bgColor?: string): string {
+    if (!bgColor) return '#fff';
+    // Simple contraste: si es claro, texto oscuro; si es oscuro, texto claro
+    const color = bgColor.charAt(0) === '#' ? bgColor.substring(1, 7) : bgColor;
+    const r = parseInt(color.substring(0,2),16);
+    const g = parseInt(color.substring(2,4),16);
+    const b = parseInt(color.substring(4,6),16);
+    const brightness = (r*299 + g*587 + b*114) / 1000;
+    return brightness > 128 ? '#222' : '#fff';
   }
 }
 

@@ -26,7 +26,7 @@ export class AlarmaComponent implements OnInit {
   }
 
   cargarAlarmas() {
-    this.alarmaService.getAlarmas(this.usuario_id).subscribe(alarmas => {
+    this.alarmaService.getAlarmas(this.usuario_id).subscribe((alarmas: any[]) => {
       this.alarmas = alarmas;
     });
   }

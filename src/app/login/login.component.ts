@@ -25,14 +25,12 @@ export class LoginComponent {
       email: this.email,
       password: this.password,
     };
-    console.log('Credenciales enviadas:', credenciales);
 
-    this.http.post<any>('http://localhost/TFG/TfgAngular19/Backend/Login.php', credenciales, {
+    this.http.post<any>('http://localhost/TFG/Backend/Login.php', credenciales, {
       headers: { 'Content-Type': 'application/json' },
     }).subscribe({
       next: (response: any) => {
         if (response.success) {
-          console.log('Inicio de sesión exitoso:', response);
 
           // Guarda el token y otros datos necesarios en localStorage
           localStorage.setItem('token', response.token);

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly AUTH_KEY = 'estaLogueado'; // Clave para almacenar el estado en localStorage
+  private readonly AUTH_KEY = 'estaLogeado'; // Clave para almacenar el estado en localStorage
 
   login(): void {
     console.log('Usuario autenticado');

@@ -34,7 +34,7 @@ export class ControlDeJornadaComponent implements OnInit {
   }
 
   cargarRegistros() {
-    this.http.get<any[]>(`http://localhost/TFG/TfgAngular19/Backend/Jornada.php?usuario_id=${this.usuario_id}`)
+    this.http.get<any[]>(`http://localhost/TFG/Backend/Jornada.php?usuario_id=${this.usuario_id}`)
       .subscribe({
         next: (data) => this.registros = data,
         error: () => this.mensaje = 'Error al cargar los registros'
@@ -42,7 +42,7 @@ export class ControlDeJornadaComponent implements OnInit {
   }
 
   cargarActividades() {
-    this.http.get<any[]>(`http://localhost/TFG/TfgAngular19/Backend/Actividades.php?usuario_id=${this.usuario_id}`)
+    this.http.get<any[]>(`http://localhost/TFG/Backend/Actividades.php?usuario_id=${this.usuario_id}`)
       .subscribe({
         next: (data) => this.actividades = data,
         error: () => this.mensaje = 'Error al cargar actividades'
@@ -78,7 +78,7 @@ export class ControlDeJornadaComponent implements OnInit {
       body.horaSalida = null;
     }
 
-    const url = 'http://localhost/TFG/TfgAngular19/Backend/Jornada.php';
+    const url = 'http://localhost/TFG/Backend/Jornada.php';
 
     if (this.registroSeleccionado.id) {
       // Actualizar
@@ -112,7 +112,7 @@ export class ControlDeJornadaComponent implements OnInit {
   }
 
   eliminarRegistro(id: number) {
-    const url = 'http://localhost/TFG/TfgAngular19/Backend/Jornada.php';
+    const url = 'http://localhost/TFG/Backend/Jornada.php';
     this.http.request('DELETE', url, { body: { id } }).subscribe({
       next: (res: any) => {
         if (res.success) {

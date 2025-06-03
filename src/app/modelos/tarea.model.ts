@@ -4,4 +4,6 @@ export interface Tarea {
   descripcion: string;
   completada: boolean;
   usuario_id: number;
+  grupo_id?: number; 
+  color?: string;
 }

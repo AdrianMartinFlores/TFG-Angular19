@@ -26,8 +26,7 @@ export class RegistroComponent {
       password: this.password,
     };
 
-    console.log('Usuario a registrar:', usuario);
-    this.http.post('http://localhost/TFG/TfgAngular19/Backend/Registro.php', usuario, {
+    this.http.post('http://localhost/TFG/Backend/Registro.php', usuario, {
       headers : {'Content-Type': 'application/json' },
     }).subscribe({
         next: (response: any) => {
