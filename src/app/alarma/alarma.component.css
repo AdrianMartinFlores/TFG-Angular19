@@ -1,168 +1,150 @@
-h2 {
-  margin-bottom: 0.5rem;
-  color: #2c3e50;
-  font-weight: 700;
+
+
+/* Nueva clase para tarjeta */
+.tarjeta {
+  border-radius: 18px;
+  background: #23272f;
+  color: #fff;
+  box-shadow: 0 2px 8px #0002;
+  padding: 2rem;
 }
 
-.alarma-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  max-width: 350px;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px #0001;
+/* Nueva clase para sombra */
+.sombra {
+  box-shadow: 0 4px 16px #0004;
 }
 
-.alarma-form label {
-  font-weight: 500;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-input,
-button {
-  padding: 0.5rem;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-.btn-primary {
-  background: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 1.1rem;
-  transition: background 0.2s;
-}
-
-.btn-primary:hover {
-  background: #0056b3;
-}
-
-.alert {
-  color: green;
-  margin-top: 1rem;
-  font-weight: 600;
-  font-size: 1.1rem;
+/* Nueva clase para centrado */
+.centrado {
   text-align: center;
 }
 
-.card {
-  border-radius: 18px;
-  border: none;
+/* Nueva clase para icono de alarma */
+.iconoAlarma {
+  font-size: 2.5rem;
 }
 
-/* Contenedor principal */
-.alarmas-container {
-  max-width: 800px;
-  margin: 40px auto 60px auto;
-  padding: 32px 24px 32px 24px;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px #0002;
-  color: #222;
-  background: #23272f;
+/* Nueva clase para texto azul */
+.textoAzul {
+  color: #007bff;
 }
 
-/* Títulos */
-.alarmas-container h1,
-.alarmas-container h2 {
-  font-size: 1.7rem;
-  font-weight: bold;
-  color: #4fc3f7;
-  margin-bottom: 24px;
-  margin-top: 0;
-}
-
-/* Formulario */
-.alarma-form {
-  margin-bottom: 30px;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #e0e0e0;
-}
-
-.form-group input,
-.form-group select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-  background: #2c2f33;
-  color: #ffffff;
-}
-
-/* Lista de alarmas */
-.lista-alarmas {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 32px 0;
-  width: 100%;
+/* Nueva clase para formulario de alarma */
+.formAlarma {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  gap: 1rem;
 }
 
-/* Cada alarma */
-.alarma-item {
+/* Nueva clase para etiqueta */
+.etiqueta {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* Nueva clase para campo */
+.campo {
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background: #23272f;
+  color: #fff;
   width: 100%;
-  box-sizing: border-box;
-  border: 1.5px solid #ff9800;
-  border-radius: 12px;
-  margin-bottom: 28px;
-  padding: 22px 20px;
-  font-size: 1.1rem;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  background: #283347;
-  gap: 18px;
-  transition: box-shadow 0.2s;
-  box-shadow: 0 2px 8px #0001;
 }
 
-/* Nombre de la alarma */
-.alarma-titulo {
-  font-size: 1.15rem;
+/* Nuevas clases para botones */
+.botonAzul {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem;
   font-weight: 600;
-  color: #ff9800;
-  margin: 0 14px 0 0;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.botonAzul:hover { background: #0056b3; }
+
+.botonGris {
+  background: #6c757d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.botonGris:hover { background: #495057; }
+
+.botonAmarillo {
+  background: #ffc107;
+  color: #23272f;
+  border: none;
+  border-radius: 4px;
+  padding: 0.4rem 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.botonAmarillo:hover { background: #e0a800; }
+
+.botonRojo {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.4rem 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.botonRojo:hover { background: #a71d2a; }
+
+.anchoTotal { width: 100%; }
+.margenTop { margin-top: 1rem; }
+.margenAbajo { margin-bottom: 1rem; }
+.margenDerecha { margin-right: 0.5rem; }
+
+.alertaExito {
+  color: #28a745;
+  font-weight: 600;
+  text-align: center;
 }
 
-/* Hora o descripción */
-.alarma-desc {
+.listaAlarmas {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.itemAlarma {
+  background: #2c2f33;
+  color: #fff;
+  border-radius: 8px;
+  margin-bottom: 0.7rem;
+  padding: 0.8rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btnPequeño {
   font-size: 1rem;
-  color: #b0bec5;
-  margin: 0 14px;
-  flex: 1;
+  padding: 0.3rem 0.7rem;
 }
 
-/* Botones de acción */
-.alarma-actions button {
-  margin-left: 10px;
-  font-size: 1rem;
-  padding: 8px 14px;
+.fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* Alarmas activadas */
-.lista-alarmas li.activada {
-  border: 1.5px solid #28a745;
-  border-radius: 12px;
-  margin-bottom: 24px;
-  padding: 18px;
-  background: #26332d;
-  color: #b0bec5;
+.animado {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* Responsive */

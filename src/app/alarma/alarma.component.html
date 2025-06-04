@@ -1,36 +1,36 @@
 <app-nav></app-nav>
-<div class="card shadow-lg p-4 mx-auto mt-5" style="max-width: 400px;">
-  <div class="text-center mb-3">
-    <span class="display-4 text-primary">
+    <div class="tarjeta sombra p-4 mx-auto mt-5" style="max-width: 400px;">
+  <div class="centrado mb-3">
+    <span class="iconoAlarma textoAzul">
       <i class="bi bi-alarm"></i>
     </span>
     <h2>Configurar Alarma</h2>
   </div>
-  <form (ngSubmit)="editandoId ? guardarEdicion() : programarAlarma()" class="alarma-form">
-    <div class="mb-3">
-      <label class="form-label">Fecha y hora:</label>
-      <input type="datetime-local" [(ngModel)]="fechaHora" name="fechaHora" class="form-control" required>
+  <form (ngSubmit)="editandoId ? guardarEdicion() : programarAlarma()" class="formAlarma">
+    <div class="margenAbajo">
+      <label class="etiqueta">Fecha y hora:</label>
+      <input type="datetime-local" [(ngModel)]="fechaHora" name="fechaHora" class="campo" required>
     </div>
-    <button type="submit" class="btn btn-primary w-100">
+    <button type="submit" class="botonAzul anchoTotal">
       <i class="bi bi-bell"></i> {{ editandoId ? 'Guardar cambios' : 'Programar alarma' }}
     </button>
-    <button *ngIf="editandoId" type="button" class="btn btn-secondary w-100 mt-2" (click)="cancelarEdicion()">
+    <button *ngIf="editandoId" type="button" class="botonGris anchoTotal margenTop" (click)="cancelarEdicion()">
       Cancelar
     </button>
   </form>
-  <div *ngIf="mensaje" class="alert alert-success mt-3 animate__animated animate__fadeIn">
+  <div *ngIf="mensaje" class="alertaExito margenTop animado">
     {{ mensaje }}
   </div>
-  <div *ngIf="alarmas.length > 0" class="mt-4">
+  <div *ngIf="alarmas.length > 0" class="margenTop">
     <h5>Alarmas programadas:</h5>
-    <ul class="list-group">
-      <li *ngFor="let alarma of alarmas" class="list-group-item d-flex justify-content-between align-items-center">
+    <ul class="listaAlarmas">
+      <li *ngFor="let alarma of alarmas" class="itemAlarma fila">
         {{ alarma.fecha_hora | date:'medium' }}
         <div>
-          <button class="btn btn-warning btn-sm me-2" (click)="editar(alarma)">
+          <button class="botonAmarillo btnPequeño margenDerecha" (click)="editar(alarma)">
             <i class="bi bi-pencil"></i>
           </button>
-          <button class="btn btn-danger btn-sm" (click)="eliminarAlarma(alarma.id)">
+          <button class="botonRojo btnPequeño" (click)="eliminarAlarma(alarma.id)">
             <i class="bi bi-trash"></i>
           </button>
         </div>
