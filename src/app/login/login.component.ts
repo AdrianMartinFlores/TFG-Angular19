@@ -29,7 +29,7 @@ export class LoginComponent {
     this.http.post<any>('http://localhost/TFG/Backend/Login.php', credenciales, {
       headers: { 'Content-Type': 'application/json' },
     }).subscribe({
-      next: (response: any) => {
+      next: (response: any) => {  
         if (response.success) {
 
           // Guarda el token y otros datos necesarios en localStorage
