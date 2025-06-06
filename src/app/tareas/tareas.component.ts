@@ -253,17 +253,6 @@ export class TareasComponent {
     const grupo = this.grupos.find(g => g.id === grupo_id);
     return grupo ? grupo.nombre : 'Sin grupo';
   }
-
-  getTextColor(bgColor?: string): string {
-    if (!bgColor) return '#fff';
-    // Simple contraste: si es claro, texto oscuro; si es oscuro, texto claro
-    const color = bgColor.charAt(0) === '#' ? bgColor.substring(1, 7) : bgColor;
-    const r = parseInt(color.substring(0,2),16);
-    const g = parseInt(color.substring(2,4),16);
-    const b = parseInt(color.substring(4,6),16);
-    const brightness = (r*299 + g*587 + b*114) / 1000;
-    return brightness > 128 ? '#222' : '#fff';
-  }
 }
 
 

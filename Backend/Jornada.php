@@ -10,7 +10,6 @@ $method = $_SERVER['REQUEST_METHOD'];
 $input = json_decode(file_get_contents('php://input'), true);
 
 try {
-    // GET: Listar registros de jornada de un usuario
     if ($method === 'GET') {
         $usuario_id = $_GET['usuario_id'];
         $sql = "SELECT * FROM jornada WHERE usuario_id = ? ORDER BY fecha DESC";

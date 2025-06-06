@@ -57,20 +57,22 @@ try {
         exit;
     } elseif ($method === 'PUT') {
         $id = $input['id'];
-            $usuario_id = $input['usuario_id'];
+        $usuario_id = $input['usuario_id'];
         $titulo = isset($input['titulo']) ? $input['titulo'] : null;
         $descripcion = isset($input['descripcion']) ? $input['descripcion'] : null;
         $grupo_id = isset($input['grupo_id']) ? $input['grupo_id'] : null;
         $completada = isset($input['completada']) ? (int)$input['completada'] : 0;
-        $color = $input['color'] ?? '#23272f';
 
-        // Siempre actualiza el color aunque solo se marque como completada
+        // Color: por defecto si está completada, si no el que envía el usuario
+        $color = $completada ? '#23272f' : ($input['color'] ?? '#23272f');
+
+        //Actualizar tarea, coalesce devuelve el primer valor que no sea nul
         $sql = "UPDATE tareas SET 
-            titulo = COALESCE(?, titulo), 
+            titulo = COALESCE(?, titulo),  
             descripcion = COALESCE(?, descripcion), 
             grupo_id = COALESCE(?, grupo_id), 
             completada = ?, 
-            color = COALESCE(?, color)
+            color = ?
             WHERE id = ? AND usuario_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssiisii", $titulo, $descripcion, $grupo_id, $completada, $color, $id, $usuario_id);
