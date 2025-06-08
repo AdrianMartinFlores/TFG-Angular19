@@ -1,55 +1,83 @@
-.registro-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-  }
-  
-  button.btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  button.btn:hover {
-    background-color: #218838;
-  }
-  
-  button[routerLink] {
-    margin-top: 10px;
-    background-color: #007bff;
-  }
-  
-  button[routerLink]:hover {
-    background-color: #0056b3;
-  }
+.contenedor-registro {
+  max-width: 350px;
+  margin: 48px auto;
+  padding: 28px 18px 18px 18px;
+  border: 1px solid #e3e8ee;
+  border-radius: 14px;
+  background: #fafdff;
+  box-shadow: 0 4px 16px 0 rgba(25, 118, 210, 0.07);
+}
+
+.titulo-registro {
+  text-align: center;
+  margin-bottom: 18px;
+  font-size: 1.5rem;
+  color: #1976d2;
+  font-weight: 700;
+}
+
+.grupo-formulario {
+  margin-bottom: 14px;
+}
+
+.etiqueta-registro {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 1rem;
+}
+
+.campo-registro {
+  width: 100%;
+  padding: 9px;
+  border: 1px solid #bcdffb;
+  border-radius: 5px;
+  font-size: 1rem;
+  background: #f6fafd;
+  color: #222;
+}
+
+.campo-registro:focus {
+  border-color: #1976d2;
+  outline: none;
+  background: #fff;
+}
+
+.boton-registro, .boton-volver {
+  width: 100%;
+  padding: 10px 0;
+  margin-top: 8px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.boton-registro {
+  background: #1976d2;
+  color: #fff;
+}
+
+.boton-registro:hover {
+  background: #1565c0;
+}
+
+.boton-volver {
+  background: #388e3c;
+  color: #fff;
+}
+
+.boton-volver:hover {
+  background: #2e7031;
+}
+
+.alerta-error {
+  background: #ffeaea;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+  border-radius: 5px;
+  padding: 8px;
+  margin-top: 14px;
+  font-size: 0.98rem;
+  text-align: center;
+}

@@ -64,7 +64,7 @@ try {
         $completada = isset($input['completada']) ? (int)$input['completada'] : 0;
 
         // Color: por defecto si está completada, si no el que envía el usuario
-        $color = $completada ? '#23272f' : ($input['color'] ?? '#23272f');
+        $color = $completada ? '#f6fafd' : ($input['color'] ?? '#f6fafd');
 
         //Actualizar tarea, coalesce devuelve el primer valor que no sea nul
         $sql = "UPDATE tareas SET 

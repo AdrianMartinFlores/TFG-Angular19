@@ -1,19 +1,16 @@
-<div class="login-container">
-    <h2>Iniciar Sesión</h2>
-    <form (ngSubmit)="iniciarSesion()">
-      <div class="form-group">
-        <label for="email">Correo Electrónico</label>
-        <input type="email" [(ngModel)]="email" name="email" id="email" placeholder="Ingresa tu correo" required>
-      </div>
-      <div class="form-group">
-        <label for="password">Contraseña</label>
-        <input type="password" [(ngModel)]="password" name="password" id="password" placeholder="Ingresa tu contraseña" required>
-      </div>
-      <button type="submit" class="btn">Ingresar</button>
-    </form>
-    <router-outlet></router-outlet>
-  <button routerLink="/" class="btn">Volver</button>
-  <!-- Muestra el mensaje si existe -->
-  <div *ngIf="mensaje" class="alert alert-danger text-center mt-3">
-  {{ mensaje }}
+<div class="contenedor-login">
+  <h2 class="titulo-login">Iniciar Sesión</h2>
+  <form (ngSubmit)="iniciarSesion()">
+    <div class="grupo-formulario">
+      <label class="etiqueta-login">Correo</label>
+      <input type="email" [(ngModel)]="email" name="email" class="campo-login" required placeholder="ejemplo@correo.com">
+    </div>
+    <div class="grupo-formulario">
+      <label class="etiqueta-login">Contraseña</label>
+      <input type="password" [(ngModel)]="password" name="password" class="campo-login" required placeholder="Tu contraseña">
+    </div>
+    <button type="submit" class="boton-login">Entrar</button>
+  </form>
+  <button routerLink="/" class="boton-volver">Volver</button>
+  <div *ngIf="mensaje" class="alerta-error">{{ mensaje }}</div>
 </div>

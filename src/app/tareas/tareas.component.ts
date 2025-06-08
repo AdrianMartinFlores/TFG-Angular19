@@ -81,7 +81,7 @@ export class TareasComponent {
   guardarTarea(event: Event) {
     event.preventDefault();
     if (!this.tareaSeleccionada.color || !/^#[0-9A-Fa-f]{6}$/.test(this.tareaSeleccionada.color)) {
-      this.tareaSeleccionada.color = '#23272f';
+      this.tareaSeleccionada.color = '#fafdff';
     }
     const url = 'http://localhost/TFG/Backend/Tareas.php';
     const method = this.tareaSeleccionada.id ? 'PUT' : 'POST';
@@ -110,6 +110,9 @@ export class TareasComponent {
 
   editarTarea(tarea: any) {
     this.tareaSeleccionada = { ...tarea };
+    if (!this.tareaSeleccionada.color || !/^#[0-9A-Fa-f]{6}$/.test(this.tareaSeleccionada.color)) {
+      this.tareaSeleccionada.color = '#fafdff';
+    }
   }
 
   eliminarTarea(id: number) {
@@ -233,7 +236,7 @@ export class TareasComponent {
   }
 
   abrirModalTarea(tarea: any) {
-    this.tareaModal = { ...tarea, color: tarea.color || '#23272f' };
+    this.tareaModal = { ...tarea, color: tarea.color || '#fafdff' };
     this.tareaModalAbierto = true;
   }
 

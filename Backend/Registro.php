@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $Password = $input['password'] ?? null;
 
     if (!$Email || !$Nombre || !$Password) {
-        echo json_encode(['success' => false, 'message' => 'Todos los campos son obligatorios']);
+        echo json_encode(['success' => false, 'mensage' => 'Todos los campos son obligatorios']);
         exit;
     }
 
@@ -39,18 +39,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $Password = password_hash($Password, PASSWORD_BCRYPT); // Encriptar la contraseña
 
-    $query = "INSERT INTO usuarios (Correo, NombreUsuario, Contraseña) VALUES (:Email, :Nombre, :Password)";
-    $stmt = $connexion->prepare($query);
+    $query = "INSERT INTO usuarios (Correo, NombreUsuario, Contraseña) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($query);
 
     try {
-        $stmt->execute([
-            ':Email' => $Email,
-            ':Nombre' => $Nombre,
-            ':Password' => $Password,
-        ]);
+        $stmt->bind_param("sss", $Email, $Nombre, $Password);
+        $stmt->execute();
         echo json_encode(['success' => true, 'message' => 'Usuario registrado correctamente']);
-    } catch (PDOException $e) {
-        if ($e->getCode() == 23000) { // Código de error para violación de unicidad
+    } catch (mysqli_sql_exception $e) {
+        if ($e->getCode() == 1062) { // Código de error para violación de unicidad en MySQLi
             echo json_encode(['success' => false, 'message' => 'El correo ya está registrado']);
         } else {
             echo json_encode(['success' => false, 'message' => 'Error al registrar el usuario: ' . $e->getMessage()]);

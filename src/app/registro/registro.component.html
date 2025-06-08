@@ -1,18 +1,20 @@
-<div class="registro-container">
-    <h2>Registro</h2>
-    <form (ngSubmit)="registroUsuario()">
-      <div class="form-group">
-        <label for="email">Correo Electrónico</label>
-        <input type="email" [(ngModel)]="email" name="email" id="email" placeholder="Ingresa tu correo" maxlength="40" required>
-      </div>
-      <div class="form-group">
-        <input type="text" [(ngModel)]="nombre" name="nombre" id="nombre" placeholder="Ingresa tu nombre" maxlength="20" required>
-      </div>
-      <div class="form-group">
-        <label for="password">Contraseña</label>
-        <input type="password" [(ngModel)]="password" name="password" id="password" placeholder="Ingresa tu contraseña" maxlength="40" required>
-      </div>
-      <button type="submit" class="btn">Registrar</button>
-      <button routerLink="/" type="button" class="btn btn-primary" style="margin-top: 10px;">Volver</button>
-    </form>
-  </div>
+<div class="contenedor-registro">
+  <h2 class="titulo-registro">Registro</h2>
+  <form (ngSubmit)="registroUsuario()">
+    <div class="grupo-formulario">
+      <label class="etiqueta-registro">Correo</label>
+      <input type="email" [(ngModel)]="email" name="email" class="campo-registro" required placeholder="ejemplo@correo.com">
+    </div>
+    <div class="grupo-formulario">
+      <label class="etiqueta-registro">Nombre</label>
+      <input type="text" [(ngModel)]="nombre" name="nombre" class="campo-registro" required placeholder="Tu nombre">
+    </div>
+    <div class="grupo-formulario">
+      <label class="etiqueta-registro">Contraseña</label>
+      <input type="password" [(ngModel)]="password" name="password" class="campo-registro" required placeholder="Tu contraseña">
+    </div>
+    <button type="submit" class="boton-registro">Registrar</button>
+  </form>
+  <button routerLink="/" class="boton-volver">Volver</button>
+  <div *ngIf="mensaje" class="alerta-error">{{ mensaje }}</div>
+</div>

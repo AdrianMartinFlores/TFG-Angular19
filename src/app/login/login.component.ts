@@ -31,13 +31,11 @@ export class LoginComponent {
     }).subscribe({
       next: (response: any) => {  
         if (response.success) {
+          this.authService.login(response.token); // Solo esta llamada es necesaria
 
           // Guarda el token y otros datos necesarios en localStorage
           localStorage.setItem('token', response.token);
           localStorage.setItem('usuario_id', response.usuario_id);
-
-          // Cambia el estado de autenticación
-          this.authService.login();
 
           // Redirige al menú
           this.router.navigate(['/menu']).then(() => {

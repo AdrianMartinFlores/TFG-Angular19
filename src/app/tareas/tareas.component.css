@@ -1,274 +1,193 @@
-/* Contenedor principal */
 .contenedor-tareas {
-  max-width: 800px;
-  margin: 40px auto 60px auto;
-  padding: 32px 24px 32px 24px;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px #0002;
-  color: #222;
-  background: #23272f;
+  max-width: 740px;
+  margin: 24px auto;
+  padding: 12px 8px;
+  border-radius: 8px;
+  background: #fafdff;
+  box-shadow: 0 1px 4px #1976d220;
 }
 
-/* Títulos */
-.contenedor-tareas h1,
-.contenedor-tareas h2 {
-  font-size: 1.7rem;
-  font-weight: bold;
+.titulo-tareas {
+  font-size: 1.2rem;
+  color: #1976d2;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.formulario-tarea,
+.filtros-tareas,
+.crear-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.input-tarea {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #bcdffb;
+  border-radius: 4px;
+  font-size: 1rem;
+  background: #f6fafd;
   color: #222;
-  margin-bottom: 24px;
-  margin-top: 0;
 }
-form {
-  margin-bottom: 30px;
+
+.input-tarea:focus {
+  border-color: #1976d2;
+  outline: none;
+  background: #fff;
 }
-/* Lista de tareas */
+
+.input-color {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0 auto 6px auto;
+  display: block;
+}
+
+.lista-grupos,
 .lista-tareas,
 .lista-completadas {
   list-style: none;
   padding: 0;
-  margin: 0 0 32px 0;
-} 
-
-/* Cada tarea pendiente */
-.tarea {
-  border-radius: 10px;
-  margin-bottom: 12px;
-  padding: 18px 16px;
-  box-shadow: 0 2px 8px #0002;
-  transition: box-shadow 0.2s, background 0.2s;
-  border: 2px solid #444;
-  color: #fff;
-  display: flex;
-  flex-direction: column; /* Cambiado a columna para apilar los textos */
-  align-items: flex-start; /* Alinea a la izquierda */
-  gap: 2px;
-  background: #23272f;
-}
-
-/* Título de la tarea */
-.titulo-tarea {
-  font-weight: 700;
-  font-size: 1.5em;
-  color: #fff !important;
-  -webkit-text-stroke: 0.5px #000;
-  margin-bottom: 4px;
-  letter-spacing: 0.2px;
-}
-
-/* Descripción de la tarea */
-.desc-tarea {
-  font-size: 1.25em;
-  margin: 0;
-  flex: 1;
-  color: #fff !important;
-  -webkit-text-stroke: 0.2px #222;
-  font-family: 'Segoe UI', Arial, Verdana, sans-serif;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  line-height: 1.7;
-  border-radius: 6px;
-  padding: 8px 12px;
-  word-break: break-word;
-  background: rgba(0,0,0,0.13);
-}
-
-/* Quita el fondo si está vacía */
-.desc-tarea:empty {
-  background: none;
-  padding: 0;
-  border-radius: 0;
-}
-
-.grupo-tarea {
-  display: block;
-  font-size: 1.2em;
-  color: #ffc107;
-  margin-bottom: 4px;
-  -webkit-text-stroke: 0.5px #000;
-  font-weight: 500;
-  letter-spacing: 0.1px;
-}
-
-/* Botones de acción */
-.acciones-tarea button {
-  margin-left: 10px;
-  font-size: 1rem;
-  padding: 8px 14px;
-}
-
-/* Tareas completadas */
-.lista-completadas .completada {
-  border: 1.5px solid #28a7467c;
-  border-radius: 12px;
-  margin-bottom: 24px;
-  padding: 18px;
-  color: #fff;
-  background: #26332d;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-}
-
-.lista-completadas .completada h3.titulo-tarea {
-  font-size: 1.5em;
-  font-weight: 700;
-  color: #fff !important;
-  -webkit-text-stroke: 0.5px #000;
-  margin: 0 0 4px 0;
-  letter-spacing: 0.2px;
-}
-
-.lista-completadas .completada .grupo-tarea {
-  display: block;
-  font-size: 1.2em;
-  color: #ffc107;
-  margin-bottom: 4px;
-  -webkit-text-stroke: 0.5px #000;
-  font-weight: 500;
-  letter-spacing: 0.1px;
-}
-
-.lista-completadas .completada .desc-tarea {
-  font-size: 1.25em;
-  margin: 0;
-  flex: 1;
-  color: #fff !important;
-  -webkit-text-stroke: 0.2px #222;
-  font-family: 'Segoe UI', Arial, Verdana, sans-serif;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  line-height: 1.7;
-  border-radius: 6px;
-  padding: 8px 12px;
-  word-break: break-word;
-  background: rgba(0,0,0,0.13);
-}
-
-.campo {
-  margin-bottom: 15px;
-}
-
-input, textarea {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border: 1px solid #bbb;
-  border-radius: 5px;
-}
-
-button {
-  margin-top: 10px;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button.btn-azul {
-  background-color: #007bff;
-  color: white;
-}
-
-button.btn-rojo {
-  background-color: #dc3545;
-  color: white;
-}
-
-button.btn-verde {
-  background-color: #28a745;
-  color: white;
-}
-
-button.btn-amarillo {
-  background-color: #ffc107;
-  color: #23272f;
-}
-
-button.btn-gris {
-  background-color: #6c757d;
-  color: white;
-}
-
-.lista-grupos {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 32px 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+  margin: 10px 0 0 0;
 }
 
 .grupo {
-  width: 100%;
-  box-sizing: border-box;
-  border: 1.5px solid #ffff006b;
-  border-radius: 12px;
-  padding: 18px 20px;
-  font-size: 1.1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
-  transition: box-shadow 0.2s;
-  box-shadow: 0 2px 8px #0001;
+  background: #eaf3fb;
+  border-radius: 5px;
+  margin-bottom: 6px;
+  padding: 5px 7px;
 }
 
 .nombre-grupo {
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: #007bff;
-  margin: 0 14px 0 0;
+  font-weight: 500;
+  color: #1976d2;
+  font-size: 1em;
 }
 
-.acciones-grupo button {
-  margin-left: 10px;
-  font-size: 1rem;
-  padding: 8px 14px;
+.input-grupo-edit {
+  width: 100%;
+  font-size: 0.98em;
+  margin-right: 4px;
 }
 
-/* Modal */
-.fondo-modal {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 1000;
-}
-.modal-tarea {
-  position: fixed;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  background: #23272f;
-  padding: 32px 24px;
-  border-radius: 16px;
-  box-shadow: 0 4px 32px #0008;
-  z-index: 1001;
-  min-width: 320px;
-  max-width: 90vw;
-}
-.modal-tarea .campo {
-  margin-bottom: 16px;
-}
-.acciones-modal {
+.acciones-grupo,
+.acciones-tarea {
   display: flex;
-  gap: 12px;
-  justify-content: flex-end;
-  margin-top: 18px;
+  gap: 4px;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
+.boton-tarea {
+  padding: 6px 0;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 0 2px;
+  min-width: 36px;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.boton-azul {
+  background: #1976d2;
+  color: #fff;
+}
+.boton-verde {
+  background: #388e3c;
+  color: #fff;
+}
+.boton-rojo {
+  background: #dc3545;
+  color: #fff;
+}
+.boton-amarillo {
+  background: #ffc107;
+  color: #23272f;
+}
+.boton-gris {
+  background: #6c757d;
+  color: #fff;
+}
+.boton-azul:hover {
+  background: #1565c0;
+}
+.boton-verde:hover {
+  background: #2e7031;
+}
+.boton-rojo:hover {
+  background: #a71d2a;
+}
+.boton-amarillo:hover {
+  background: #e0a800;
+}
+.boton-gris:hover {
+  background: #495057;
+}
+
+.tarea,
+.completada {
+  border-radius: 5px;
+  margin-bottom: 7px;
+  padding: 7px 5px;
+  background: #eaf3fb;
+  box-shadow: 0 1px 4px #0001;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.98rem;
+}
+
+.titulo-tarea {
+  font-weight: 600;
+  color: #1976d2;
+  flex: 1;
+}
+
+.grupo-tarea {
+  font-size: 0.95em;
+  color: #388e3c;
+}
+
+.mensaje-error {
+  background: #ffeaea;
+  color: #c62828;
+  border-radius: 4px;
+  padding: 5px;
+  margin-top: 6px;
+  font-size: 0.93rem;
+  text-align: center;
+  border: 1px solid #ffcdd2;
+}
+
+.separador {
+  margin: 18px 0 8px 0;
+  font-size: 1.08rem;
+  color: #1976d2;
+  font-weight: 600;
+  border-bottom: 1px solid #bcdffb;
+  padding-bottom: 2px;
+}
+
+@media (max-width: 500px) {
   .contenedor-tareas {
-    padding: 12px 4px;
+    max-width: 68vw;
+    padding: 5px 10px;
   }
-  .tarea {
-    flex-direction: column;
-    gap: 10px;
-    padding: 14px 8px;
-  }
-  .acciones-tarea button {
-    margin-left: 0;
-    margin-top: 8px;
+  .grupo,
+  .tarea,
+  .completada {
+    padding: 6px 2px;
   }
 }

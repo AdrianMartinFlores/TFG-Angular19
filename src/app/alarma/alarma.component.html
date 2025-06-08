@@ -1,36 +1,36 @@
 <app-nav></app-nav>
-    <div class="tarjeta sombra p-4 mx-auto mt-5" style="max-width: 400px;">
-  <div class="centrado mb-3">
-    <span class="iconoAlarma textoAzul">
+<div class="alarma-contenedor">
+  <div class="alarma-header">
+    <span class="alarma-icono">
       <i class="bi bi-alarm"></i>
     </span>
-    <h2>Configurar Alarma</h2>
+    <h2 class="alarma-titulo">Configurar Alarma</h2>
   </div>
-  <form (ngSubmit)="editandoId ? guardarEdicion() : programarAlarma()" class="formAlarma">
-    <div class="margenAbajo">
-      <label class="etiqueta">Fecha y hora:</label>
-      <input type="datetime-local" [(ngModel)]="fechaHora" name="fechaHora" class="campo" required>
+  <form (ngSubmit)="editandoId ? guardarEdicion() : programarAlarma()" class="alarma-form">
+    <div class="alarma-campo">
+      <label class="alarma-etiqueta">Fecha y hora:</label>
+      <input type="datetime-local" [(ngModel)]="fechaHora" name="fechaHora" class="alarma-input" required>
     </div>
-    <button type="submit" class="botonAzul anchoTotal">
+    <button type="submit" class="alarma-boton-azul alarma-boton-full">
       <i class="bi bi-bell"></i> {{ editandoId ? 'Guardar cambios' : 'Programar alarma' }}
     </button>
-    <button *ngIf="editandoId" type="button" class="botonGris anchoTotal margenTop" (click)="cancelarEdicion()">
+    <button *ngIf="editandoId" type="button" class="alarma-boton-gris alarma-boton-full alarma-margen-top" (click)="cancelarEdicion()">
       Cancelar
     </button>
   </form>
-  <div *ngIf="mensaje" class="alertaExito margenTop animado">
+  <div *ngIf="mensaje" class="alarma-alerta-exito alarma-margen-top">
     {{ mensaje }}
   </div>
-  <div *ngIf="alarmas.length > 0" class="margenTop">
-    <h5>Alarmas programadas:</h5>
-    <ul class="listaAlarmas">
-      <li *ngFor="let alarma of alarmas" class="itemAlarma fila">
+  <div *ngIf="alarmas.length > 0" class="alarma-margen-top">
+    <h5 class="alarma-subtitulo">Alarmas programadas:</h5>
+    <ul class="alarma-lista">
+      <li *ngFor="let alarma of alarmas" class="alarma-item">
         {{ alarma.fecha_hora | date:'medium' }}
-        <div>
-          <button class="botonAmarillo btnPequeño margenDerecha" (click)="editar(alarma)">
+        <div class="alarma-acciones">
+          <button class="alarma-boton-amarillo alarma-boton-pequeno alarma-margen-derecha" (click)="editar(alarma)">
             <i class="bi bi-pencil"></i>
           </button>
-          <button class="botonRojo btnPequeño" (click)="eliminarAlarma(alarma.id)">
+          <button class="alarma-boton-rojo alarma-boton-pequeno" (click)="eliminarAlarma(alarma.id)">
             <i class="bi bi-trash"></i>
           </button>
         </div>

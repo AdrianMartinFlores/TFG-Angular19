@@ -1,151 +1,75 @@
 <app-nav></app-nav>
 <div class="contenedor-tareas">
-  <h1>Mis Tareas</h1>
-  <p>Aquí puedes gestionar tus tareas diarias.</p>
-
-  <form (submit)="guardarTarea($event)">
-    <div class="campo">
-      <label for="titulo">Título</label>
-      <input id="titulo" [(ngModel)]="tareaSeleccionada.titulo" name="titulo" required />
-    </div>
-    <div class="campo">
-      <label for="descripcion">Descripción</label>
-      <textarea id="descripcion" [(ngModel)]="tareaSeleccionada.descripcion" name="descripcion"></textarea>
-    </div>
-    <div class="campo">
-      <label for="grupo_id">Grupo</label>
-      <select id="grupo_id" [(ngModel)]="tareaSeleccionada.grupo_id" name="grupo_id" class="form-control">
-        <option [ngValue]="null">Sin grupo</option>
-        <option *ngFor="let grupo of grupos" [ngValue]="grupo.id">{{ grupo.nombre }}</option>
-      </select>
-    </div>
-    <div class="campo">
-      <label for="color">Color</label>
-      <input id="color" type="color" [(ngModel)]="tareaSeleccionada.color" name="color" class="form-control" [value]="tareaSeleccionada.color || '#23272f'" />
-    </div>
-    <button type="submit" class="btn btn-azul">
-      {{ tareaSeleccionada.id ? 'Actualizar' : 'Crear' }} Tarea
-    </button>
-    <span *ngIf="mensaje" class="alert alert-danger ms-3 align-middle" style="display:inline-block;">
-      {{ mensaje }}
-    </span>
-  </form>
-
-  <div class="mb-3 d-flex align-items-center gap-2">
-    <label class="me-2">Ver tareas del grupo:</label>
-    <select [(ngModel)]="grupoSeleccionado" (change)="cargarTareasPorGrupo()" class="form-control" style="max-width:200px;">
-      <option [ngValue]="null">Todos los grupos</option>
+  <h1 class="titulo-tareas">Tareas</h1>
+  <form (submit)="guardarTarea($event)" class="formulario-tarea">
+    <input [(ngModel)]="tareaSeleccionada.titulo" name="titulo" class="input-tarea" required placeholder="Título" />
+    <input [(ngModel)]="tareaSeleccionada.descripcion" name="descripcion" class="input-tarea" placeholder="Descripción" />
+    <select [(ngModel)]="tareaSeleccionada.grupo_id" name="grupo_id" class="input-tarea">
+      <option [ngValue]="null">Sin grupo</option>
       <option *ngFor="let grupo of grupos" [ngValue]="grupo.id">{{ grupo.nombre }}</option>
     </select>
-    <button class="btn btn-verde btn-sm ms-2" (click)="mostrarCrearGrupo = !mostrarCrearGrupo">
-      Crear grupo
+    <input
+      type="color"
+      [(ngModel)]="tareaSeleccionada.color"
+      name="color"
+      class="input-color"
+      [value]="tareaSeleccionada.color || '#fafdff'"
+    />
+    <button type="submit" class="boton-tarea boton-azul">
+      {{ tareaSeleccionada.id ? 'Actualizar' : 'Crear' }}
     </button>
+    <span *ngIf="mensaje" class="mensaje-error">{{ mensaje }}</span>
+  </form>
+
+  <div class="filtros-tareas">
+    <select [(ngModel)]="grupoSeleccionado" (change)="cargarTareasPorGrupo()" class="input-tarea" style="max-width:110px;">
+      <option [ngValue]="null">Todos</option>
+      <option *ngFor="let grupo of grupos" [ngValue]="grupo.id">{{ grupo.nombre }}</option>
+    </select>
+    <button class="boton-tarea boton-verde" (click)="mostrarCrearGrupo = !mostrarCrearGrupo">Crear nuevo grupo</button>
   </div>
 
-  <div *ngIf="mostrarCrearGrupo" class="mb-3">
-    <div class="d-flex align-items-center gap-2 flex-wrap">
-      <input [(ngModel)]="nuevoGrupoNombre"
-             placeholder="Nombre del grupo"
-             class="form-control"
-             style="width:auto;max-width:200px;" />
-      <button class="btn btn-azul btn-sm" (click)="crearGrupo()">Crear</button>
-      <button class="btn btn-gris btn-sm" (click)="mostrarCrearGrupo = false">Cancelar</button>
-    </div>
+  <div *ngIf="mostrarCrearGrupo" class="crear-grupo">
+    <input [(ngModel)]="nuevoGrupoNombre" placeholder="Nombre grupo" class="input-tarea" />
+    <button class="boton-tarea boton-azul" (click)="crearGrupo()">Crear</button>
+    <button class="boton-tarea boton-gris" (click)="mostrarCrearGrupo = false">X</button>
   </div>
 
-  <div *ngIf="mensaje" class="alert alert-danger text-center">
-    {{ mensaje }}
-  </div>
-  <div *ngIf="mensajeGrupo" class="alert alert-success text-center">
-    {{ mensajeGrupo }}
-  </div>
-
-  <h2>Tareas Pendientes</h2>
-  <ul class="lista-tareas">
-    <li class="tarea"
-        *ngFor="let tarea of tareasPendientes"
-        [ngStyle]="{'background-color': tarea.color || '#23272f'}">
-      <span class="titulo-tarea">{{ tarea.titulo }}</span>
-      <span class="grupo-tarea" *ngIf="tarea.grupo_id">
-        {{ getNombreGrupo(tarea.grupo_id) }}
-      </span>
-      <span class="desc-tarea">{{ tarea.descripcion }}</span>
-      <div class="acciones-tarea">
-        <button (click)="completarTarea(tarea)" class="btn btn-verde">Completar</button>
-        <button (click)="abrirModalTarea(tarea); $event.stopPropagation()" class="btn btn-azul">Editar</button>
-        <button (click)="eliminarTarea(tarea.id)" class="btn btn-rojo">Eliminar</button>
-      </div>
-    </li>
-  </ul>
-
-  <h2>Tareas Completadas</h2>
-  <ul class="lista-completadas">
-    <li *ngFor="let tarea of tareasCompletadas" class="completada"
-        [ngStyle]="{'background-color': tarea.color || '#23272f'}">
-      <h3 class="titulo-tarea">{{ tarea.titulo }}</h3>
-      <span class="grupo-tarea" *ngIf="tarea.grupo_id">
-        Grupo: {{ getNombreGrupo(tarea.grupo_id) }}
-      </span>
-      <p class="desc-tarea">{{ tarea.descripcion }}</p>
-      <button (click)="marcarComoNoTerminada(tarea)" class="btn btn-amarillo">No Terminada</button>
-      <button (click)="eliminarTarea(tarea.id)" class="btn btn-rojo ms-2">Eliminar</button>
-    </li>
-  </ul>
-
-  <h2>Grupos</h2>
+  <h2 class="separador">Grupos creados</h2>
   <ul class="lista-grupos">
     <li *ngFor="let grupo of grupos" class="grupo">
       <span *ngIf="grupoEditandoId !== grupo.id" class="nombre-grupo">{{ grupo.nombre }}</span>
-      <input *ngIf="grupoEditandoId === grupo.id"
-             [(ngModel)]="nuevoNombreGrupoEditando"
-             class="form-control d-inline-block"
-             style="width:auto;max-width:200px;" />
-
-      <div class="acciones-grupo d-inline-block ms-2">
-        <button *ngIf="grupoEditandoId !== grupo.id"
-                (click)="editarGrupo(grupo)"
-                class="btn btn-azul btn-sm">Editar</button>
-        <button *ngIf="grupoEditandoId === grupo.id"
-                (click)="guardarEdicionGrupo(grupo)"
-                class="btn btn-verde btn-sm">Guardar</button>
-        <button *ngIf="grupoEditandoId === grupo.id"
-                (click)="cancelarEdicionGrupo()"
-                class="btn btn-gris btn-sm">Cancelar</button>
-        <button (click)="eliminarGrupo(grupo.id)" class="btn btn-rojo btn-sm ms-2">Eliminar</button>
+      <input *ngIf="grupoEditandoId === grupo.id" [(ngModel)]="nuevoNombreGrupoEditando" class="input-tarea input-grupo-edit" />
+      <div class="acciones-grupo">
+        <button *ngIf="grupoEditandoId !== grupo.id" (click)="editarGrupo(grupo)" class="boton-tarea boton-azul" title="Editar">✎</button>
+        <button *ngIf="grupoEditandoId === grupo.id" (click)="guardarEdicionGrupo(grupo)" class="boton-tarea boton-verde" title="Guardar">✔</button>
+        <button *ngIf="grupoEditandoId === grupo.id" (click)="cancelarEdicionGrupo()" class="boton-tarea boton-gris" title="Cancelar">✖</button>
+        <button (click)="eliminarGrupo(grupo.id)" class="boton-tarea boton-rojo" title="Eliminar">🗑</button>
       </div>
     </li>
   </ul>
 
-  <!-- Modal de tarea -->
-  <div class="fondo-modal" *ngIf="tareaModalAbierto" (click)="cerrarModalTarea()"></div>
-  <div class="modal-tarea" *ngIf="tareaModalAbierto">
-    <form (submit)="guardarTareaDesdeModal($event)">
-      <h2>Editar Tarea</h2>
-      <div class="campo">
-        <label for="modal-titulo">Título</label>
-        <input id="modal-titulo" [(ngModel)]="tareaModal.titulo" name="modal-titulo" class="form-control" required />
+  <h2 class="separador">Tareas sin marcar</h2>
+  <ul class="lista-tareas">
+    <li class="tarea" *ngFor="let tarea of tareasPendientes" [ngStyle]="{'background-color': tarea.color || '#fafdff'}">
+      <span class="titulo-tarea">{{ tarea.titulo }}</span>
+      <span *ngIf="tarea.grupo_id" class="grupo-tarea">{{ getNombreGrupo(tarea.grupo_id) }}</span>
+      <div class="acciones-tarea">
+        <button (click)="completarTarea(tarea)" class="boton-tarea boton-verde">✔</button>
+        <button (click)="editarTarea(tarea)" class="boton-tarea boton-azul">✎</button>
+        <button (click)="eliminarTarea(tarea.id)" class="boton-tarea boton-rojo">🗑</button>
       </div>
-      <div class="campo">
-        <label for="modal-descripcion">Descripción</label>
-        <textarea id="modal-descripcion" [(ngModel)]="tareaModal.descripcion" name="modal-descripcion" class="form-control"></textarea>
-      </div>
-      <div class="campo">
-        <label for="modal-grupo">Grupo</label>
-        <select id="modal-grupo" [(ngModel)]="tareaModal.grupo_id" name="modal-grupo" class="form-control">
-          <option [ngValue]="null">Sin grupo</option>
-          <option *ngFor="let grupo of grupos" [ngValue]="grupo.id">{{ grupo.nombre }}</option>
-        </select>
-      </div>
-      <div class="campo">
-        <label for="modal-color">Color</label>
-        <input id="modal-color" type="color" [(ngModel)]="tareaModal.color" name="modal-color" class="form-control" [value]="tareaModal.color || '#23272f'" />
-      </div>
-      <div class="acciones-modal">
-        <button type="submit" class="btn btn-verde btn-sm">Guardar</button>
-        <button type="button" class="btn btn-rojo btn-sm" (click)="eliminarTarea(tareaModal.id)">Eliminar</button>
-        <button type="button" class="btn btn-gris btn-sm" (click)="cerrarModalTarea()">Cerrar</button>
-      </div>
-    </form>
-  </div>
+    </li>
+  </ul>
+
+  <h2 class="separador">Tareas realizadas</h2>
+  <ul class="lista-completadas">
+    <li *ngFor="let tarea of tareasCompletadas" class="completada" [ngStyle]="{'background-color': tarea.color || '#fafdff'}">
+      <span class="titulo-tarea">{{ tarea.titulo }}</span>
+      <span *ngIf="tarea.grupo_id" class="grupo-tarea">{{ getNombreGrupo(tarea.grupo_id) }}</span>
+      <button (click)="marcarComoNoTerminada(tarea)" class="boton-tarea boton-amarillo">↺</button>
+      <button (click)="eliminarTarea(tarea.id)" class="boton-tarea boton-rojo">🗑</button>
+    </li>
+  </ul>
 </div>
 

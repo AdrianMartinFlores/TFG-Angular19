@@ -1,25 +1,39 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule , Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-registro',
-  imports: [RouterModule, FormsModule, HttpClientModule],
+  imports: [RouterModule, FormsModule, CommonModule],
   standalone: true,
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.css',
 })
 export class RegistroComponent {
-  // Formulario de registro
+  mensaje: string = '';
   email: string = '';
   nombre: string = '';
-  contraseña: string = '';
-  password: any;
+  password: string = '';
 
   constructor(private http: HttpClient, private router: Router) {}
 
   registroUsuario() {
+    this.mensaje = '';
+
+    // Validación en el frontend antes de enviar
+    if (!this.email || !this.nombre || !this.password) {
+      if (!this.email) {
+        this.mensaje = 'El correo es obligatorio.';
+      } else if (!this.nombre) {
+        this.mensaje = 'El nombre es obligatorio.';
+      } else if (!this.password) {
+        this.mensaje = 'La contraseña es obligatoria.';
+      }
+      return;
+    }
+
     const usuario = {
       email: this.email,
       nombre: this.nombre,
@@ -31,16 +45,14 @@ export class RegistroComponent {
     }).subscribe({
         next: (response: any) => {
           if (response.success) {
-            alert(response.message);
-            //Si todo es correcto te redirige al login para iniciar sesion
-            this.router.navigate(['/login']);
+            this.mensaje = response.message;
+            setTimeout(() => this.router.navigate(['/login']), 1500);
           } else {
-            alert('Error al registrar el usuario: ' + response.message);
+            this.mensaje = 'Error al registrar el usuario: ' + response.message;
           }
         },
         error: (error) => {
-          console.error('Error en la solicitud:', error);
-          alert('Error en la solicitud: ' + error.message);
+          this.mensaje = 'Error en la solicitud: ' + error.message;
         },
       });
   }

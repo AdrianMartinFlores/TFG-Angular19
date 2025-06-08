@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AlarmaService } from './alarma.service';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ export class AppComponent implements OnInit {
   private notifiedAlarmas: Set<number> = new Set();
   private audio = new Audio('assets/sounds/notificacion.mp3'); 
 
-  constructor(private alarmaService: AlarmaService) {}
+  constructor(private alarmaService: AlarmaService, private authService: AuthService) {}
 
   ngOnInit() {
     // Lee el usuario_id de localStorage al iniciar
@@ -56,5 +57,10 @@ export class AppComponent implements OnInit {
         });
       }
     }, 1000); // Comprobar cada segundo
+
+    // Renueva la sesión en cada acción del usuario
+    ['click', 'keydown', 'mousemove'].forEach(event => {
+      window.addEventListener(event, () => this.authService.renovarSesion());
+    });
   }
 }

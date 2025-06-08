@@ -4,22 +4,34 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly AUTH_KEY = 'estaLogeado'; // Clave para almacenar el estado en localStorage
+  private readonly TOKEN_KEY = 'token';
+  private readonly EXP_KEY = 'token_exp';
 
-  login(): void {
-    console.log('Usuario autenticado');
-    localStorage.setItem(this.AUTH_KEY, 'true'); // Guardar el estado de autenticación
+  login(token: string): void {
+    const expiresAt = Date.now() + 5 * 60 * 1000; // 5 minutos en ms
+    sessionStorage.setItem(this.TOKEN_KEY, token);
+    sessionStorage.setItem(this.EXP_KEY, expiresAt.toString());
   }
 
   logout(): void {
+    sessionStorage.removeItem(this.TOKEN_KEY);
+    sessionStorage.removeItem(this.EXP_KEY);
     console.log('Usuario no autenticado');
-    localStorage.removeItem(this.AUTH_KEY); // Eliminar el estado de autenticación
   }
 
   isLoggedIn(): boolean {
-    const token = localStorage.getItem('token');
-    const estado = !!token;
-    console.log('Estado de autenticación:', estado);
-    return estado;
+    const token = sessionStorage.getItem(this.TOKEN_KEY);
+    const exp = sessionStorage.getItem(this.EXP_KEY);
+    const valid = !!token && !!exp && Date.now() < Number(exp);
+    if (!valid) this.logout();
+    return valid;
+  }
+
+  renovarSesion(): void {
+    const token = sessionStorage.getItem(this.TOKEN_KEY);
+    if (token) {
+      const expiresAt = Date.now() + 5 * 60 * 1000; // 5 minutos más
+      sessionStorage.setItem(this.EXP_KEY, expiresAt.toString());
+    }
   }
 }

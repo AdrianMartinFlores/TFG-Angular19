@@ -27,4 +27,14 @@ export class MenuComponent {
     this.authService.logout(); // Cambiar el estado a no autenticado
     this.router.navigate(['/login']); // Redirigir al componente de inicio de sesión
   }
+
+  irATareas() {
+    this.router.navigate(['/tareas']);
+  }
+  irAHorarios() {
+    this.router.navigate(['/control-de-jornada']);
+  }
+  irAAlarmas() {
+    this.router.navigate(['/alarma']);
+  }
 }
