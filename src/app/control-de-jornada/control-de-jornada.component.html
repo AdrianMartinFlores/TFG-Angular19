@@ -1,157 +1,54 @@
 <app-nav></app-nav>
-<div class="jornada">
+<div class="contenedor-jornada">
   <h1 class="titulo-jornada">Control de Jornada</h1>
-  <p class="descripcion-jornada">Registra tus horas de entrada y salida para llevar un control de tu jornada laboral.</p>
 
-  <div class="contenedor-jornada">
-    <form (submit)="registrarJornada($event)" class="formulario-jornada">
-      <div class="grupo-jornada">
-        <label>Modo de registro:</label>
-        <select [(ngModel)]="modoRegistro" name="modoRegistro" class="input-jornada">
-          <option value="manual">Manual</option>
-          <option value="temporizador">Temporizador</option>
-        </select>
-      </div>
-
-      <div *ngIf="modoRegistro === 'manual'">
-        <div class="grupo-jornada">
-          <label for="fecha">Fecha</label>
-          <input id="fecha" type="date" [(ngModel)]="registroSeleccionado.fecha" name="fecha" required class="input-jornada" />
-        </div>
-        <div class="grupo-jornada">
-          <label for="horaEntrada">Hora de entrada</label>
-          <input id="horaEntrada" type="time" [(ngModel)]="registroSeleccionado.horaEntrada" name="horaEntrada" required class="input-jornada" />
-        </div>
-        <div class="grupo-jornada">
-          <label for="horaSalida">Hora de salida</label>
-          <input id="horaSalida" type="time" [(ngModel)]="registroSeleccionado.horaSalida" name="horaSalida" class="input-jornada" />
-        </div>
-      </div>
-
-      <div *ngIf="modoRegistro === 'temporizador'">
-        <div class="grupo-jornada">
-          <label for="fecha">Fecha</label>
-          <input id="fecha" type="date" [(ngModel)]="registroSeleccionado.fecha" name="fecha" required class="input-jornada" />
-        </div>
-        <!-- Solo muestra el input de segundos si se está editando un registro ya creado -->
-        <div class="grupo-jornada" *ngIf="registroSeleccionado.id">
-          <label for="duracionManual">Modificar tiempo (segundos):</label>
-          <input
-            id="duracionManual"
-            type="number"
-            [(ngModel)]="tiempoTranscurrido"
-            name="duracionManual"
-            class="input-jornada"
-            min="0"
-            [readonly]="temporizadorActivo"
-          />
-        </div>
-      </div>
-
-      <div class="grupo-jornada">
-        <label for="actividad">Actividad</label>
-        <select id="actividad" [(ngModel)]="registroSeleccionado.actividad_id" name="actividad_id" class="input-jornada" required>
-          <option *ngFor="let actividad of actividades" [value]="actividad.id">{{ actividad.nombre }}</option>
-        </select>
-        <input type="text" [(ngModel)]="nuevaActividad" name="nuevaActividad" placeholder="Nueva actividad" class="input-jornada" />
-        <button type="button" class="boton-jornada boton-azul" (click)="crearActividad()">Crear actividad</button>
-      </div>
-
-      <div class="acciones-jornada" *ngIf="modoRegistro === 'manual'">
-        <button type="submit" class="boton-jornada boton-azul">
-          {{ registroSeleccionado.id ? 'Actualizar' : 'Registrar' }} Jornada
-        </button>
-      </div>
-    </form>
-
-    <!-- Mostrar temporizador solo si modoRegistro es 'temporizador' y hay actividad seleccionada -->
-    <div *ngIf="modoRegistro === 'temporizador' && registroSeleccionado.actividad_id" class="temporizador-jornada mt-4">
-      <span class="tiempo-jornada">{{ tiempoTranscurrido | date:'HH:mm:ss':'UTC' }}</span>
-      <button type="button" class="boton-jornada boton-verde"
-              (click)="iniciarTemporizador()" [disabled]="temporizadorActivo">
-        Iniciar temporizador
-      </button>
-      <button type="button" class="boton-jornada boton-rojo"
-              (click)="detenerYRegistrarTemporizador()" [disabled]="!temporizadorActivo">
-        Detener y registrar
-      </button>
-      <button type="button" class="boton-jornada boton-gris"
-              (click)="resetearTemporizador()" [disabled]="temporizadorActivo">
-        Reset
-      </button>
+  <!-- Registro automático -->
+  <div class="formulario-jornada">
+    <div><label>Actividad</label>
+      <input class="input-jornada" type="text" [(ngModel)]="autoNombre" name="autoNombre" required />
     </div>
-
-    <div *ngIf="mensaje" class="exito-jornada">
-      {{ mensaje }}
+    <div><label>Fecha</label>
+      <input class="input-jornada" type="date" [value]="autoFecha" disabled />
     </div>
-
-    <h2 class="subtitulo-jornada">Registros de Jornada</h2>
-    <ul class="lista-jornada">
-      <li *ngFor="let registro of registros" class="item-jornada">
-        <span><strong>Fecha:</strong> {{ registro.fecha }}</span>
-        <span><strong>Entrada:</strong> {{ registro.horaEntrada }}</span>
-        <span><strong>Salida:</strong> {{ registro.horaSalida || '-' }}</span>
-        <span><strong>Actividad:</strong> {{ registro.actividad_nombre || '-' }}</span>
-        <!-- Ejemplo para mostrar el tiempo de actividad en la lista de registros -->
-        <span>
-          <strong>Tiempo:</strong>
-          {{ registro.duracion && registro.duracion > 0 ? (registro.duracion * 1000 | date:'HH:mm:ss':'UTC') : '-' }}
-        </span>
-        <div class="acciones-jornada">
-          <button (click)="editarRegistro(registro)" class="boton-jornada boton-verde">Editar</button>
-          <button (click)="eliminarRegistro(registro.id)" class="boton-jornada boton-rojo">Eliminar</button>
-        </div>
-      </li>
-    </ul>
-
-    <!-- Lista de actividades creadas -->
-    <h2 class="subtitulo-jornada">Actividades creadas</h2>
-    <ul class="lista-jornada">
-      <li *ngFor="let actividad of actividades" class="item-jornada">
-        <span *ngIf="actividadEditandoId !== actividad.id">{{ actividad.nombre }}</span>
-        <input *ngIf="actividadEditandoId === actividad.id"
-               [(ngModel)]="nuevoNombreActividadEditando"
-               class="input-jornada"
-               style="width: 180px; margin-right: 8px;" />
-        <!-- Quitar el temporizador individual delante del botón -->
-        <ng-container *ngIf="modoRegistro === 'temporizador'">
-          <button type="button"
-                  class="boton-jornada boton-verde"
-                  (click)="iniciarTemporizadorActividad(actividad)"
-                  [disabled]="actividadTemporizadorActivo && actividadTemporizadorId === actividad.id"
-                  style="margin-left:10px;">
-            ▶
-          </button>
-          <button type="button"
-                  class="boton-jornada boton-rojo"
-                  (click)="detenerYRegistrarTemporizadorActividad(actividad)"
-                  [disabled]="!actividadTemporizadorActivo || actividadTemporizadorId !== actividad.id">
-            ■
-          </button>
-          <span style="margin-left:10px;">
-            <strong>Total:</strong>
-            {{
-              (actividad.tiempo_total
-                ? (actividad.tiempo_total + (actividadTemporizadorId === actividad.id ? actividadTiempoTranscurrido : 0))
-                : (actividadTemporizadorId === actividad.id ? actividadTiempoTranscurrido : 0)
-              ) * 1000 | date:'HH:mm:ss':'UTC'
-            }}
-          </span>
-        </ng-container>
-        <div class="acciones-jornada">
-          <button *ngIf="actividadEditandoId !== actividad.id"
-                  (click)="editarActividad(actividad)"
-                  class="boton-jornada boton-azul" title="Editar">✎</button>
-          <button *ngIf="actividadEditandoId === actividad.id"
-                  (click)="guardarEdicionActividad(actividad)"
-                  class="boton-jornada boton-verde" title="Guardar">✔</button>
-          <button *ngIf="actividadEditandoId === actividad.id"
-                  (click)="cancelarEdicionActividad()"
-                  class="boton-jornada boton-gris" title="Cancelar">✖</button>
-          <button (click)="eliminarActividad(actividad.id)"
-                  class="boton-jornada boton-rojo" title="Eliminar">🗑</button>
-        </div>
-      </li>
-    </ul>
+    <div><label>Hora inicio</label>
+      <input class="input-jornada" type="time" [value]="autoHoraInicio" disabled />
+    </div>
+    <div><label>Hora fin</label>
+      <input class="input-jornada" type="time" [value]="autoHoraFin" disabled />
+    </div>
+    <div><label>Duración:</label>
+      <span>{{ autoTiempoFormateado }}</span>
+    </div>
+    <button class="boton-jornada" type="button" (click)="iniciarTemporizador()" [disabled]="autoEnCurso">Iniciar jornada</button>
+    <button class="boton-jornada" type="button" (click)="finalizarTemporizador()" [disabled]="!autoEnCurso">Finalizar jornada</button>
   </div>
+
+  <h2 class="titulo-jornada">Entrada manual</h2>
+  <form class="formulario-jornada" (submit)="registrarJornada($event)">
+    <div><label>Actividad</label>
+      <input class="input-jornada" type="text" [(ngModel)]="registroSeleccionado.nombre" name="nombre" required />
+    </div>
+    <div><label>Fecha</label>
+      <input class="input-jornada" type="date" [(ngModel)]="registroSeleccionado.fecha" name="fecha" required />
+    </div>
+    <div><label>Hora entrada</label>
+      <input class="input-jornada" type="time" [(ngModel)]="registroSeleccionado.horaEntrada" name="horaEntrada" required />
+    </div>
+    <div><label>Hora salida</label>
+      <input class="input-jornada" type="time" [(ngModel)]="registroSeleccionado.horaSalida" name="horaSalida" />
+    </div>
+    <button class="boton-jornada" type="submit">Registrar jornada</button>
+  </form>
+
+  <div *ngIf="mensaje">{{ mensaje }}</div>
+
+  <h2 class="titulo-jornada">Registros</h2>
+  <ul class="lista-jornada">
+    <li class="item-jornada" *ngFor="let registro of registros">
+      {{ registro.nombre }} | {{ registro.fecha }} | {{ registro.horaEntrada }} - {{ registro.horaSalida }}
+      <span *ngIf="registro.horaEntrada && registro.horaSalida">
+        <!-- Solo muestra el tiempo si es automático o si hay horas manuales -->
+      </span>
+    </li>
+  </ul>
 </div>

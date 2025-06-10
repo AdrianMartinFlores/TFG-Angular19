@@ -37,8 +37,10 @@
 /* Lista de navegación */
 .navbar-nav {
   display: flex;
-  gap: 16px;
+  flex-direction: row;
+  gap: 10px;
   align-items: center;
+  margin-left: auto;
   padding-left: 0;
   margin-bottom: 0;
   flex-wrap: wrap;
@@ -121,5 +123,25 @@
   }
   .container-fluid {
     padding: 0 2vw;
+  }
+}
+
+/* Botones más pequeños en pantallas pequeñas */
+@media (max-width: 900px) {
+  .navbar-nav {
+    gap: 6px;
+  }
+  .navbar-nav .btn {
+    font-size: 0.95rem;
+    padding: 7px 10px;
+  }
+}
+@media (max-width: 600px) {
+  .navbar-nav {
+    gap: 2px;
+  }
+  .navbar-nav .btn {
+    font-size: 0.85rem;
+    padding: 5px 6px;
   }
 }

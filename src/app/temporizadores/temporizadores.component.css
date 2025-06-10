@@ -163,11 +163,28 @@
 
 @media (max-width: 500px) {
   .contenedor-temporizadores {
-    max-width: 68vw;
-    padding: 5px 10px;
+    max-width: 98vw;
+    padding: 5px 2vw;
   }
 
   .item-temporizador {
     padding: 6px 2px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .acciones-temporizador {
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: flex-start;
+  }
+
+  .boton-temporizador {
+    min-width: 44px;
+    min-height: 36px;
+    font-size: 1rem;
+    flex: 1 1 44%;
+    margin: 2px 0;
   }
 }

@@ -1,313 +1,135 @@
-import { Component, OnInit, ChangeDetectorRef, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NavComponent } from '../nav/nav.component'; 
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { NavComponent } from '../nav/nav.component';
 
 @Component({
   selector: 'app-control-de-jornada',
   templateUrl: './control-de-jornada.component.html',
   styleUrls: ['./control-de-jornada.component.css'],
   standalone: true,
-  imports: [FormsModule, NavComponent, CommonModule] 
+  imports: [FormsModule, CommonModule, NavComponent]
 })
 export class ControlDeJornadaComponent implements OnInit {
   registros: any[] = [];
-  registroSeleccionado: any = { id: null, fecha: '', horaEntrada: '', horaSalida: '' };
-  mensaje: string = '';
-  usuario_id: number = 0;
-  actividades: any[] = [];
-  tiempoTranscurrido: number = 0;
-  temporizador: any = null;
-  temporizadorActivo: boolean = false;
-  inicioTemporizador: number | null = null;
-  modoRegistro: string = 'manual';
-  nuevaActividad: string = '';
+  usuario_id = 0;
+  mensaje = '';
+  registroSeleccionado: any = { fecha: '', horaEntrada: '', horaSalida: '', nombre: '' };
 
-  actividadEditandoId: number | null = null;
-  nuevoNombreActividadEditando: string = '';
+  autoNombre = '';
+  autoFecha = '';
+  autoHoraInicio = '';
+  autoHoraFin = '';
+  autoEnCurso = false;
+  private autoInterval: any = null;
+  private autoStartDate: Date | null = null;
+  autoTiempoFormateado = '00:00:00';
 
-  actividadTemporizadorId: number | null = null;
-  actividadTiempoTranscurrido: number = 0;
-  actividadTemporizador: any = null;
-  actividadTemporizadorActivo: boolean = false;
-
-  constructor(
-    private http: HttpClient,
-    private cdr: ChangeDetectorRef,
-    private ngZone: NgZone // <-- Añade esto
-  ) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
     const usuarioId = localStorage.getItem('usuario_id');
     if (usuarioId) {
-      this.usuario_id = parseInt(usuarioId, 10);
+      this.usuario_id = +usuarioId;
       this.cargarRegistros();
-      this.cargarActividades();
+    }
+    if (localStorage.getItem('jornadaAutoEnCurso') === 'true') {
+      this.autoNombre = localStorage.getItem('jornadaAutoNombre') || '';
+      this.autoFecha = localStorage.getItem('jornadaAutoFecha') || '';
+      this.autoHoraInicio = localStorage.getItem('jornadaAutoHoraInicio') || '';
+      this.autoEnCurso = true;
+      this.iniciarIntervaloTemporizador();
     }
   }
 
   cargarRegistros() {
     this.http.get<any[]>(`http://localhost/TFG/Backend/Jornada.php?usuario_id=${this.usuario_id}`)
-      .subscribe({
-        next: (data) => this.registros = data,
-        error: () => this.mensaje = 'Error al cargar los registros'
-      });
+      .subscribe({ next: data => this.registros = Array.isArray(data) ? data : [] });
   }
 
-  cargarActividades() {
-    this.http.get<any[]>(`http://localhost/TFG/Backend/Actividades.php?usuario_id=${this.usuario_id}`)
-      .subscribe({
-        next: (data) => this.actividades = data,
-        error: () => this.mensaje = 'Error al cargar actividades'
-      });
+  registrarJornada(e: Event) {
+    e.preventDefault();
+    if (!this.registroSeleccionado.nombre || this.registroSeleccionado.nombre.trim() === '') {
+      this.mensaje = 'El nombre de la actividad es obligatorio';
+      setTimeout(() => this.mensaje = '', 2000);
+      return;
+    }
+    const b = { ...this.registroSeleccionado, usuario_id: this.usuario_id };
+    this.http.post('http://localhost/TFG/Backend/Jornada.php', b)
+      .subscribe(() => { this.mensaje = 'Guardado'; this.cargarRegistros(); });
+    setTimeout(() => this.mensaje = '', 2000);
   }
 
-  // --- TEMPORIZADOR ---
   iniciarTemporizador() {
-    if (this.temporizadorActivo) return;
-    this.temporizadorActivo = true;
-    this.inicioTemporizador = Date.now();
-    this.tiempoTranscurrido = 0;
+    const now = new Date();
+    this.autoFecha = now.toISOString().slice(0, 10);
+    this.autoHoraInicio = now.toTimeString().slice(0, 5);
+    this.autoHoraFin = '';
+    this.autoEnCurso = true;
+    this.autoStartDate = now;
+    localStorage.setItem('jornadaAutoEnCurso', 'true');
+    localStorage.setItem('jornadaAutoNombre', this.autoNombre);
+    localStorage.setItem('jornadaAutoFecha', this.autoFecha);
+    localStorage.setItem('jornadaAutoHoraInicio', this.autoHoraInicio);
+    localStorage.setItem('jornadaAutoStartDate', now.toISOString());
+    this.iniciarIntervaloTemporizador();
+  }
 
-    if (this.temporizador) clearInterval(this.temporizador);
-
-    this.temporizador = setInterval(() => {
-      if (this.inicioTemporizador !== null) {
-        this.ngZone.run(() => {
-          this.tiempoTranscurrido = Math.floor((Date.now() - this.inicioTemporizador!) / 1000);
-        });
-      }
+  private iniciarIntervaloTemporizador() {
+    if (this.autoInterval) clearInterval(this.autoInterval);
+    this.autoInterval = setInterval(() => {
+      const startIso = localStorage.getItem('jornadaAutoStartDate');
+      const startDate = startIso ? new Date(startIso) : this.autoStartDate || new Date();
+      const diffMs = new Date().getTime() - startDate.getTime();
+      const totalSeconds = Math.floor(diffMs / 1000);
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      this.autoTiempoFormateado =
+        `${hours.toString().padStart(2, '0')}:` +
+        `${minutes.toString().padStart(2, '0')}:` +
+        `${seconds.toString().padStart(2, '0')}`;
+      const fin = new Date();
+      this.autoHoraFin = fin.toTimeString().slice(0, 5);
     }, 1000);
   }
 
-  detenerYRegistrarTemporizador() {
-    this.temporizadorActivo = false;
-    if (this.temporizador) {
-      clearInterval(this.temporizador);
-      this.temporizador = null;
+  finalizarTemporizador() {
+    if (!this.autoNombre || this.autoNombre.trim() === '') {
+      this.mensaje = 'El nombre de la actividad es obligatorio';
+      setTimeout(() => this.mensaje = '', 2000);
+      return;
     }
-    this.registrarTiempoActividad();
-  }
-
-  resetearTemporizador() {
-    this.temporizadorActivo = false;
-    if (this.temporizador) {
-      clearInterval(this.temporizador);
-      this.temporizador = null;
-    }
-    this.tiempoTranscurrido = 0;
-    this.inicioTemporizador = null;
-  }
-
-  registrarTiempoActividad() {
-    if (!this.registroSeleccionado.actividad_id || !this.tiempoTranscurrido) return;
-    const url = 'http://localhost/TFG/Backend/Jornada.php';
-    const body = {
-      usuario_id: this.usuario_id,
-      fecha: this.registroSeleccionado.fecha || new Date().toISOString().slice(0, 10),
-      actividad_id: this.registroSeleccionado.actividad_id,
-      duracion: this.tiempoTranscurrido
-    };
-    this.http.post(url, body).subscribe({
-      next: (res: any) => {
-        if (res.success) {
-          this.mensaje = 'Tiempo registrado correctamente';
-          this.cargarRegistros();
-          this.resetearTemporizador();
-        }
-      },
-      error: () => this.mensaje = 'Error al registrar el tiempo'
-    });
-  }
-
-  // --- REGISTRO MANUAL ---
-  registrarJornada(event: Event) {
-    event.preventDefault();
-    let body: any = { ...this.registroSeleccionado, usuario_id: this.usuario_id };
-
-    if (this.modoRegistro === 'manual') {
-      if (body.horaEntrada && body.horaSalida) {
-        const [h1, m1] = body.horaEntrada.split(':').map(Number);
-        const [h2, m2] = body.horaSalida.split(':').map(Number);
-        let entrada = h1 * 3600 + m1 * 60;
-        let salida = h2 * 3600 + m2 * 60;
-        let duracion = salida - entrada;
-        if (duracion < 0) duracion += 24 * 3600; // por si pasa de medianoche
-        body.duracion = duracion;
-      } else {
-        body.duracion = 0;
-      }
-    } else if (this.modoRegistro === 'temporizador') {
-      body.duracion = this.tiempoTranscurrido;
-    }
-
-    const url = 'http://localhost/TFG/Backend/Jornada.php';
-
-    if (this.registroSeleccionado.id) {
-      // Actualizar
-      this.http.put(url, body).subscribe({
-        next: (res: any) => {
-          if (res.success) {
-            this.mensaje = 'Registro actualizado correctamente';
-            this.cargarRegistros();
-          }
-        },
-        error: () => this.mensaje = 'Error al actualizar el registro'
-      });
-    } else {
-      // Crear nuevo registro
-      this.http.post(url, body).subscribe({
-        next: (res: any) => {
-          if (res.success && res.id) {
-            this.mensaje = 'Registro creado correctamente';
-            this.cargarRegistros();
-            this.registroSeleccionado.id = res.id;
-          }
-        },
-        error: () => this.mensaje = 'Error al crear el registro'
-      });
-    }
-    setTimeout(() => this.mensaje = '', 2000);
-    this.resetearTemporizador();
-  }
-
-  editarRegistro(registro: any) {
-    this.registroSeleccionado = { ...registro };
-    if (registro.duracion) {
-      this.tiempoTranscurrido = registro.duracion;
-    }
-  }
-
-  eliminarRegistro(id: number) {
-    const url = 'http://localhost/TFG/Backend/Jornada.php';
-    this.http.request('DELETE', url, { body: { id } }).subscribe({
-      next: (res: any) => {
-        if (res.success) {
-          this.mensaje = 'Registro eliminado correctamente';
-          this.cargarRegistros();
-        }
-      },
-      error: () => this.mensaje = 'Error al eliminar el registro'
-    });
-    setTimeout(() => this.mensaje = '', 2000);
-  }
-
-  crearActividad() {
-    if (!this.nuevaActividad.trim()) return;
-    this.http.post('http://localhost/TFG/Backend/Actividades.php', {
-      nombre: this.nuevaActividad,
-      usuario_id: this.usuario_id,
-      fecha_creacion: new Date().toISOString().slice(0, 10)
-    }).subscribe(() => {
-      this.cargarActividades();
-      this.nuevaActividad = '';
-    });
-  }
-
-  editarActividad(actividad: any) {
-    this.actividadEditandoId = actividad.id;
-    this.nuevoNombreActividadEditando = actividad.nombre;
-  }
-
-  guardarEdicionActividad(actividad: any) {
-    if (!this.nuevoNombreActividadEditando.trim()) return;
-    const url = 'http://localhost/TFG/Backend/Actividades.php';
-    const body = { id: actividad.id, nombre: this.nuevoNombreActividadEditando, usuario_id: this.usuario_id };
-    this.http.put(url, body).subscribe({
-      next: (res: any) => {
-        if (res.success) {
-          // Actualiza solo el nombre en el array, no agregues una nueva
-          actividad.nombre = this.nuevoNombreActividadEditando;
-          this.actividadEditandoId = null;
-          this.nuevoNombreActividadEditando = '';
-        }
-      }
-    });
-  }
-
-  cancelarEdicionActividad() {
-    this.actividadEditandoId = null;
-    this.nuevoNombreActividadEditando = '';
-  }
-
-  eliminarActividad(id: number) {
-    if (!confirm('¿Seguro que quieres eliminar esta actividad?')) return;
-    const url = 'http://localhost/TFG/Backend/Actividades.php';
-    this.http.request('DELETE', url, { body: { id, usuario_id: this.usuario_id } }).subscribe({
-      next: (res: any) => {
-        if (res.success) {
-          this.actividades = this.actividades.filter(a => a.id !== id);
-          if (this.registroSeleccionado.actividad_id === id) {
-            this.registroSeleccionado.actividad_id = null;
-          }
-        }
-      }
-    });
-  }
-
-  // Sumar tiempo del temporizador a la jornada seleccionada
-  sumarTiempoAJornada() {
-    if (!this.registroSeleccionado.id || !this.tiempoTranscurrido) return;
-    const url = 'http://localhost/TFG/Backend/Jornada.php';
-    const body = {
-      id: this.registroSeleccionado.id,
-      duracion: this.tiempoTranscurrido,
+    if (this.autoInterval) clearInterval(this.autoInterval);
+    this.autoEnCurso = false;
+    const nombre = localStorage.getItem('jornadaAutoNombre') || this.autoNombre;
+    const fecha = localStorage.getItem('jornadaAutoFecha') || this.autoFecha;
+    const horaEntrada = localStorage.getItem('jornadaAutoHoraInicio') || this.autoHoraInicio;
+    const horaSalida = this.autoHoraFin;
+    const b = {
+      nombre,
+      fecha,
+      horaEntrada,
+      horaSalida,
       usuario_id: this.usuario_id
     };
-    this.http.put(url, body).subscribe({
-      next: (res: any) => {
-        if (res.success) {
-          this.mensaje = 'Tiempo sumado correctamente';
-          this.cargarRegistros();
-          this.resetearTemporizador();
-        }
-      },
-      error: () => this.mensaje = 'Error al sumar el tiempo'
-    });
-  }
-
-  // --- TEMPORIZADOR ACTIVIDAD ---
-  iniciarTemporizadorActividad(actividad: any) {
-    if (this.actividadTemporizadorActivo && this.actividadTemporizadorId === actividad.id) return;
-    this.actividadTemporizadorId = actividad.id;
-    this.actividadTiempoTranscurrido = 0;
-    this.actividadTemporizadorActivo = true;
-    if (this.actividadTemporizador) clearInterval(this.actividadTemporizador);
-
-    const inicio = Date.now();
-    this.actividadTemporizador = setInterval(() => {
-      this.ngZone.run(() => {
-        this.actividadTiempoTranscurrido = Math.floor((Date.now() - inicio) / 1000);
+    this.http.post('http://localhost/TFG/Backend/Jornada.php', b)
+      .subscribe(() => {
+        this.mensaje = 'Jornada automática guardada';
+        this.cargarRegistros();
+        localStorage.removeItem('jornadaAutoEnCurso');
+        localStorage.removeItem('jornadaAutoNombre');
+        localStorage.removeItem('jornadaAutoFecha');
+        localStorage.removeItem('jornadaAutoHoraInicio');
+        localStorage.removeItem('jornadaAutoStartDate');
+        this.autoNombre = '';
+        this.autoFecha = '';
+        this.autoHoraInicio = '';
+        this.autoHoraFin = '';
+        this.autoStartDate = null;
+        this.autoTiempoFormateado = '00:00:00';
       });
-    }, 1000);
-  }
-
-  detenerYRegistrarTemporizadorActividad(actividad: any) {
-    this.actividadTemporizadorActivo = false;
-    if (this.actividadTemporizador) {
-      clearInterval(this.actividadTemporizador);
-      this.actividadTemporizador = null;
-    }
-    if (!this.actividadTiempoTranscurrido) return;
-    // Llama al backend para sumar el tiempo a la actividad
-    const url = 'http://localhost/TFG/Backend/Actividades.php';
-    const body = {
-      id: actividad.id,
-      tiempo: this.actividadTiempoTranscurrido,
-      usuario_id: this.usuario_id,
-      sumar_tiempo: true
-    };
-    this.http.put(url, body).subscribe({
-      next: (res: any) => {
-        if (res.success) {
-          this.mensaje = 'Tiempo sumado correctamente';
-          this.cargarActividades();
-          this.actividadTiempoTranscurrido = 0;
-          this.actividadTemporizadorId = null;
-        }
-      },
-      error: () => this.mensaje = 'Error al sumar el tiempo'
-    });
+    setTimeout(() => this.mensaje = '', 2000);
   }
 }

@@ -197,7 +197,7 @@ export class TareasComponent {
 
   guardarEdicionGrupo(grupo: any) {
     if (this.nuevoNombreGrupoEditando.trim() === '') return;
-    this.gruposTareasService.editarGrupo(grupo.id, this.nuevoNombreGrupoEditando).subscribe(() => {
+    this.gruposTareasService.editarGrupo(grupo.id, this.nuevoNombreGrupoEditando, this.usuario_id).subscribe(() => {
       grupo.nombre = this.nuevoNombreGrupoEditando;
       this.grupoEditandoId = null;
       this.nuevoNombreGrupoEditando = '';
@@ -211,7 +211,7 @@ export class TareasComponent {
 
   eliminarGrupo(id: number) {
     if (confirm('¿Seguro que quieres eliminar este grupo?')) {
-      this.gruposTareasService.eliminarGrupo(id).subscribe(() => {
+      this.gruposTareasService.eliminarGrupo(id, this.usuario_id).subscribe(() => {
         this.grupos = this.grupos.filter(g => g.id !== id);
         // Opcional: recargar tareas si el grupo eliminado estaba seleccionado
       });

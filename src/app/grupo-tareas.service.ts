@@ -14,11 +14,11 @@ export class GrupoTareasService {
     return this.http.post('http://localhost/TFG/Backend/GruposTareas.php', { nombre, usuario_id });
   }
 
-  editarGrupo(id: number, nombre: string): Observable<any> {
-    return this.http.put('http://localhost/TFG/Backend/GruposTareas.php', { id, nombre });
+  editarGrupo(id: number, nombre: string, usuario_id: number): Observable<any> {
+    return this.http.put('http://localhost/TFG/Backend/GruposTareas.php', { id, nombre, usuario_id });
   }
 
-  eliminarGrupo(id: number): Observable<any> {
-    return this.http.request('DELETE', 'http://localhost/TFG/Backend/GruposTareas.php', { body: { id } });
+  eliminarGrupo(id: number, usuario_id: number): Observable<any> {
+    return this.http.request('DELETE', 'http://localhost/TFG/Backend/GruposTareas.php', { body: { id, usuario_id } });
   }
 }
