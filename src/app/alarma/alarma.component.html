@@ -1,36 +1,35 @@
 <app-nav></app-nav>
-<div class="alarma-contenedor">
-  <div class="alarma-header">
+<div class="alarma">
+    <div class="alarma-cabecera">
     <span class="alarma-icono">
-      <i class="bi bi-alarm"></i>
     </span>
     <h2 class="alarma-titulo">Configurar Alarma</h2>
   </div>
-  <form (ngSubmit)="editandoId ? guardarEdicion() : programarAlarma()" class="alarma-form">
-    <div class="alarma-campo">
-      <label class="alarma-etiqueta">Fecha y hora:</label>
-      <input type="datetime-local" [(ngModel)]="fechaHora" name="fechaHora" class="alarma-input" required>
+  <form (ngSubmit)="editandoId ? guardarEdicion() : programarAlarma()" class="alarma-formulario">
+    <div class="alarma-grupo">
+      <label for="fecha-hora" class="alarma-etiqueta">Fecha y hora:</label>
+      <input type="datetime-local" id="fecha-hora" [(ngModel)]="fechaHora" name="fechaHora" class="alarma-input" required>
     </div>
-    <button type="submit" class="alarma-boton-azul alarma-boton-full">
+    <button type="submit" class="alarma-azul alarma-ancho">
       <i class="bi bi-bell"></i> {{ editandoId ? 'Guardar cambios' : 'Programar alarma' }}
     </button>
-    <button *ngIf="editandoId" type="button" class="alarma-boton-gris alarma-boton-full alarma-margen-top" (click)="cancelarEdicion()">
+    <button *ngIf="editandoId" type="button" class="alarma-gris alarma-ancho alarma-margen" (click)="cancelarEdicion()">
       Cancelar
     </button>
   </form>
-  <div *ngIf="mensaje" class="alarma-alerta-exito alarma-margen-top">
+  <div *ngIf="mensaje" class="alarma-exito alarma-margen">
     {{ mensaje }}
   </div>
-  <div *ngIf="alarmas.length > 0" class="alarma-margen-top">
+  <div *ngIf="alarmas.length > 0" class="alarma-margen">
     <h5 class="alarma-subtitulo">Alarmas programadas:</h5>
     <ul class="alarma-lista">
       <li *ngFor="let alarma of alarmas" class="alarma-item">
         {{ alarma.fecha_hora | date:'medium' }}
         <div class="alarma-acciones">
-          <button class="alarma-boton-amarillo alarma-boton-pequeno alarma-margen-derecha" (click)="editar(alarma)">
+          <button class="alarma-amarillo alarma-pequeno alarma-margen-derecha" (click)="editar(alarma)">
             <i class="bi bi-pencil"></i>
           </button>
-          <button class="alarma-boton-rojo alarma-boton-pequeno" (click)="eliminarAlarma(alarma.id)">
+          <button class="alarma-rojo alarma-pequeno" (click)="eliminarAlarma(alarma.id)">
             <i class="bi bi-trash"></i>
           </button>
         </div>

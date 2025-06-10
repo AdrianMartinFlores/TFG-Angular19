@@ -1,62 +1,60 @@
 <app-nav></app-nav>
-<div class="temporizadores-container card">
-  <h1 class="title">Gestión de Temporizadores</h1>
+<div class="contenedor-temporizadores">
+  <h1 class="titulo-temporizadores">Gestión de Temporizadores</h1>
 
-  <!-- Formulario para crear o editar temporizadores -->
-  <form (submit)="guardarTemporizador()" #temporizadorForm="ngForm" class="temporizador-form">
-    <div class="form-group">
-      <label for="titulo">Título</label>
-      <input id="titulo" [(ngModel)]="nuevoTemporizador.titulo" name="titulo" required placeholder="Introduce un título" />
-    </div>
-    <div class="form-group time-inputs">
+  <form (submit)="guardarTemporizador()" #temporizadorForm="ngForm" class="formulario-temporizador">
+    <label for="titulo-temporizador">Título</label>
+    <input id="titulo-temporizador" [(ngModel)]="nuevoTemporizador.titulo" name="titulo" class="input-temporizador" required placeholder="Introduce un título" />
+
+    <div class="grupo-tiempo">
       <div>
-        <label for="horas">Horas</label>
-        <input id="horas" type="number" [(ngModel)]="nuevoTemporizador.horas" name="horas" min="0" placeholder="0" />
+        <label for="horas-temporizador">Horas</label>
+        <input id="horas-temporizador" type="number" [(ngModel)]="nuevoTemporizador.horas" name="horas" min="0" placeholder="0" class="input-temporizador" />
       </div>
       <div>
-        <label for="minutos">Minutos</label>
-        <input id="minutos" type="number" [(ngModel)]="nuevoTemporizador.minutos" name="minutos" min="0" max="59" placeholder="0" />
+        <label for="minutos-temporizador">Minutos</label>
+        <input id="minutos-temporizador" type="number" [(ngModel)]="nuevoTemporizador.minutos" name="minutos" min="0" max="59" placeholder="0" class="input-temporizador" />
       </div>
       <div>
-        <label for="segundos">Segundos</label>
-        <input id="segundos" type="number" [(ngModel)]="nuevoTemporizador.segundos" name="segundos" min="0" max="59" placeholder="0" />
+        <label for="segundos-temporizador">Segundos</label>
+        <input id="segundos-temporizador" type="number" [(ngModel)]="nuevoTemporizador.segundos" name="segundos" min="0" max="59" placeholder="0" class="input-temporizador" />
       </div>
     </div>
-    <div class="form-actions">
-      <button type="submit" class="btn btn-primary" [disabled]="!temporizadorForm.valid || !esDuracionValida()">
-        {{ editando ? 'Actualizar Temporizador' : 'Crear Temporizador' }}
+
+    <div class="acciones-temporizador">
+      <button type="submit" class="boton-temporizador boton-azul" [disabled]="!temporizadorForm.valid || !esDuracionValida()">
+        {{ editando ? 'Actualizar temporizador' : 'Crear temporizador' }}
       </button>
-      <button type="button" class="btn btn-secondary" *ngIf="editando" (click)="cancelarEdicion()">Cancelar</button>
+      <button type="button" class="boton-temporizador boton-gris" *ngIf="editando" (click)="cancelarEdicion()">Cancelar</button>
     </div>
   </form>
 
-  <!-- Lista de temporizadores -->
-  <ul class="temporizadores-list">
-    <li *ngFor="let temporizador of temporizadores" class="temporizador-item">
-      <div class="temporizador-info">
-        <strong class="temporizador-title">{{ temporizador.titulo }}</strong>
-        <span class="temporizador-total">
+  <ul class="lista-temporizadores">
+    <li *ngFor="let temporizador of temporizadores" class="item-temporizador">
+      <div class="info-temporizador">
+        <strong class="titulo-item-temporizador">{{ temporizador.titulo }}</strong>
+        <span class="total-temporizador">
           Tiempo total: {{ formatearTiempo(temporizador.duracion) }}
         </span>
         <span 
-          class="temporizador-time"
+          class="restante-temporizador"
           *ngIf="temporizador.tiempoRestante !== undefined; else noTiempo"
           [ngClass]="{
-            'critical': temporizador.tiempoRestante <= 10,
-            'warning': temporizador.tiempoRestante > 10 && temporizador.tiempoRestante <= 30
+            'critico-temporizador': temporizador.tiempoRestante <= 10,
+            'aviso-temporizador': temporizador.tiempoRestante > 10 && temporizador.tiempoRestante <= 30
           }"
         >
           Tiempo restante: {{ formatearTiempo(temporizador.tiempoRestante) }}
         </span>
         <ng-template #noTiempo>
-          <span class="temporizador-time">Sin tiempo restante</span>
+          <span class="restante-temporizador">Sin tiempo restante</span>
         </ng-template>
       </div>
-      <div class="temporizador-actions">
-        <button (click)="iniciarCuentaAtras(temporizador)" class="btn btn-primary" *ngIf="!temporizador.enEjecucion">Iniciar</button>
-        <button (click)="pausarCuentaAtras(temporizador)" class="btn btn-warning" *ngIf="temporizador.enEjecucion">Pausar</button>
-        <button (click)="editarTemporizador(temporizador)" class="btn btn-secondary">Editar</button>
-        <button *ngIf="temporizador.id" (click)="borrarTemporizador(temporizador.id)" class="btn btn-danger">Borrar</button>
+      <div class="acciones-temporizador">
+        <button (click)="iniciarCuentaAtras(temporizador)" class="boton-temporizador boton-azul" *ngIf="!temporizador.enEjecucion">Iniciar</button>
+        <button (click)="pausarCuentaAtras(temporizador)" class="boton-temporizador boton-amarillo" *ngIf="temporizador.enEjecucion">Pausar</button>
+        <button (click)="editarTemporizador(temporizador)" class="boton-temporizador boton-gris">Editar</button>
+        <button *ngIf="temporizador.id" (click)="borrarTemporizador(temporizador.id)" class="boton-temporizador boton-rojo">Borrar</button>
       </div>
     </li>
   </ul>
@@ -64,7 +62,6 @@
 <audio id="notificacion-audio" src="assets/sounds/notificacion.mp3" preload="auto"></audio>
 
 <script>
-  // Mostrar notificación del navegador
   if (Notification.permission === 'granted') {
     new Notification(`El temporizador "${temporizador.titulo}" ha terminado`);
   }

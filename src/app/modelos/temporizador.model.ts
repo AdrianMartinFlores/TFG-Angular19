@@ -9,4 +9,5 @@ export interface Temporizador {
   tiempoRestante?: number; 
   enEjecucion?: boolean; 
   intervalo?: any; 
+  inicio?: number;
 }

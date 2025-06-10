@@ -1,198 +1,173 @@
-/* Contenedor principal */
-.temporizadores-container {
-  max-width: 800px;
-  margin: 40px auto 60px auto;
-  padding: 32px 24px 32px 24px;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px #0002;
-  color: #222;
-  background: #23272f;
+.contenedor-temporizadores {
+  max-width: 740px;
+  margin: 24px auto;
+  padding: 12px 8px;
+  border-radius: 8px;
+  background: #fafdff;
+  box-shadow: 0 1px 4px #1976d220;
 }
 
-/* Títulos */
-.temporizadores-container h1,
-.temporizadores-container h2 {
-  font-size: 1.7rem;
-  font-weight: bold;
-  color: #4fc3f7;
-  margin-bottom: 24px;
-  margin-top: 0;
+.titulo-temporizadores {
+  font-size: 1.2rem;
+  color: #1976d2;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-/* Formulario */
-.temporizador-form {
-  margin-bottom: 30px;
+.formulario-temporizador {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
 }
 
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #e0e0e0;
-}
-
-.form-group input {
+.input-temporizador {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-  background: #2c2f33;
-  color: #ffffff;
+  padding: 6px;
+  border: 1px solid #bcdffb;
+  border-radius: 4px;
+  font-size: 1rem;
+  background: #f6fafd;
+  color: #222;
 }
 
-.time-inputs {
+.input-temporizador:focus {
+  border-color: #1976d2;
+  outline: none;
+  background: #fff;
+}
+
+.grupo-tiempo {
   display: flex;
   gap: 10px;
 }
 
-.time-inputs div {
+.grupo-tiempo div {
   flex: 1;
 }
 
-/* Botones */
-.form-actions {
-  text-align: center;
-  margin-top: 20px;
+.acciones-temporizador {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
 }
 
-.btn {
-  padding: 10px 15px;
+.boton-temporizador {
+  padding: 6px 5px;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: 500;
   cursor: pointer;
-  font-size: 1rem;
+  margin: 0 2px;
+  min-width: 36px;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.btn-primary {
-  background-color: #007bff;
-  color: white;
+.boton-azul {
+  background: #1976d2;
+  color: #fff;
 }
 
-.btn-primary:hover {
-  background-color: #0056b3;
+.boton-verde {
+  background: #388e3c;
+  color: #fff;
 }
 
-.btn-secondary {
-  background-color: #6c757d;
-  color: white;
+.boton-rojo {
+  background: #dc3545;
+  color: #fff;
 }
 
-.btn-secondary:hover {
-  background-color: #5a6268;
+.boton-amarillo {
+  background: #ffc107;
+  color: #23272f;
 }
 
-.btn-warning {
-  background-color: #ffc107;
-  color: black;
+.boton-gris {
+  background: #6c757d;
+  color: #fff;
 }
 
-.btn-warning:hover {
-  background-color: #e0a800;
+.boton-azul:hover {
+  background: #1565c0;
 }
 
-.btn-danger {
-  background-color: #dc3545;
-  color: white;
+.boton-verde:hover {
+  background: #2e7031;
 }
 
-.btn-danger:hover {
-  background-color: #c82333;
+.boton-rojo:hover {
+  background: #a71d2a;
 }
 
-/* Lista de temporizadores */
+.boton-amarillo:hover {
+  background: #e0a800;
+}
+
+.boton-gris:hover {
+  background: #495057;
+}
+
 .lista-temporizadores {
   list-style: none;
   padding: 0;
-  margin: 0 0 32px 0; /* Elimina el auto para evitar margen lateral */
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch; /* Cambia a stretch para ocupar todo el ancho */
+  margin: 10px 0 0 0;
 }
 
-/* Cada temporizador ocupa el 100% del contenedor */
-.temporizador-item {
-  width: 100%;
-  box-sizing: border-box;
-  border: 1.5px solid #0026ff;
-  border-radius: 12px;
-  margin-bottom: 28px;
-  padding: 22px 20px;
-  font-size: 1.1rem;
+.item-temporizador {
+  border-radius: 5px;
+  margin-bottom: 15px;
+  padding: 7px 5px;
+  background: #eaf3fb;
+  box-shadow: 0 1px 4px #0001;
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  background: #283347;
-  gap: 18px;
-  transition: box-shadow 0.2s;
-  box-shadow: 0 2px 8px #0001;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.98rem;
 }
 
-.temporizador-info {
+.info-temporizador {
   flex: 1;
 }
 
-.temporizador-title {
-  font-size: 1.2rem;
+.titulo-item-temporizador {
+  font-weight: 600;
+  color: #1976d2;
+  font-size: 1em;
+}
+
+.total-temporizador {
+  font-size: 0.95em;
+  color: #388e3c;
+}
+
+.restante-temporizador {
+  font-size: 1.1rem;
   font-weight: bold;
-  color: #e0e0e0;
-}
-
-.temporizador-time {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #007bff;
-  text-align: right;
-  margin-top: 5px;
-}
-
-.temporizador-time.critical {
-  color: #dc3545; /* Rojo para tiempos críticos */
-}
-
-.temporizador-time.warning {
-  color: #ffc107; /* Amarillo para tiempos moderados */
-}
-
-.temporizador-total {
-  font-size: 1rem;
-  color: #555;
+  color: #1976d2;
+  margin-top: 4px;
   display: block;
-  margin-top: 5px;
 }
 
-.temporizador-actions {
-  display: flex;
-  gap: 10px;
+.critico-temporizador {
+  color: #dc3545;
 }
 
-.temporizador-actions button {
-  margin-left: 10px;
-  font-size: 1rem;
-  padding: 8px 14px;
+.aviso-temporizador {
+  color: #ffc107;
 }
 
-/* Temporizadores finalizados */
-.lista-temporizadores li.finalizado {
-  border: 1.5px solid #28a745;
-  border-radius: 12px;
-  margin-bottom: 24px;
-  padding: 18px;
-  background: #26332d;
-  color: #b0bec5;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  .temporizadores-container {
-    padding: 12px 0;
+@media (max-width: 500px) {
+  .contenedor-temporizadores {
+    max-width: 68vw;
+    padding: 5px 10px;
   }
-  .temporizador-item {
-    padding: 14px 8px;
+
+  .item-temporizador {
+    padding: 6px 2px;
   }
 }

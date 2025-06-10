@@ -2,19 +2,24 @@
 <div class="contenedor-tareas">
   <h1 class="titulo-tareas">Tareas</h1>
   <form (submit)="guardarTarea($event)" class="formulario-tarea">
-    <input [(ngModel)]="tareaSeleccionada.titulo" name="titulo" class="input-tarea" required placeholder="Título" />
-    <input [(ngModel)]="tareaSeleccionada.descripcion" name="descripcion" class="input-tarea" placeholder="Descripción" />
-    <select [(ngModel)]="tareaSeleccionada.grupo_id" name="grupo_id" class="input-tarea">
+    <label for="titulo-tarea">Título</label>
+    <input id="titulo-tarea" [(ngModel)]="tareaSeleccionada.titulo" name="titulo" class="input-tarea" required
+      placeholder="Título" />
+
+    <label for="descripcion-tarea">Descripción</label>
+    <input id="descripcion-tarea" [(ngModel)]="tareaSeleccionada.descripcion" name="descripcion" class="input-tarea"
+      placeholder="Descripción" />
+
+    <label for="grupo-tarea">Grupo</label>
+    <select id="grupo-tarea" [(ngModel)]="tareaSeleccionada.grupo_id" name="grupo_id" class="input-tarea">
       <option [ngValue]="null">Sin grupo</option>
       <option *ngFor="let grupo of grupos" [ngValue]="grupo.id">{{ grupo.nombre }}</option>
     </select>
-    <input
-      type="color"
-      [(ngModel)]="tareaSeleccionada.color"
-      name="color"
-      class="input-color"
-      [value]="tareaSeleccionada.color || '#fafdff'"
-    />
+
+    <label for="color-tarea">Color</label>
+    <input id="color-tarea" type="color" [(ngModel)]="tareaSeleccionada.color" name="color" class="input-color"
+      [value]="tareaSeleccionada.color || '#fafdff'" />
+
     <button type="submit" class="boton-tarea boton-azul">
       {{ tareaSeleccionada.id ? 'Actualizar' : 'Crear' }}
     </button>
@@ -22,7 +27,8 @@
   </form>
 
   <div class="filtros-tareas">
-    <select [(ngModel)]="grupoSeleccionado" (change)="cargarTareasPorGrupo()" class="input-tarea" style="max-width:110px;">
+    <select [(ngModel)]="grupoSeleccionado" (change)="cargarTareasPorGrupo()" class="input-tarea"
+      style="max-width:110px;">
       <option [ngValue]="null">Todos</option>
       <option *ngFor="let grupo of grupos" [ngValue]="grupo.id">{{ grupo.nombre }}</option>
     </select>
@@ -39,11 +45,15 @@
   <ul class="lista-grupos">
     <li *ngFor="let grupo of grupos" class="grupo">
       <span *ngIf="grupoEditandoId !== grupo.id" class="nombre-grupo">{{ grupo.nombre }}</span>
-      <input *ngIf="grupoEditandoId === grupo.id" [(ngModel)]="nuevoNombreGrupoEditando" class="input-tarea input-grupo-edit" />
+      <input *ngIf="grupoEditandoId === grupo.id" [(ngModel)]="nuevoNombreGrupoEditando"
+        class="input-tarea input-grupo-edit" />
       <div class="acciones-grupo">
-        <button *ngIf="grupoEditandoId !== grupo.id" (click)="editarGrupo(grupo)" class="boton-tarea boton-azul" title="Editar">✎</button>
-        <button *ngIf="grupoEditandoId === grupo.id" (click)="guardarEdicionGrupo(grupo)" class="boton-tarea boton-verde" title="Guardar">✔</button>
-        <button *ngIf="grupoEditandoId === grupo.id" (click)="cancelarEdicionGrupo()" class="boton-tarea boton-gris" title="Cancelar">✖</button>
+        <button *ngIf="grupoEditandoId !== grupo.id" (click)="editarGrupo(grupo)" class="boton-tarea boton-azul"
+          title="Editar">✎</button>
+        <button *ngIf="grupoEditandoId === grupo.id" (click)="guardarEdicionGrupo(grupo)"
+          class="boton-tarea boton-verde" title="Guardar">✔</button>
+        <button *ngIf="grupoEditandoId === grupo.id" (click)="cancelarEdicionGrupo()" class="boton-tarea boton-gris"
+          title="Cancelar">✖</button>
         <button (click)="eliminarGrupo(grupo.id)" class="boton-tarea boton-rojo" title="Eliminar">🗑</button>
       </div>
     </li>
@@ -64,7 +74,8 @@
 
   <h2 class="separador">Tareas realizadas</h2>
   <ul class="lista-completadas">
-    <li *ngFor="let tarea of tareasCompletadas" class="completada" [ngStyle]="{'background-color': tarea.color || '#fafdff'}">
+    <li *ngFor="let tarea of tareasCompletadas" class="completada"
+      [ngStyle]="{'background-color': tarea.color || '#fafdff'}">
       <span class="titulo-tarea">{{ tarea.titulo }}</span>
       <span *ngIf="tarea.grupo_id" class="grupo-tarea">{{ getNombreGrupo(tarea.grupo_id) }}</span>
       <button (click)="marcarComoNoTerminada(tarea)" class="boton-tarea boton-amarillo">↺</button>
@@ -72,4 +83,3 @@
     </li>
   </ul>
 </div>
-

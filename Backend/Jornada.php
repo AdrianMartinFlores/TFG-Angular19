@@ -12,7 +12,11 @@ $input = json_decode(file_get_contents('php://input'), true);
 try {
     if ($method === 'GET') {
         $usuario_id = $_GET['usuario_id'];
-        $sql = "SELECT * FROM jornada WHERE usuario_id = ? ORDER BY fecha DESC";
+        $sql = "SELECT j.*, a.nombre AS actividad_nombre
+                FROM jornada j
+                LEFT JOIN actividades a ON j.actividad_id = a.id
+                WHERE j.usuario_id = ?
+                ORDER BY j.fecha DESC";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $usuario_id);
         $stmt->execute();
@@ -25,12 +29,13 @@ try {
     elseif ($method === 'POST') {
         $usuario_id = $input['usuario_id'];
         $fecha = $input['fecha'];
-        $horaEntrada = $input['horaEntrada'];
+        $horaEntrada = isset($input['horaEntrada']) ? $input['horaEntrada'] : null;
         $horaSalida = isset($input['horaSalida']) ? $input['horaSalida'] : null;
         $actividad_id = isset($input['actividad_id']) ? $input['actividad_id'] : null;
         $duracion = isset($input['duracion']) ? $input['duracion'] : 0;
 
-        $sql = "INSERT INTO jornada (usuario_id, fecha, horaEntrada, horaSalida, actividad_id, duracion) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO jornada (usuario_id, fecha, horaEntrada, horaSalida, actividad_id, duracion)
+                VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("isssii", $usuario_id, $fecha, $horaEntrada, $horaSalida, $actividad_id, $duracion);
         $stmt->execute();
@@ -49,13 +54,11 @@ try {
     // PUT: Actualizar registro de jornada
     elseif ($method === 'PUT') {
         $id = $input['id'];
-        $fecha = $input['fecha'];
-        $horaEntrada = $input['horaEntrada'];
-        $horaSalida = isset($input['horaSalida']) ? $input['horaSalida'] : null;
-
-        $sql = "UPDATE jornada SET fecha = ?, horaEntrada = ?, horaSalida = ? WHERE id = ?";
+        $duracion = $input['duracion'];
+        $usuario_id = $input['usuario_id'];
+        $sql = "UPDATE jornada SET duracion = duracion + ? WHERE id = ? AND usuario_id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssi", $fecha, $horaEntrada, $horaSalida, $id);
+        $stmt->bind_param("iii", $duracion, $id, $usuario_id);
         $stmt->execute();
         echo json_encode(['success' => true]);
         exit;

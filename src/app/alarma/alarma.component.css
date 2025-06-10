@@ -1,61 +1,63 @@
-
-
-/* Nueva clase para tarjeta */
-.tarjeta {
-  border-radius: 18px;
-  background: #23272f;
-  color: #fff;
-  box-shadow: 0 2px 8px #0002;
-  padding: 2rem;
+.alarma {
+  max-width: 500px;
+  margin: 32px auto;
+  background: #fafdff;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px #1976d220;
+  padding: 2rem 1.5rem;
+  color: #23272f;
 }
 
-/* Nueva clase para sombra */
-.sombra {
-  box-shadow: 0 4px 16px #0004;
+.alarma-cabecera {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.2rem;
 }
 
-/* Nueva clase para centrado */
-.centrado {
+.alarma-icono {
+  font-size: 2rem;
+  color: #1976d2;
+}
+
+.alarma-titulo {
+ font-size: 1.2rem;
+  color: #1976d2;
   text-align: center;
+  margin-bottom: 10px;
 }
 
-/* Nueva clase para icono de alarma */
-.iconoAlarma {
-  font-size: 2.5rem;
-}
-
-/* Nueva clase para texto azul */
-.textoAzul {
-  color: #007bff;
-}
-
-/* Nueva clase para formulario de alarma */
-.formAlarma {
+.alarma-formulario {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  margin-bottom: 1.2rem;
 }
 
-/* Nueva clase para etiqueta */
-.etiqueta {
+.alarma-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.alarma-etiqueta {
   font-weight: 500;
-  margin-bottom: 0.5rem;
-  display: block;
+  margin-bottom: 0.2rem;
+  color: #1976d2;
 }
 
-/* Nueva clase para campo */
-.campo {
+.alarma-input {
   padding: 0.5rem;
   border-radius: 4px;
-  border: 1px solid #ccc;
-  background: #23272f;
-  color: #fff;
+  border: 1px solid #bcdffb;
+  background: #fff;
+  color: #23272f;
   width: 100%;
+  font-size: 1rem;
 }
 
-/* Nuevas clases para botones */
-.botonAzul {
-  background: #007bff;
+.alarma-azul {
+  background: #1976d2;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -64,9 +66,9 @@
   cursor: pointer;
   transition: background 0.2s;
 }
-.botonAzul:hover { background: #0056b3; }
+.alarma-azul:hover { background: #1565c0; }
 
-.botonGris {
+.alarma-gris {
   background: #6c757d;
   color: #fff;
   border: none;
@@ -75,9 +77,9 @@
   font-weight: 600;
   cursor: pointer;
 }
-.botonGris:hover { background: #495057; }
+.alarma-gris:hover { background: #495057; }
 
-.botonAmarillo {
+.alarma-amarillo {
   background: #ffc107;
   color: #23272f;
   border: none;
@@ -86,9 +88,9 @@
   font-weight: 600;
   cursor: pointer;
 }
-.botonAmarillo:hover { background: #e0a800; }
+.alarma-amarillo:hover { background: #e0a800; }
 
-.botonRojo {
+.alarma-rojo {
   background: #dc3545;
   color: #fff;
   border: none;
@@ -97,28 +99,42 @@
   font-weight: 600;
   cursor: pointer;
 }
-.botonRojo:hover { background: #a71d2a; }
+.alarma-rojo:hover { background: #a71d2a; }
 
-.anchoTotal { width: 100%; }
-.margenTop { margin-top: 1rem; }
-.margenAbajo { margin-bottom: 1rem; }
-.margenDerecha { margin-right: 0.5rem; }
+.alarma-ancho {
+  width: 100%;
+}
 
-.alertaExito {
+.alarma-margen {
+  margin-top: 1rem;
+}
+
+.alarma-margen-derecha {
+  margin-right: 0.5rem;
+}
+
+.alarma-exito {
   color: #28a745;
   font-weight: 600;
   text-align: center;
 }
 
-.listaAlarmas {
+.alarma-subtitulo {
+  font-size: 1.1rem;
+  color: #1976d2;
+  margin-bottom: 0.7rem;
+  font-weight: 500;
+}
+
+.alarma-lista {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.itemAlarma {
-  background: #2c2f33;
-  color: #fff;
+.alarma-item {
+  background: #eaf3fb;
+  color: #23272f;
   border-radius: 8px;
   margin-bottom: 0.7rem;
   padding: 0.8rem 1rem;
@@ -127,37 +143,27 @@
   justify-content: space-between;
 }
 
-.btnPequeño {
+.alarma-acciones {
+  display: flex;
+  align-items: center;
+}
+
+.alarma-pequeno {
   font-size: 1rem;
   padding: 0.3rem 0.7rem;
 }
 
-.fila {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.animado {
-  animation: fadeIn 0.5s;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
 /* Responsive */
 @media (max-width: 600px) {
-  .alarmas-container {
-    padding: 12px 0;
+  .alarma {
+    padding: 1rem 0.3rem;
   }
   .alarma-item {
-    padding: 14px 8px;
+    padding: 0.7rem 0.4rem;
     flex-direction: column;
     gap: 10px;
   }
-  .alarma-actions button {
+  .alarma-acciones button {
     margin-left: 0;
     margin-top: 8px;
   }

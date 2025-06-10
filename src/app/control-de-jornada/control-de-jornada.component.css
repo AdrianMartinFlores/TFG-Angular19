@@ -1,0 +1,145 @@
+.jornada {
+  max-width: 740px;
+  margin: 24px auto;
+  padding: 12px 8px;
+  border-radius: 8px;
+  background: #fafdff;
+  box-shadow: 0 1px 4px #1976d220;
+}
+
+.titulo-jornada {
+font-size: 1.2rem;
+  color: #1976d2;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.descripcion-jornada {
+  text-align: center;
+  margin-bottom: 18px;
+  color: #444;
+}
+
+.contenedor-jornada {
+  margin: 0 auto;
+}
+
+.formulario-jornada {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.grupo-jornada {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.input-jornada {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #bcdffb;
+  border-radius: 4px;
+  font-size: 1rem;
+  background: #f6fafd;
+  color: #222;
+}
+
+.input-jornada:focus {
+  border-color: #1976d2;
+  outline: none;
+  background: #fff;
+}
+
+.temporizador-jornada {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.tiempo-jornada {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #1976d2;
+  min-width: 90px;
+  display: inline-block;
+}
+
+.acciones-jornada {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.boton-jornada {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.boton-azul { background: #1976d2; color: #fff; }
+.boton-verde { background: #388e3c; color: #fff; }
+.boton-rojo { background: #dc3545; color: #fff; }
+.boton-gris { background: #6c757d; color: #fff; }
+.boton-azul:hover { background: #1565c0; }
+.boton-verde:hover { background: #2e7031; }
+.boton-rojo:hover { background: #a71d2a; }
+.boton-gris:hover { background: #495057; }
+
+.exito-jornada {
+  color: #28a745;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.subtitulo-jornada {
+  font-size: 1.1rem;
+  color: #1976d2;
+  margin: 18px 0 10px 0;
+  font-weight: 500;
+  text-align: center;
+}
+
+.lista-jornada {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item-jornada {
+  border-radius: 5px;
+  margin-bottom: 7px;
+  padding: 7px 5px;
+  background: #eaf3fb;
+  box-shadow: 0 1px 4px #0001;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.98rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+@media (max-width: 600px) {
+  .jornada {
+    max-width: 98vw;
+    padding: 5px 2px;
+  }
+  .item-jornada {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 8px 2px;
+  }
+}
