@@ -1,10 +1,52 @@
 .contenedor-jornada {
-  max-width: 740px;
-  margin: 24px auto;
-  padding: 12px 8px;
+  max-width: 1100px;
+  margin: 24px auto 0 auto;
+  padding: 32px 0 0 0;
   border-radius: 8px;
-  background: #fafdff;
-  box-shadow: 0 1px 4px #1976d220;
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  justify-content: center;
+  background: none;
+}
+
+.bloque-jornada {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #1976d220;
+  padding: 24px 18px;
+  min-width: 320px;
+  max-width: 400px;
+  flex: 1 1 340px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+}
+
+.bloque-registros {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #1976d220;
+  padding: 24px 18px;
+  max-width: 900px;
+  margin: 32px auto 0 auto;
+}
+
+@media (max-width: 900px) {
+  .contenedor-jornada {
+    flex-direction: column;
+    gap: 24px;
+    padding: 16px 0 0 0;
+    max-width: 98vw;
+  }
+  .bloque-jornada {
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+  .bloque-registros {
+    max-width: 100%;
+  }
 }
 
 .titulo-jornada {
@@ -12,6 +54,8 @@
   color: #1976d2;
   text-align: center;
   margin-bottom: 10px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
 }
 
 .formulario-jornada {
@@ -29,6 +73,7 @@
   font-size: 1rem;
   background: #f6fafd;
   color: #222;
+  transition: border 0.2s;
 }
 
 .input-jornada:focus {
@@ -38,13 +83,13 @@
 }
 
 .boton-jornada {
-  padding: 6px 0;
+  padding: 8px 0;
   border: none;
   border-radius: 4px;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  margin: 0 2px;
+  margin: 8px 2px 0 2px;
   min-width: 36px;
   min-height: 36px;
   display: inline-flex;
@@ -52,10 +97,19 @@
   justify-content: center;
   background: #1976d2;
   color: #fff;
+  transition: background 0.2s, transform 0.2s;
 }
 
 .boton-jornada:hover {
   background: #1565c0;
+  transform: scale(1.04);
+}
+
+.mensaje-jornada {
+  color: #1976d2;
+  text-align: center;
+  margin-top: 8px;
+  font-weight: 500;
 }
 
 .lista-jornada {
@@ -65,28 +119,80 @@
 }
 
 .item-jornada {
-  border-radius: 5px;
-  margin-bottom: 7px;
-  padding: 7px 5px;
-  background: #eaf3fb;
+  border-radius: 7px;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  background: #f6fafd;
   box-shadow: 0 1px 4px #0001;
   display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.98rem;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 1rem;
+  transition: box-shadow 0.2s;
 }
 
-@media (max-width: 600px) {
-  .contenedor-jornada {
-    max-width: 98vw;
-    padding: 5px 2px;
-  }
-  .item-jornada {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-    padding: 8px 2px;
+.item-jornada:hover {
+  box-shadow: 0 2px 8px #1976d220;
+  background: #eaf3fb;
+}
+
+.registro-actividad {
+  font-weight: bold;
+  color: #1976d2;
+  margin-right: 8px;
+}
+
+.registro-fecha {
+  color: #555;
+  font-size: 0.98em;
+}
+
+.registro-horas {
+  color: #222;
+  font-size: 0.98em;
+}
+
+.registro-duracion {
+  color: #388e3c;
+  font-size: 0.96em;
+  margin-left: 8px;
+}
+
+
+.tabla-jornada {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px #1976d220;
+  margin-top: 10px;
+}
+
+.tabla-jornada th, .tabla-jornada td {
+  padding: 10px 8px;
+  text-align: center;
+  border-bottom: 1px solid #e3eaf3;
+}
+
+.tabla-jornada th {
+  background: #eaf3fb;
+  color: #1976d2;
+  font-weight: bold;
+  font-size: 1.05em;
+}
+
+.tabla-jornada tr:last-child td {
+  border-bottom: none;
+}
+
+.tabla-jornada tr:hover td {
+  background: #f6fafd;
+}
+
+@media (max-width: 900px) {
+  .tabla-jornada th, .tabla-jornada td {
+    padding: 7px 4px;
+    font-size: 0.97em;
   }
 }

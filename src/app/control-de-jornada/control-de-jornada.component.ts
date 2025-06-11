@@ -107,29 +107,66 @@ export class ControlDeJornadaComponent implements OnInit {
     const fecha = localStorage.getItem('jornadaAutoFecha') || this.autoFecha;
     const horaEntrada = localStorage.getItem('jornadaAutoHoraInicio') || this.autoHoraInicio;
     const horaSalida = this.autoHoraFin;
-    const b = {
-      nombre,
-      fecha,
-      horaEntrada,
-      horaSalida,
-      usuario_id: this.usuario_id
-    };
-    this.http.post('http://localhost/TFG/Backend/Jornada.php', b)
-      .subscribe(() => {
-        this.mensaje = 'Jornada automática guardada';
-        this.cargarRegistros();
-        localStorage.removeItem('jornadaAutoEnCurso');
-        localStorage.removeItem('jornadaAutoNombre');
-        localStorage.removeItem('jornadaAutoFecha');
-        localStorage.removeItem('jornadaAutoHoraInicio');
-        localStorage.removeItem('jornadaAutoStartDate');
-        this.autoNombre = '';
-        this.autoFecha = '';
-        this.autoHoraInicio = '';
-        this.autoHoraFin = '';
-        this.autoStartDate = null;
-        this.autoTiempoFormateado = '00:00:00';
-      });
-    setTimeout(() => this.mensaje = '', 2000);
+
+    // Calcular duración en segundos
+    if (horaEntrada && horaSalida) {
+      const [h1, m1] = horaEntrada.split(':').map(Number);
+      const [h2, m2] = horaSalida.split(':').map(Number);
+      const [s1, s2] = [0, 0]; // Si quieres segundos reales, cámbialo aquí
+      let segundos = ((h2 * 60 + m2) * 60 + s2) - ((h1 * 60 + m1) * 60 + s1);
+      if (segundos < 0) segundos += 24 * 60 * 60;
+
+      const b = {
+        nombre,
+        fecha,
+        horaEntrada,
+        horaSalida,
+        duracion: segundos,
+        usuario_id: this.usuario_id
+      };
+      this.http.post('http://localhost/TFG/Backend/Jornada.php', b)
+        .subscribe(() => {
+          this.mensaje = 'Jornada automática guardada';
+          this.cargarRegistros();
+          localStorage.removeItem('jornadaAutoEnCurso');
+          localStorage.removeItem('jornadaAutoNombre');
+          localStorage.removeItem('jornadaAutoFecha');
+          localStorage.removeItem('jornadaAutoHoraInicio');
+          localStorage.removeItem('jornadaAutoStartDate');
+          this.autoNombre = '';
+          this.autoFecha = '';
+          this.autoHoraInicio = '';
+          this.autoHoraFin = '';
+          this.autoStartDate = null;
+          this.autoTiempoFormateado = '00:00:00';
+        });
+      setTimeout(() => this.mensaje = '', 2000);
+    }
+  }
+
+  mostrarColumnaDuracion(): boolean {
+    return this.registros && this.registros.some(r => !!r.duracion);
+  }
+
+  formatearDuracion(segundos: number): string {
+    if (!segundos || segundos <= 0) return '';
+    const h = Math.floor(segundos / 3600);
+    const m = Math.floor((segundos % 3600) / 60);
+    const s = segundos % 60;
+    return `${h}h ${m}m ${s}s`;
+  }
+
+  calcularDuracionRegistro(registro: any): string {
+    if (!registro.horaEntrada || !registro.horaSalida) return '';
+    const [h1, m1] = registro.horaEntrada.split(':').map(Number);
+    const [h2, m2] = registro.horaSalida.split(':').map(Number);
+    // Si algún campo no es válido, no mostrar nada
+    if (isNaN(h1) || isNaN(m1) || isNaN(h2) || isNaN(m2)) return '';
+    let segundos = ((h2 * 60 + m2) * 60) - ((h1 * 60 + m1) * 60);
+    if (segundos < 0) segundos += 24 * 60 * 60;
+    const h = Math.floor(segundos / 3600);
+    const m = Math.floor((segundos % 3600) / 60);
+    const s = segundos % 60;
+    return `${h}h ${m}m ${s}s`;
   }
 }

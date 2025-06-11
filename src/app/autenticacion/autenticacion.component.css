@@ -1,4 +1,3 @@
-/* Contenedor principal del menú de autenticación */
 .menu-autenticacion {
     max-width: 600px;
     margin: 48px auto 32px auto;
@@ -39,8 +38,6 @@
     font-size: 1.08rem;
     border: none;
     border-radius: 6px;
-    cursor: pointer;
-    box-shadow: 0 2px 8px 0 rgba(25, 118, 210, 0.06);
     font-weight: 500;
 }
 
@@ -50,23 +47,17 @@
 }
 
 .boton-primario:hover {
-    background: (90deg, #1565c0 80%, #1976d2 100%);
-    transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 4px 16px 0 rgba(25, 118, 210, 0.13);
+    background: linear-gradient(rgb(52, 147, 241));
 }
-
 .boton-secundario {
     background: green;
     color: #fff;
 }
 
 .boton-secundario:hover {
-    background: linear-gradient(90deg, #2e7031 80%, #388e3c 100%);
-    transform: translateY(-2px) scale(1.04);
-    box-shadow: 0 4px 16px 0 rgba(56, 142, 60, 0.13);
+    background: linear-gradient(rgb(16, 163, 16));
 }
 
-/* Funciones principales */
 .funciones-app {
     max-width: 700px;
     margin: 0 auto 48px auto;
@@ -88,16 +79,13 @@
 
 .funcion-div {
     display: flex;
-    align-items: flex-start;
     gap: 1rem;
     margin-bottom: 1.2rem;
     font-size: 1.07rem;
-    line-height: 1.6;
     background: #eaf3fb;
     border-radius: 9px;
     padding: 1rem 1.2rem;
     box-shadow: 0 2px 8px 0 #1976d20a;
-    transition: box-shadow 0.2s, background 0.2s;
 }
 
 

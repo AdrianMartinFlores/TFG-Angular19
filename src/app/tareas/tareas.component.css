@@ -1,10 +1,12 @@
 .contenedor-tareas {
-  max-width: 740px;
+  max-width: 1100px; /* más ancho para que quepan dos cajas grandes */
   margin: 24px auto;
-  padding: 12px 8px;
+  padding: 32px 0;
   border-radius: 8px;
-  background: #fafdff;
-  box-shadow: 0 1px 4px #1976d220;
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  justify-content: center;
 }
 
 .titulo-tareas {
@@ -178,6 +180,35 @@
   font-weight: 600;
   border-bottom: 1px solid #bcdffb;
   padding-bottom: 2px;
+}
+
+.bloque-crear,
+.bloque-vista {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #1976d220;
+  padding: 24px 18px;
+  min-width: 320px;
+  max-width: 500px;
+  flex: 1 1 340px;
+  /* Para que no se apilen si hay espacio */
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 900px) {
+  .contenedor-tareas {
+    flex-direction: column;
+    gap: 24px;
+    padding: 16px 0;
+    max-width: 98vw;
+  }
+  .bloque-crear,
+  .bloque-vista {
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+  }
 }
 
 @media (max-width: 500px) {

@@ -1,54 +1,87 @@
 <app-nav></app-nav>
 <div class="contenedor-jornada">
-  <h1 class="titulo-jornada">Control de Jornada</h1>
-
-  <!-- Registro automático -->
-  <div class="formulario-jornada">
-    <div><label>Actividad</label>
-      <input class="input-jornada" type="text" [(ngModel)]="autoNombre" name="autoNombre" required />
-    </div>
-    <div><label>Fecha</label>
-      <input class="input-jornada" type="date" [value]="autoFecha" disabled />
-    </div>
-    <div><label>Hora inicio</label>
-      <input class="input-jornada" type="time" [value]="autoHoraInicio" disabled />
-    </div>
-    <div><label>Hora fin</label>
-      <input class="input-jornada" type="time" [value]="autoHoraFin" disabled />
-    </div>
-    <div><label>Duración:</label>
-      <span>{{ autoTiempoFormateado }}</span>
-    </div>
-    <button class="boton-jornada" type="button" (click)="iniciarTemporizador()" [disabled]="autoEnCurso">Iniciar jornada</button>
-    <button class="boton-jornada" type="button" (click)="finalizarTemporizador()" [disabled]="!autoEnCurso">Finalizar jornada</button>
+  <!-- Bloque 1: Control de jornada automática -->
+  <div class="bloque-jornada">
+    <h1 class="titulo-jornada">Control de Jornada Automática</h1>
+    <form class="formulario-jornada" (submit)="iniciarTemporizador(); $event.preventDefault()">
+      <div>
+        <label>Actividad</label>
+        <input class="input-jornada" type="text" [(ngModel)]="autoNombre" name="autoNombre" required />
+      </div>
+      <div>
+        <label>Fecha</label>
+        <input class="input-jornada" type="date" [value]="autoFecha" disabled />
+      </div>
+      <div>
+        <label>Hora inicio</label>
+        <input class="input-jornada" type="time" [value]="autoHoraInicio" disabled />
+      </div>
+      <div>
+        <label>Hora fin</label>
+        <input class="input-jornada" type="time" [value]="autoHoraFin" disabled />
+      </div>
+      <div>
+        <label>Duración:</label>
+        <span>{{ autoTiempoFormateado }}</span>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button class="boton-jornada" type="button" (click)="iniciarTemporizador()" [disabled]="autoEnCurso">Iniciar jornada</button>
+        <button class="boton-jornada" type="button" (click)="finalizarTemporizador()" [disabled]="!autoEnCurso">Finalizar jornada</button>
+      </div>
+    </form>
   </div>
 
-  <h2 class="titulo-jornada">Entrada manual</h2>
-  <form class="formulario-jornada" (submit)="registrarJornada($event)">
-    <div><label>Actividad</label>
-      <input class="input-jornada" type="text" [(ngModel)]="registroSeleccionado.nombre" name="nombre" required />
-    </div>
-    <div><label>Fecha</label>
-      <input class="input-jornada" type="date" [(ngModel)]="registroSeleccionado.fecha" name="fecha" required />
-    </div>
-    <div><label>Hora entrada</label>
-      <input class="input-jornada" type="time" [(ngModel)]="registroSeleccionado.horaEntrada" name="horaEntrada" required />
-    </div>
-    <div><label>Hora salida</label>
-      <input class="input-jornada" type="time" [(ngModel)]="registroSeleccionado.horaSalida" name="horaSalida" />
-    </div>
-    <button class="boton-jornada" type="submit">Registrar jornada</button>
-  </form>
+  <!-- Bloque 2: Entrada manual -->
+  <div class="bloque-jornada">
+    <h1 class="titulo-jornada">Entrada Manual</h1>
+    <form class="formulario-jornada" (submit)="registrarJornada($event)">
+      <div>
+        <label>Actividad</label>
+        <input class="input-jornada" type="text" [(ngModel)]="registroSeleccionado.nombre" name="nombre" required />
+      </div>
+      <div>
+        <label>Fecha</label>
+        <input class="input-jornada" type="date" [(ngModel)]="registroSeleccionado.fecha" name="fecha" required />
+      </div>
+      <div>
+        <label>Hora entrada</label>
+        <input class="input-jornada" type="time" [(ngModel)]="registroSeleccionado.horaEntrada" name="horaEntrada" required />
+      </div>
+      <div>
+        <label>Hora salida</label>
+        <input class="input-jornada" type="time" [(ngModel)]="registroSeleccionado.horaSalida" name="horaSalida" />
+      </div>
+      <button class="boton-jornada" type="submit">Registrar jornada</button>
+    </form>
+    <div *ngIf="mensaje" class="mensaje-jornada">{{ mensaje }}</div>
+  </div>
+</div>
 
-  <div *ngIf="mensaje">{{ mensaje }}</div>
-
-  <h2 class="titulo-jornada">Registros</h2>
-  <ul class="lista-jornada">
-    <li class="item-jornada" *ngFor="let registro of registros">
-      {{ registro.nombre }} | {{ registro.fecha }} | {{ registro.horaEntrada }} - {{ registro.horaSalida }}
-      <span *ngIf="registro.horaEntrada && registro.horaSalida">
-        <!-- Solo muestra el tiempo si es automático o si hay horas manuales -->
-      </span>
-    </li>
-  </ul>
+<!-- Bloque 3: Registros (debajo de los dos bloques principales) -->
+<div class="bloque-registros">
+  <h2 class="titulo-jornada">Registros de Jornada</h2>
+  <div class="tabla-responsive">
+    <table class="tabla-jornada">
+      <thead>
+        <tr>
+          <th>Actividad</th>
+          <th>Fecha</th>
+          <th>Hora entrada</th>
+          <th>Hora salida</th>
+          <th>Duración</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let registro of registros">
+          <td>{{ registro.nombre }}</td>
+          <td>{{ registro.fecha }}</td>
+          <td>{{ registro.horaEntrada }}</td>
+          <td>{{ registro.horaSalida }}</td>
+          <td>
+            {{ calcularDuracionRegistro(registro) }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

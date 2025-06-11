@@ -28,11 +28,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $horaEntrada = $input['horaEntrada'];
     $horaSalida = $input['horaSalida'];
     $nombre = $input['nombre'];
+    $duracion = isset($input['duracion']) ? intval($input['duracion']) : null;
 
-    $sql = "INSERT INTO jornada (usuario_id, fecha, horaEntrada, horaSalida, nombre)
-            VALUES (?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("issss", $usuario_id, $fecha, $horaEntrada, $horaSalida, $nombre);
+    if ($duracion !== null) {
+        $sql = "INSERT INTO jornada (usuario_id, fecha, horaEntrada, horaSalida, nombre, duracion)
+                VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("issssi", $usuario_id, $fecha, $horaEntrada, $horaSalida, $nombre, $duracion);
+    } else {
+        $sql = "INSERT INTO jornada (usuario_id, fecha, horaEntrada, horaSalida, nombre)
+                VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("issss", $usuario_id, $fecha, $horaEntrada, $horaSalida, $nombre);
+    }
     $stmt->execute();
     echo json_encode(['success' => true]);
     exit;
