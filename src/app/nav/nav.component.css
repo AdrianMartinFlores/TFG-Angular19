@@ -1,5 +1,4 @@
-/* Navbar oscuro y responsivo */
-.navbar {
+.barra-navegacion {
   padding: 15px 20px;
   display: flex;
   justify-content: center;
@@ -13,8 +12,7 @@
   flex-wrap: wrap;
 }
 
-/* Marca y botones */
-.navbar .navbar-brand {
+.barra-navegacion .marca-barra {
   color: #fff !important;
   font-size: 1.7rem !important;
   font-weight: bold;
@@ -23,8 +21,7 @@
   white-space: nowrap;
 }
 
-/* Container fluid adaptativo */
-.container-fluid {
+.contenedor-fluido {
   width: 100%;
   margin: 10px auto;
   display: flex;
@@ -34,8 +31,7 @@
   padding: 0;
 }
 
-/* Lista de navegación */
-.navbar-nav {
+.lista-barra {
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -46,13 +42,11 @@
   flex-wrap: wrap;
 }
 
-/* Elementos de la lista */
-.navbar-nav .nav-item {
+.lista-barra .item-barra {
   display: flex;
 }
 
-/* Botones */
-.navbar-nav .btn {
+.lista-barra .btn {
   background-color: #222;
   color: white;
   border: 2px solid white;
@@ -66,81 +60,75 @@
   text-align: center;
 }
 
-.navbar-nav .btn:hover {
+.lista-barra .btn:hover {
   background-color: #007bff;
   color: #fff;
   transform: scale(1.05);
 }
 
-/* Hamburguesa */
-.navbar-toggler {
+.boton-barra {
   background-color: #007bff !important;
   border: none !important;
   border-radius: 5px;
   padding: 8px 12px;
   margin-left: 10px;
 }
-.navbar-toggler .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-}
 
-/* Responsive */
+
 @media (max-width: 991px) {
-  .container-fluid {
+  .contenedor-fluido {
     flex-direction: column;
     align-items: stretch;
     padding: 0 10px;
   }
-  .navbar-nav {
+  .lista-barra {
     flex-direction: column;
     gap: 10px;
     width: 100%;
     align-items: stretch;
     margin: 0 0 0 0;
   }
-  .navbar-nav .nav-item {
+  .lista-barra .item-barra {
     width: 100%;
     justify-content: center;
   }
-  .navbar-nav .btn {
+  .lista-barra .btn {
     width: 100%;
     margin-bottom: 8px;
     margin-left: 0;
   }
-  .navbar .navbar-brand {
+  .barra-navegacion .marca-barra {
     font-size: 1.3rem !important;
     margin-bottom: 10px;
   }
-  .navbar {
-    padding: 10px 5vw; /* margen lateral en móvil */
+  .barra-navegacion {
+    padding: 10px 5vw;
   }
 }
 
-/* Extra: para pantallas muy pequeñas */
 @media (max-width: 600px) {
-  .navbar {
+  .barra-navegacion {
     padding: 8px 2vw;
   }
-  .container-fluid {
+  .contenedor-fluido {
     padding: 0 2vw;
   }
 }
 
-/* Botones más pequeños en pantallas pequeñas */
 @media (max-width: 900px) {
-  .navbar-nav {
+  .lista-barra {
     gap: 6px;
   }
-  .navbar-nav .btn {
+  .lista-barra .btn {
     font-size: 0.95rem;
     padding: 7px 10px;
   }
 }
 @media (max-width: 600px) {
-  .navbar-nav {
+  .lista-barra {
     gap: 2px;
   }
-  .navbar-nav .btn {
+  .lista-barra .btn {
     font-size: 0.85rem;
     padding: 5px 6px;
   }

@@ -1,19 +1,19 @@
-<nav class="navbar navbar-expand-lg shadow-sm mb-4 sticky-top">
-  <div class="container-fluid">
-    <a class="navbar-brand fw-bold" style="cursor:pointer;">TFG</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+<nav class="barra-navegacion barra-expand-lg sombra-suave mb-4 fija-arriba">
+  <div class="contenedor-fluido">
+    <a class="marca-barra negrita" style="cursor:pointer;">TFG</a>
+    <button class="boton-barra" type="button" data-bs-toggle="collapse" data-bs-target="#barraNav"
+      aria-controls="barraNav" aria-expanded="false" aria-label="Mostrar navegación">
+      <span class="icono-barra">Expandir</span>
     </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav">
+    <div class="collapse barra-collapse justificar-derecha" id="barraNav">
+      <ul class="lista-barra">
         <p></p>
-        <li class="nav-item"><button (click)="CerrarSesion()" class="btn nav-link">Cerrar Sesión</button></li>
-        <li class="nav-item"><button (click)="onNavigate('/menu')" class="btn nav-link">Menú</button></li>
-        <li class="nav-item"><button (click)="onNavigate('/tareas')" class="btn nav-link">Gestión de Tareas</button></li>
-        <li class="nav-item"><button (click)="onNavigate('/temporizadores')" class="btn nav-link">Temporizadores</button></li>
-        <li class="nav-item"><button (click)="onNavigate('/alarma')" class="btn nav-link">Configurar Alarma</button></li>
-        <li class="nav-item"><button (click)="onNavigate('/control-de-jornada')" class="btn nav-link">Control de Jornada</button></li>
+        <li class="item-barra"><button (click)="CerrarSesion()" class="btn enlace-barra">Cerrar Sesión</button></li>
+        <li class="item-barra"><button (click)="onNavigate('/menu')" class="btn enlace-barra">Menú</button></li>
+        <li class="item-barra"><button (click)="onNavigate('/tareas')" class="btn enlace-barra">Gestión de Tareas</button></li>
+        <li class="item-barra"><button (click)="onNavigate('/temporizadores')" class="btn enlace-barra">Temporizadores</button></li>
+        <li class="item-barra"><button (click)="onNavigate('/alarma')" class="btn enlace-barra">Configurar Alarma</button></li>
+        <li class="item-barra"><button (click)="onNavigate('/control-de-jornada')" class="btn enlace-barra">Control de Jornada</button></li>
       </ul>
     </div>
   </div>
