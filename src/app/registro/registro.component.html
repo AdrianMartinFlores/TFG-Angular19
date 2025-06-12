@@ -1,6 +1,6 @@
 <div class="contenedor-registro">
   <h2 class="titulo-registro">Registro</h2>
-  <form (ngSubmit)="registroUsuario()">
+  <form (ngSubmit)="registroUsuario()">   <!--ngSubmit envia los datos adaptados para angular-->
     <div class="grupo-formulario">
       <label class="etiqueta-registro">Correo</label>
       <input type="email" [(ngModel)]="email" name="email" class="campo-registro" required placeholder="ejemplo@correo.com">

@@ -64,7 +64,7 @@ export class TemporizadoresComponent {
   cargarTemporizadores() {
     this.http
       .get<Temporizador[]>(
-        'http://localhost/TFG/Backend/Temporizadores.php',
+        'http://79.147.185.171/TFG/Backend/Temporizadores.php',
         {
           params: {
             usuario_id: this.nuevoTemporizador.usuario_id.toString(),
@@ -152,7 +152,7 @@ export class TemporizadoresComponent {
     if (guardado && JSON.parse(guardado).id === id) {
       localStorage.removeItem('temporizador_activo');
     }
-    this.http.delete(`http://localhost/TFG/Backend/Temporizadores.php`, {
+    this.http.delete(`http://79.147.185.171/TFG/Backend/Temporizadores.php`, {
       body: { id, usuario_id: this.nuevoTemporizador.usuario_id }
     }).subscribe({
       next: () => {
@@ -171,13 +171,13 @@ export class TemporizadoresComponent {
     this.nuevoTemporizador.duracion = horas * 3600 + minutos * 60 + segundos;
 
     if (this.editando) {
-      this.http.put('http://localhost/TFG/Backend/Temporizadores.php', this.nuevoTemporizador)
+      this.http.put('http://79.147.185.171/TFG/Backend/Temporizadores.php', this.nuevoTemporizador)
         .subscribe(() => {
           this.cargarTemporizadores();
           this.cancelarEdicion();
         });
     } else {
-      this.http.post('http://localhost/TFG/Backend/Temporizadores.php', this.nuevoTemporizador)
+      this.http.post('http://79.147.185.171/TFG/Backend/Temporizadores.php', this.nuevoTemporizador)
         .subscribe(() => {
           this.cargarTemporizadores();
           this.nuevoTemporizador = { titulo: '', duracion: 0, usuario_id: this.nuevoTemporizador.usuario_id };
@@ -205,9 +205,7 @@ export class TemporizadoresComponent {
   }
 
   notificarFin(temporizador: Temporizador) {
-    if ('Notification' in window && Notification.permission === 'granted') {
-      new Notification(`El temporizador "${temporizador.titulo}" ha terminado`);
-    }
+    alert(`El temporizador "${temporizador.titulo}" ha terminado`);
     const audio = new Audio('assets/sounds/notificacion.mp3');
     audio.play().catch(() => {});
   }

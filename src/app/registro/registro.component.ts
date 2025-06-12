@@ -11,7 +11,9 @@ import { CommonModule } from '@angular/common';
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.css',
 })
+
 export class RegistroComponent {
+
   mensaje: string = '';
   email: string = '';
   nombre: string = '';
@@ -19,8 +21,9 @@ export class RegistroComponent {
 
   constructor(private http: HttpClient, private router: Router) {}
 
+  // Envía los datos al backend y gestiona la respuesta
   registroUsuario() {
-    this.mensaje = '';
+    this.mensaje = '';  
 
     // Validación en el frontend antes de enviar
     if (!this.email || !this.nombre || !this.password) {
@@ -39,10 +42,10 @@ export class RegistroComponent {
       nombre: this.nombre,
       password: this.password,
     };
-
-    this.http.post('http://localhost/TFG/Backend/Registro.php', usuario, {
-      headers : {'Content-Type': 'application/json' },
-    }).subscribe({
+    // Envía los datos al backend
+    this.http.post('http://79.147.185.171/TFG/Backend/Registro.php', usuario, {
+      headers : {'Content-Type': 'application/json' }, // Se establece el contenido en Json
+    }).subscribe({  
         next: (response: any) => {
           if (response.success) {
             this.mensaje = response.message;

@@ -22,6 +22,21 @@ export class AlarmaComponent implements OnInit {
 
   ngOnInit() {
     this.cargarAlarmas();
+    // Comprueba cada 10s si alguna alarma debe sonar
+    setInterval(() => {
+      const ahora = new Date();
+      this.alarmas.forEach(alarma => {
+        const fechaAlarma = new Date(alarma.fecha_hora);
+        if (
+          fechaAlarma <= ahora &&
+          fechaAlarma > new Date(ahora.getTime() - 15000) &&
+          !alarma.sonada
+        ) {
+          this.activarAlarma(alarma);
+          alarma.sonada = true;
+        }
+      });
+    }, 10000);
   }
 
   cargarAlarmas() {
@@ -52,7 +67,7 @@ export class AlarmaComponent implements OnInit {
 
   editar(alarma: any) {
     this.editandoId = alarma.id;
-    this.fechaHora = alarma.fecha_hora.substring(0, 16); // Para input datetime-local
+    this.fechaHora = alarma.fecha_hora.substring(0, 16);
   }
 
   guardarEdicion() {
@@ -66,7 +81,7 @@ export class AlarmaComponent implements OnInit {
       this.mensaje = 'La fecha y hora deben ser futuras.';
       return;
     }
-    if (this.editandoId !== null) { // Solo si es un número
+    if (this.editandoId !== null) {
       this.alarmaService.editarAlarma(this.editandoId, this.fechaHora, this.usuario_id).subscribe(() => {
         this.mensaje = 'Alarma actualizada correctamente.';
         this.editandoId = null;
@@ -90,13 +105,7 @@ export class AlarmaComponent implements OnInit {
     });
   }
 
-  getTextColor(bgColor?: string): string {
-    if (!bgColor) return '#fff';
-    const color = bgColor.charAt(0) === '#' ? bgColor.substring(1, 7) : bgColor;
-    const r = parseInt(color.substring(0,2),16);
-    const g = parseInt(color.substring(2,4),16);
-    const b = parseInt(color.substring(4,6),16);
-    const brightness = (r*299 + g*587 + b*114) / 1000;
-    return brightness > 128 ? '#222' : '#fff';
+  activarAlarma(alarma: any) {
+    alert('¡Tienes una alarma programada para ahora!');
   }
 }

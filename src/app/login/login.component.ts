@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterModule, FormsModule, HttpClientModule, CommonModule],
+  imports: [RouterModule, FormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -19,6 +19,7 @@ export class LoginComponent {
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
 
+  // Envía los datos al backend y gestiona la respuesta
   iniciarSesion() {
     this.mensaje = '';
     const credenciales = {
@@ -26,28 +27,25 @@ export class LoginComponent {
       password: this.password,
     };
 
-    this.http.post<any>('http://localhost/TFG/Backend/Login.php', credenciales, {
-      headers: { 'Content-Type': 'application/json' },
+    this.http.post<any>('http://79.147.185.171/TFG/Backend/Login.php', credenciales, {
+      headers: { 'Content-Type': 'application/json' }, //Se establece el contenido en Json
     }).subscribe({
       next: (response: any) => {  
         if (response.success) {
-          this.authService.login(response.token); // Solo esta llamada es necesaria
-
-          // Guarda el token y otros datos necesarios en localStorage
+          // Guarda el token en sessionStorage y localStorage
+          this.authService.login(response.token);
           localStorage.setItem('token', response.token);
           localStorage.setItem('usuario_id', response.usuario_id);
 
-          // Redirige al menú
+          // Redirige al menu principal
           this.router.navigate(['/menu']).then(() => {
             console.log('Redirigido al menú correctamente.');
           });
         } else {
-          console.error('Error en el inicio de sesión:', response.message);
           this.mensaje = 'Error al iniciar sesión: ' + (response.message || 'Credenciales incorrectas');
         }
       },
       error: (error) => {
-        console.error('Error en la solicitud:', error);
         this.mensaje = 'Error en la solicitud: ' + error.message;
       },
     });

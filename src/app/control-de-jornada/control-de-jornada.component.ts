@@ -44,7 +44,7 @@ export class ControlDeJornadaComponent implements OnInit {
   }
 
   cargarRegistros() {
-    this.http.get<any[]>(`http://localhost/TFG/Backend/Jornada.php?usuario_id=${this.usuario_id}`)
+    this.http.get<any[]>(`http://79.147.185.171/TFG/Backend/Jornada.php?usuario_id=${this.usuario_id}`)
       .subscribe({ next: data => this.registros = Array.isArray(data) ? data : [] });
   }
 
@@ -56,7 +56,7 @@ export class ControlDeJornadaComponent implements OnInit {
       return;
     }
     const b = { ...this.registroSeleccionado, usuario_id: this.usuario_id };
-    this.http.post('http://localhost/TFG/Backend/Jornada.php', b)
+    this.http.post('http://79.147.185.171/TFG/Backend/Jornada.php', b)
       .subscribe(() => { this.mensaje = 'Guardado'; this.cargarRegistros(); });
     setTimeout(() => this.mensaje = '', 2000);
   }
@@ -124,7 +124,7 @@ export class ControlDeJornadaComponent implements OnInit {
         duracion: segundos,
         usuario_id: this.usuario_id
       };
-      this.http.post('http://localhost/TFG/Backend/Jornada.php', b)
+      this.http.post('http://79.147.185.171/TFG/Backend/Jornada.php', b)
         .subscribe(() => {
           this.mensaje = 'Jornada automática guardada';
           this.cargarRegistros();

@@ -23,7 +23,8 @@ export class AppComponent implements OnInit {
     const id = localStorage.getItem('usuario_id');
     this.usuario_id = id ? Number(id) : null;
 
-    if ('Notification' in window) {
+    // Solicita permiso para notificaciones al iniciar la app
+    if ('Notification' in window && Notification.permission !== 'granted') {
       Notification.requestPermission();
     }
 

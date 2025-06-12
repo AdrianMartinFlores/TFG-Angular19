@@ -57,7 +57,7 @@ export class TareasComponent {
   }
 
   cargarTareas() {
-    const url = 'http://localhost/TFG/Backend/Tareas.php';
+    const url = 'http://79.147.185.171/Backend/Tareas.php';
 
     this.http.get<Tarea[]>(url, {
       params: { usuario_id: this.usuario_id.toString() }
@@ -83,7 +83,7 @@ export class TareasComponent {
     if (!this.tareaSeleccionada.color || !/^#[0-9A-Fa-f]{6}$/.test(this.tareaSeleccionada.color)) {
       this.tareaSeleccionada.color = '#fafdff';
     }
-    const url = 'http://localhost/TFG/Backend/Tareas.php';
+    const url = 'http://79.147.185.171/TFG/Backend/Tareas.php';
     const method = this.tareaSeleccionada.id ? 'PUT' : 'POST';
 
     this.http.request(method, url, {
@@ -116,7 +116,7 @@ export class TareasComponent {
   }
 
   eliminarTarea(id: number) {
-    const url = 'http://localhost/TFG/Backend/Tareas.php';
+    const url = 'http://79.147.185.171/TFG/Backend/Tareas.php';
 
     this.http.request('DELETE', url, {
       body: { id, usuario_id: this.usuario_id }
@@ -132,7 +132,7 @@ export class TareasComponent {
   }
 
   completarTarea(tarea: Tarea) {
-    const url = 'http://localhost/TFG/Backend/Tareas.php';
+    const url = 'http://79.147.185.171/TFG/Backend/Tareas.php';
     const body = {
       id: tarea.id,
       completada: true,
@@ -153,7 +153,7 @@ export class TareasComponent {
   }
 
   marcarComoNoTerminada(tarea: Tarea) {
-    const url = 'http://localhost/TFG/Backend/Tareas.php';
+    const url = 'http://79.147.185.171/TFG/Backend/Tareas.php';
     const body = {
       id: tarea.id,
       completada: false,
@@ -219,7 +219,7 @@ export class TareasComponent {
   }
 
   cargarTareasPorGrupo() {
-    const url = 'http://localhost/TFG/Backend/Tareas.php';
+    const url = 'http://79.147.185.171/TFG/Backend/Tareas.php';
     const params: any = { usuario_id: this.usuario_id.toString() };
     if (this.grupoSeleccionado) {
       params.grupo_id = this.grupoSeleccionado;
