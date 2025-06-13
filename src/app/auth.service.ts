@@ -8,14 +8,12 @@ export class AuthService {
   private readonly EXP_KEY = 'token_exp';
 
   // Guarda el token y su expiracion en el Storage del navegador
-  //El token expira a los 5 minutos
   login(token: string): void {
     const expiresAt = Date.now() + 5 * 60 * 1000; 
     sessionStorage.setItem(this.TOKEN_KEY, token);
-    sessionStorage.setItem(this.EXP_KEY, expiresAt.toString()); // fecha de expiración del token
+    sessionStorage.setItem(this.EXP_KEY, expiresAt.toString()); //formato de texto
   }
 
-  // Elimina el token
   logout(): void {
     sessionStorage.removeItem(this.TOKEN_KEY);
     sessionStorage.removeItem(this.EXP_KEY);

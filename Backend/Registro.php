@@ -11,17 +11,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //php://input permite leer el cuerpo de la solicitud POST
     $input = json_decode(file_get_contents('php://input'), true);
 
-    $Email = strtolower($input['email'] ?? null); // Email en minúsculas
+    $Email = strtolower($input['email'] ?? null); 
     $Nombre = $input['nombre'] ?? null;
     $Password = $input['password'] ?? null;
 
-    // Validaciones básicas
     if (!$Email || !$Nombre || !$Password) {
         echo json_encode(['success' => false, 'mensage' => 'Todos los campos son obligatorios']);
         exit;
     }
 
-    // Validación de longitud y formato
     if(strlen($Nombre) < 3 || strlen($Nombre) > 15){
         echo json_encode(['success' => false, 'message' => 'El nombre de usuario debe tener entre 3 y 15 caracteres']);
         exit;
@@ -38,7 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Encripta la contraseña antes de guardar
     $Password = password_hash($Password, PASSWORD_BCRYPT);
 
-    // Inserta el usuario en la base de datos
     $query = "INSERT INTO usuarios (Correo, NombreUsuario, Contraseña) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($query);
 
@@ -48,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
         echo json_encode(['success' => true, 'message' => 'Usuario registrado correctamente']);
     } catch (mysqli_sql_exception $e) {
-        if ($e->getCode() == 1062) { // 1062 es el código de error para duplicados
+        if ($e->getCode() == 1062) { //error mysql entrada duplicada
             echo json_encode(['success' => false, 'message' => 'El correo ya está registrado']);
         } else {
             echo json_encode(['success' => false, 'message' => 'Error al registrar el usuario: ' . $e->getMessage()]);

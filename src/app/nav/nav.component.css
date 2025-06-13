@@ -12,9 +12,9 @@
   flex-wrap: wrap;
 }
 
-.barra-navegacion .marca-barra {
-  color: #fff !important;
-  font-size: 1.7rem !important;
+.marca-barra {
+  color: #fff;
+  font-size: 1.7rem;
   font-weight: bold;
   margin: 0;
   letter-spacing: 0.5px;
@@ -42,11 +42,11 @@
   flex-wrap: wrap;
 }
 
-.lista-barra .item-barra {
+.item-barra {
   display: flex;
 }
 
-.lista-barra .btn {
+.btn {
   background-color: #222;
   color: white;
   border: 2px solid white;
@@ -60,76 +60,62 @@
   text-align: center;
 }
 
-.lista-barra .btn:hover {
+.btn:hover {
   background-color: #007bff;
   color: #fff;
   transform: scale(1.05);
 }
 
+/* Oculta el botón de expandir por defecto */
 .boton-barra {
-  background-color: #007bff !important;
-  border: none !important;
-  border-radius: 5px;
-  padding: 8px 12px;
-  margin-left: 10px;
+  display: none;
 }
 
-
+/* Muestra el botón solo en pantallas pequeñas */
 @media (max-width: 991px) {
   .contenedor-fluido {
     flex-direction: column;
-    align-items: stretch;
+    align-items: x  ;
     padding: 0 10px;
   }
+
   .lista-barra {
     flex-direction: column;
     gap: 10px;
     width: 100%;
     align-items: stretch;
-    margin: 0 0 0 0;
+    margin: 0;
   }
-  .lista-barra .item-barra {
+
+  .item-barra {
     width: 100%;
     justify-content: center;
   }
-  .lista-barra .btn {
+
+  .btn {
     width: 100%;
     margin-bottom: 8px;
     margin-left: 0;
   }
-  .barra-navegacion .marca-barra {
-    font-size: 1.3rem !important;
+
+  .marca-barra {
+    font-size: 1.3rem;
     margin-bottom: 10px;
   }
+
   .barra-navegacion {
     padding: 10px 5vw;
   }
-}
 
-@media (max-width: 600px) {
-  .barra-navegacion {
-    padding: 8px 2vw;
-  }
-  .contenedor-fluido {
-    padding: 0 2vw;
+  .boton-barra {
+    display: inline-block;
+    background-color: #007bff;
+    height: 40px;
   }
 }
 
-@media (max-width: 900px) {
-  .lista-barra {
-    gap: 6px;
-  }
-  .lista-barra .btn {
-    font-size: 0.95rem;
-    padding: 7px 10px;
-  }
-}
-@media (max-width: 600px) {
-  .lista-barra {
-    gap: 2px;
-  }
-  .lista-barra .btn {
-    font-size: 0.85rem;
-    padding: 5px 6px;
+@media (min-width: 992px) {
+  .barra-collapse {
+    display: flex;
   }
 }

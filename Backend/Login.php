@@ -28,16 +28,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->store_result(); //Almacena
     // Verificar en la bbdd
     if ($stmt->num_rows === 1) { 
-        $stmt->bind_result($usuario_id, $hash); // Vincula las variables para almacenar los resultados
-        $stmt->fetch(); // Obtiene los resultados de la consulta
-        if (password_verify($password, $hash)) { // contraseña y hash
-            $key = '12345678'; // Usa una clave secreta segura
+        $stmt->bind_result($usuario_id, $hash); 
+        $stmt->fetch(); 
+        if (password_verify($password, $hash)) { // Verificacion de hash y contraseña
+            $key = '123jqsdu8123jud12e'; // Usa una clave secreta segura
             $payload = [
-                'iss' => 'http://localhost', // Identifica al emisor
-                'aud' => 'http://localhost', // Identifica al destinatario
-                'iat' => time(),             // Fecha de emisión
-                'exp' => time() + 360,      // Fecha de expiración
-                'uid' => $usuario_id         // ID de usuario 
+                'iss' => 'http://localhost', // emisor
+                'aud' => 'http://localhost', // receptor
+                'iat' => time(),             //tiempo token
+                'exp' => time() + 360,      
+                'uid' => $usuario_id        
             ];
             $jwt = JWT::encode($payload, $key, 'HS256'); 
 
