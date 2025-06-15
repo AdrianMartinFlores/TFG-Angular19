@@ -13,6 +13,7 @@ $input = json_decode(file_get_contents('php://input'), true);
 try {
     if ($method === 'GET') {
         $usuario_id = $_GET['usuario_id'];
+        //isset !=nulo 
         $grupo_id = isset($_GET['grupo_id']) ? $_GET['grupo_id'] : null;
 
         $sql = "SELECT * FROM tareas WHERE usuario_id = ?";
@@ -25,8 +26,10 @@ try {
 
         $stmt = $conn->prepare($sql);
         if (count($params) === 2) {
+            // Si hay dos parametros, bind_param espera "ii" (dos enteros)
             $stmt->bind_param("ii", $params[0], $params[1]);
         } else {
+            //Evita errores si solo hay un parametro
             $stmt->bind_param("i", $params[0]);
         }
         $stmt->execute();
@@ -47,7 +50,6 @@ try {
             exit;
         }
 
-        // POST: Crear tarea
         $sql = "INSERT INTO tareas (titulo, descripcion, usuario_id, grupo_id, completada, color) VALUES (?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssiiss", $titulo, $descripcion, $usuario_id, $grupo_id, $completada, $color);
@@ -56,6 +58,7 @@ try {
         echo json_encode(['success' => true]);
         exit;
     } elseif ($method === 'PUT') {
+        
         $id = $input['id'];
         $usuario_id = $input['usuario_id'];
         $titulo = isset($input['titulo']) ? $input['titulo'] : null;
@@ -63,10 +66,8 @@ try {
         $grupo_id = isset($input['grupo_id']) ? $input['grupo_id'] : null;
         $completada = isset($input['completada']) ? (int)$input['completada'] : 0;
 
-        // Color: por defecto si está completada, si no el que envía el usuario
         $color = $completada ? '#f6fafd' : ($input['color'] ?? '#f6fafd');
 
-        //Actualizar tarea, coalesce devuelve el primer valor que no sea nul
         $sql = "UPDATE tareas SET 
             titulo = COALESCE(?, titulo),  
             descripcion = COALESCE(?, descripcion), 

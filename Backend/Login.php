@@ -31,8 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_result($usuario_id, $hash); 
         $stmt->fetch(); 
         if (password_verify($password, $hash)) { // Verificacion de hash y contraseña
-            $key = '123jqsdu8123jud12e'; // Usa una clave secreta segura
-            $payload = [
+            $key = '123jqsdu8123jud12e';  // Clave secreta para firmar el JWT
+            $payload = [ // Datos del JWT
                 'iss' => 'http://localhost', // emisor
                 'aud' => 'http://localhost', // receptor
                 'iat' => time(),             //tiempo token

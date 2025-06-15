@@ -7,3 +7,4 @@ export interface Tarea {
   grupo_id?: number; 
   color?: string;
 }
+

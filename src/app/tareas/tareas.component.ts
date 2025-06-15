@@ -10,7 +10,7 @@ import { GrupoTareasService } from '../grupo-tareas.service';
 @Component({
   selector: 'app-tareas',
   standalone: true,
-  imports: [FormsModule, CommonModule, NavComponent, ],
+  imports: [FormsModule, CommonModule, NavComponent,],
   templateUrl: './tareas.component.html',
   styleUrl: './tareas.component.css',
 })
@@ -20,9 +20,9 @@ export class TareasComponent {
   tareasPendientes: any[] = [];
   tareasCompletadas: any[] = [];
   tareaSeleccionada: any = { id: null, titulo: '', descripcion: '', completada: false, color: '#23272f' };
-  usuario_id: number = 0; 
+  usuario_id: number = 0;
   grupos: any[] = [];
-  grupoSeleccionado: number|null = null;
+  grupoSeleccionado: number | null = null;
   mostrarCrearGrupo = false;
   nuevoGrupoNombre = '';
   mensaje: string = '';
@@ -36,11 +36,11 @@ export class TareasComponent {
     private router: Router,
     private http: HttpClient,
     private gruposTareasService: GrupoTareasService
-  ) {}
+  ) { }
   ngOnInit() {
     const usuarioId = localStorage.getItem('usuario_id');
     if (usuarioId) {
-      this.usuario_id = parseInt(usuarioId); 
+      this.usuario_id = parseInt(usuarioId);
       this.gruposTareasService.getGrupos(this.usuario_id).subscribe((grupos: any[]) => {
         this.grupos = grupos;
         if (grupos.length) {
@@ -62,9 +62,8 @@ export class TareasComponent {
       params: { usuario_id: this.usuario_id.toString() }
     }).subscribe({
       next: (data) => {
-        // Asegura que cada tarea tenga un color válido
         data.forEach(t => {
-          if (!t.color || !/^#[0-9A-Fa-f]{6}$/.test(t.color)) {
+          {
             t.color = '#23272f';
           }
         });
@@ -74,12 +73,12 @@ export class TareasComponent {
       error: (error) => {
         console.log('Error al cargar las tareas:', error);
       },
-    }); 
+    });
   }
 
   guardarTarea(event: Event) {
     event.preventDefault();
-    if (!this.tareaSeleccionada.color || !/^#[0-9A-Fa-f]{6}$/.test(this.tareaSeleccionada.color)) {
+    if (!this.tareaSeleccionada.color) {
       this.tareaSeleccionada.color = '#fafdff';
     }
     const url = 'http://79.147.185.171/TFG/Backend/Tareas.php';
@@ -87,9 +86,8 @@ export class TareasComponent {
 
     this.http.request(method, url, {
       body: { ...this.tareaSeleccionada, usuario_id: this.usuario_id }
-    }).subscribe({
-      next: (res: any) => {
-        if (res.success) {
+    }).subscribe({ next: (res: any) => { 
+      if (res.success) {
           if (this.grupoSeleccionado) {
             this.cargarTareasPorGrupo();
           } else {
@@ -106,8 +104,8 @@ export class TareasComponent {
       },
     });
   }
-
-  editarTarea(tarea: any) {
+  //Copia la tarea al formulario
+  editarTarea(tarea: any) { 
     this.tareaSeleccionada = { ...tarea };
   }
 
@@ -172,12 +170,11 @@ export class TareasComponent {
   }
 
   crearGrupo() {
-    if (!this.nuevoGrupoNombre ) {
+    if (!this.nuevoGrupoNombre) {
       this.mensajeGrupo = 'El nombre del grupo no puede estar vacío';
       setTimeout(() => this.mensajeGrupo = '', 3000);
       return;
     }
-    
     // res : any hace referencia a la respuesta del backend
     this.gruposTareasService.crearGrupo(this.nuevoGrupoNombre, this.usuario_id).subscribe((res: any) => {
       this.grupos.push({ id: res.id, nombre: this.nuevoGrupoNombre });
@@ -188,7 +185,7 @@ export class TareasComponent {
     });
   }
 
-  editarGrupo(grupo: any) { 
+  editarGrupo(grupo: any) {
     this.grupoEditandoId = grupo.id;
     this.nuevoNombreGrupoEditando = grupo.nombre;
   }
@@ -221,6 +218,7 @@ export class TareasComponent {
     if (this.grupoSeleccionado) {
       params.grupo_id = this.grupoSeleccionado;
     }
+    //Interfaz de Tarea
     this.http.get<Tarea[]>(url, { params }).subscribe({
       next: (data) => {
         this.tareasPendientes = data.filter(tarea => !tarea.completada);
