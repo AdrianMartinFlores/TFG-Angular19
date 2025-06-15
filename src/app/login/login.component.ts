@@ -28,16 +28,13 @@ export class LoginComponent {
     };
 
     this.http.post<any>('http://79.147.185.171/TFG/Backend/Login.php', credenciales, {
-      headers: { 'Content-Type': 'application/json' }, //Se establece el contenido en Json
+      headers: { 'Content-Type': 'application/json' }, 
     }).subscribe({
       next: (response: any) => {  
         if (response.success) {
-          // Guarda el token en sessionStorage y localStorage
           this.authService.login(response.token);
-          localStorage.setItem('token', response.token);
+          sessionStorage.setItem('token', response.token);
           localStorage.setItem('usuario_id', response.usuario_id);
-
-          // Redirige al menu principal
           this.router.navigate(['/menu']).then(() => {
             console.log('Redirigido al menú correctamente.');
           });

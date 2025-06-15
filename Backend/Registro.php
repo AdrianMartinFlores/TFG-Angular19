@@ -33,14 +33,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Encripta la contraseña antes de guardar
     $Password = password_hash($Password, PASSWORD_BCRYPT);
 
     $query = "INSERT INTO usuarios (Correo, NombreUsuario, Contraseña) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($query);
 
     try {
-        // "sss"
         $stmt->bind_param("sss", $Email, $Nombre, $Password);
         $stmt->execute();
         echo json_encode(['success' => true, 'message' => 'Usuario registrado correctamente']);

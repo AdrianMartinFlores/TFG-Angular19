@@ -14,12 +14,13 @@ import { GrupoTareasService } from '../grupo-tareas.service';
   templateUrl: './tareas.component.html',
   styleUrl: './tareas.component.css',
 })
+
 export class TareasComponent {
   tareas: any[] = [];
   tareasPendientes: any[] = [];
   tareasCompletadas: any[] = [];
   tareaSeleccionada: any = { id: null, titulo: '', descripcion: '', completada: false, color: '#23272f' };
-  usuario_id: number = 1;
+  usuario_id: number = 0; 
   grupos: any[] = [];
   grupoSeleccionado: number|null = null;
   mostrarCrearGrupo = false;
@@ -28,7 +29,6 @@ export class TareasComponent {
   mensajeGrupo: string = '';
   grupoEditandoId: number | null = null;
   nuevoNombreGrupoEditando: string = '';
-
   tareaModalAbierto = false;
   tareaModal: any = {};
 
@@ -37,11 +37,10 @@ export class TareasComponent {
     private http: HttpClient,
     private gruposTareasService: GrupoTareasService
   ) {}
-
   ngOnInit() {
     const usuarioId = localStorage.getItem('usuario_id');
     if (usuarioId) {
-      this.usuario_id = parseInt(usuarioId, 10);
+      this.usuario_id = parseInt(usuarioId); 
       this.gruposTareasService.getGrupos(this.usuario_id).subscribe((grupos: any[]) => {
         this.grupos = grupos;
         if (grupos.length) {
@@ -73,9 +72,9 @@ export class TareasComponent {
         this.tareasCompletadas = data.filter(tarea => tarea.completada);
       },
       error: (error) => {
-        // Manejo de error
+        console.log('Error al cargar las tareas:', error);
       },
-    });
+    }); 
   }
 
   guardarTarea(event: Event) {
@@ -110,9 +109,6 @@ export class TareasComponent {
 
   editarTarea(tarea: any) {
     this.tareaSeleccionada = { ...tarea };
-    if (!this.tareaSeleccionada.color || !/^#[0-9A-Fa-f]{6}$/.test(this.tareaSeleccionada.color)) {
-      this.tareaSeleccionada.color = '#fafdff';
-    }
   }
 
   eliminarTarea(id: number) {
@@ -176,11 +172,13 @@ export class TareasComponent {
   }
 
   crearGrupo() {
-    if (!this.nuevoGrupoNombre || this.nuevoGrupoNombre.trim() === '') {
+    if (!this.nuevoGrupoNombre ) {
       this.mensajeGrupo = 'El nombre del grupo no puede estar vacío';
       setTimeout(() => this.mensajeGrupo = '', 3000);
       return;
     }
+    
+    // res : any hace referencia a la respuesta del backend
     this.gruposTareasService.crearGrupo(this.nuevoGrupoNombre, this.usuario_id).subscribe((res: any) => {
       this.grupos.push({ id: res.id, nombre: this.nuevoGrupoNombre });
       this.nuevoGrupoNombre = '';
@@ -190,13 +188,13 @@ export class TareasComponent {
     });
   }
 
-  editarGrupo(grupo: any) {
+  editarGrupo(grupo: any) { 
     this.grupoEditandoId = grupo.id;
     this.nuevoNombreGrupoEditando = grupo.nombre;
   }
 
   guardarEdicionGrupo(grupo: any) {
-    if (this.nuevoNombreGrupoEditando.trim() === '') return;
+    if (this.nuevoNombreGrupoEditando.trim() === '') return; // Evita nombres vacios
     this.gruposTareasService.editarGrupo(grupo.id, this.nuevoNombreGrupoEditando, this.usuario_id).subscribe(() => {
       grupo.nombre = this.nuevoNombreGrupoEditando;
       this.grupoEditandoId = null;
@@ -212,8 +210,7 @@ export class TareasComponent {
   eliminarGrupo(id: number) {
     if (confirm('¿Seguro que quieres eliminar este grupo?')) {
       this.gruposTareasService.eliminarGrupo(id, this.usuario_id).subscribe(() => {
-        this.grupos = this.grupos.filter(g => g.id !== id);
-        // Opcional: recargar tareas si el grupo eliminado estaba seleccionado
+        this.grupos = this.grupos.filter(g => g.id !== id); // Filtra el grupo eliminado
       });
     }
   }

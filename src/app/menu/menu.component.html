@@ -2,7 +2,8 @@
 <div class="contenedor-menu">
   <h1 class="titulo-menu">Bienvenido a tu aplicación de control de horario y gestor de tareas</h1>
   <p class="descripcion-menu">
-    Aquí podrás controlar y registrar tu horario de trabajo, organizar las tareas pendientes y crear alarmas y temporizadores.
+    Aquí podrás controlar y registrar tu horario de trabajo, organizar las tareas pendientes y crear alarmas y
+    temporizadores. <br> Todas las funciones de la aplicación se seguirán ejecutando aunque cambies de apartado.
   </p>
 
   <div class="secciones-menu">
@@ -13,21 +14,39 @@
           <i class="bi bi-list-task"></i>
           <div>
             <strong>Gestión de Tareas</strong>
-            <p>Organiza tus tareas diarias, crea listas y establece prioridades.</p>
+            <p>Organiza tus tareas diarias, crea listas y establece prioridades.
+              Podrás agregarlas a grupos para tener una mayor organización y cambiar
+              su color para diferenciarlas fácilmente.</p>
           </div>
         </div>
         <div class="funcion-menu" (click)="irAHorarios()">
           <i class="bi bi-clock-history"></i>
           <div>
-            <strong>Control de Horarios</strong>
-            <p>Registra tus horarios de trabajo y lleva un seguimiento de tus actividades.</p>
+            <strong>Control de Tiempo de Trabajo</strong>
+            <p>Registra tus horarios de trabajo y lleva un seguimiento de tus actividades.
+              Para empezar a contabilizar la actividad que realices desde la aplicación, 
+              primero tendrás que asignarle un nombre, después pulsa el botón de iniciar
+              jornada para que comience el temporizador. <br> <br> Una vez que lo detengas, esa actividad
+              quedara registrada con su fecha y tiempo total destinado. 
+            
+            </p>
+          </div>
+        </div>
+        <div class="funcion-menu" (click)="irATemporizadores()">
+          <i class="bi bi-alarm"></i>
+          <div>
+            <strong>Temporizadores</strong>
+            <p>Configura temporizadores para gestionar tu tiempo de manera eficiente.
+              Todos los temporizadores creados , se guardaran en nuestra aplicación.
+            </p>
           </div>
         </div>
         <div class="funcion-menu" (click)="irAAlarmas()">
-          <i class="bi bi-alarm"></i>
+          <i class="bi bi-graph-up"></i>
           <div>
-            <strong>Alarmas y Temporizadores</strong>
-            <p>Configura alarmas y temporizadores para gestionar tu tiempo de manera eficiente.</p>
+            <strong>Alarmas</strong>
+            <p>Gestiona las alarmas para no olvidarte de nada. 
+              Podrás crear alarmas que se activarán en el momento que tú quieras.            </p>
           </div>
         </div>
       </div>

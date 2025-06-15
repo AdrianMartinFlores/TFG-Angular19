@@ -9,9 +9,9 @@ export class AuthService {
 
   // Guarda el token y su expiracion en el Storage del navegador
   login(token: string): void {
-    const expiresAt = Date.now() + 5 * 60 * 1000; 
+    const expiresAt = Date.now() + 5 * 60 * 1000;  
     sessionStorage.setItem(this.TOKEN_KEY, token);
-    sessionStorage.setItem(this.EXP_KEY, expiresAt.toString()); //formato de texto
+    sessionStorage.setItem(this.EXP_KEY, expiresAt.toString()); 
   }
 
   logout(): void {
@@ -19,12 +19,11 @@ export class AuthService {
     sessionStorage.removeItem(this.EXP_KEY);
   }
 
-  // Comprueba si el usuario está autenticado y el token no ha expirado
   isLoggedIn(): boolean {
     const token = sessionStorage.getItem(this.TOKEN_KEY);
     const exp = sessionStorage.getItem(this.EXP_KEY);
-  // Verificacion de token y expiración
-    const valid = !!token && !!exp && Date.now() < Number(exp);  // exp viene de sessionStorage,se pasa de String a Number
+  // Si el token o la fecha de exp no existe, no es válido
+    const valid = !!token && !!exp && Date.now() < Number(exp);  
     if (!valid) this.logout();
     return valid;
   }

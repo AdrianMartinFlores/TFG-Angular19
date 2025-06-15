@@ -12,10 +12,9 @@ export class NavComponent {
   constructor(private router: Router) {}
 
   onNavigate(route: string) {
-    console.log(`Intentando navegar a: ${route}`);
     this.router.navigate([route]).then(success => {
       if (success) {
-        console.log(`Navegación exitosa a: ${route}`);
+        console.log(`Navegación a: ${route}`);
       } else {
         console.error(`Error al navegar a: ${route}`);
       }

@@ -37,4 +37,7 @@ export class MenuComponent {
   irAAlarmas() {
     this.router.navigate(['/alarma']);
   }
+  irATemporizadores(){
+    this.router.navigate(['/temporizadores']);
+  }
 }

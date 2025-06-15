@@ -1,6 +1,5 @@
 <app-nav></app-nav>
 <div class="contenedor-jornada">
-  <!-- Bloque 1: Control de jornada automática -->
   <div class="bloque-jornada">
     <h1 class="titulo-jornada">Control de Jornada Automática</h1>
     <form class="formulario-jornada" (submit)="iniciarTemporizador(); $event.preventDefault()">
@@ -31,7 +30,6 @@
     </form>
   </div>
 
-  <!-- Bloque 2: Entrada manual -->
   <div class="bloque-jornada">
     <h1 class="titulo-jornada">Entrada Manual</h1>
     <form class="formulario-jornada" (submit)="registrarJornada($event)">
@@ -57,7 +55,6 @@
   </div>
 </div>
 
-<!-- Bloque 3: Registros (debajo de los dos bloques principales) -->
 <div class="bloque-registros">
   <h2 class="titulo-jornada">Registros de Jornada</h2>
   <div class="tabla-responsive">
@@ -69,17 +66,33 @@
           <th>Hora entrada</th>
           <th>Hora salida</th>
           <th>Duración</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let registro of registros">
-          <td>{{ registro.nombre }}</td>
-          <td>{{ registro.fecha }}</td>
-          <td>{{ registro.horaEntrada }}</td>
-          <td>{{ registro.horaSalida }}</td>
-          <td>
-            {{ calcularDuracionRegistro(registro) }}
-          </td>
+          <ng-container *ngIf="editandoId !== registro.id; else editando">
+            <td>{{ registro.nombre }}</td>
+            <td>{{ registro.fecha }}</td>
+            <td>{{ registro.horaEntrada }}</td>
+            <td>{{ registro.horaSalida }}</td>
+            <td>{{ calcularDuracionRegistro(registro) }}</td>
+            <td>
+              <button class="boton-jornada" (click)="seleccionarParaEditar(registro)">Editar</button>
+              <button class="boton-jornada" (click)="eliminarRegistro(registro.id)">Eliminar</button>
+            </td>
+          </ng-container>
+          <ng-template #editando>
+            <td><input class="input-jornada" [(ngModel)]="registroSeleccionado.nombre"></td>
+            <td><input class="input-jornada" type="date" [(ngModel)]="registroSeleccionado.fecha"></td>
+            <td><input class="input-jornada" type="time" [(ngModel)]="registroSeleccionado.horaEntrada"></td>
+            <td><input class="input-jornada" type="time" [(ngModel)]="registroSeleccionado.horaSalida"></td>
+            <td>{{ calcularDuracionRegistro(registroSeleccionado) }}</td>
+            <td>
+              <button class="boton-jornada" (click)="guardarEdicion()">Guardar</button>
+              <button class="boton-jornada" (click)="cancelarEdicion()">Cancelar</button>
+            </td>
+          </ng-template>
         </tr>
       </tbody>
     </table>

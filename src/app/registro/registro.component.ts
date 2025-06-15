@@ -21,11 +21,9 @@ export class RegistroComponent {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  // Envía los datos al backend y gestiona la respuesta
   registroUsuario() {
     this.mensaje = '';  
 
-    // Validación en el frontend antes de enviar
     if (!this.email || !this.nombre || !this.password) {
       if (!this.email) {
         this.mensaje = 'El correo es obligatorio.';
@@ -42,7 +40,6 @@ export class RegistroComponent {
       nombre: this.nombre,
       password: this.password,
     };
-    // Envía los datos al backend
     this.http.post('http://79.147.185.171/TFG/Backend/Registro.php', usuario, {
       headers : {'Content-Type': 'application/json' }, // Se establece el contenido en Json
     }).subscribe({  

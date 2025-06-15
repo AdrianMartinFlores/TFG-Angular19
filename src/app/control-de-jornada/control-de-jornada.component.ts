@@ -16,6 +16,7 @@ export class ControlDeJornadaComponent implements OnInit {
   usuario_id = 0;
   mensaje = '';
   registroSeleccionado: any = { fecha: '', horaEntrada: '', horaSalida: '', nombre: '' };
+  editandoId: number | null = null;
 
   autoNombre = '';
   autoFecha = '';
@@ -58,6 +59,47 @@ export class ControlDeJornadaComponent implements OnInit {
     const b = { ...this.registroSeleccionado, usuario_id: this.usuario_id };
     this.http.post('http://79.147.185.171/TFG/Backend/Jornada.php', b)
       .subscribe(() => { this.mensaje = 'Guardado'; this.cargarRegistros(); });
+    setTimeout(() => this.mensaje = '', 2000);
+    this.registroSeleccionado = { fecha: '', horaEntrada: '', horaSalida: '', nombre: '' };
+  }
+
+  seleccionarParaEditar(registro: any) {
+    this.editandoId = registro.id;
+    this.registroSeleccionado = { ...registro };
+  }
+
+  guardarEdicion() {
+    const b = { ...this.registroSeleccionado };
+    // Calcula duración si tienes horaEntrada y horaSalida
+    if (b.horaEntrada && b.horaSalida) {
+      const [h1, m1] = b.horaEntrada.split(':').map(Number);
+      const [h2, m2] = b.horaSalida.split(':').map(Number);
+      let segundos = ((h2 * 60 + m2) * 60) - ((h1 * 60 + m1) * 60);
+      if (segundos < 0) segundos += 24 * 60 * 60;
+      b.duracion = segundos;
+    }
+    this.http.put('http://79.147.185.171/TFG/Backend/Jornada.php', b)
+      .subscribe(() => {
+        this.mensaje = 'Registro actualizado';
+        this.cargarRegistros();
+        this.editandoId = null;
+        this.registroSeleccionado = { fecha: '', horaEntrada: '', horaSalida: '', nombre: '' };
+      });
+    setTimeout(() => this.mensaje = '', 2000);
+  }
+
+  cancelarEdicion() {
+    this.editandoId = null;
+    this.registroSeleccionado = { fecha: '', horaEntrada: '', horaSalida: '', nombre: '' };
+  }
+
+  eliminarRegistro(id: number) {
+    if (!confirm('¿Seguro que quieres eliminar este registro?')) return;
+    this.http.request('delete', 'http://79.147.185.171/TFG/Backend/Jornada.php', { body: { id } })
+      .subscribe(() => {
+        this.mensaje = 'Registro eliminado';
+        this.cargarRegistros();
+      });
     setTimeout(() => this.mensaje = '', 2000);
   }
 
@@ -160,7 +202,6 @@ export class ControlDeJornadaComponent implements OnInit {
     if (!registro.horaEntrada || !registro.horaSalida) return '';
     const [h1, m1] = registro.horaEntrada.split(':').map(Number);
     const [h2, m2] = registro.horaSalida.split(':').map(Number);
-    // Si algún campo no es válido, no mostrar nada
     if (isNaN(h1) || isNaN(m1) || isNaN(h2) || isNaN(m2)) return '';
     let segundos = ((h2 * 60 + m2) * 60) - ((h1 * 60 + m1) * 60);
     if (segundos < 0) segundos += 24 * 60 * 60;

@@ -19,6 +19,6 @@ export class GrupoTareasService {
   }
 
   eliminarGrupo(id: number, usuario_id: number): Observable<any> {
-    return this.http.request('DELETE', 'http://79.147.185.171/TFG/Backend/GruposTareas.php', { body: { id, usuario_id } });
+    return this.http.request('DELETE', 'http://79.147.185.171  /TFG/Backend/GruposTareas.php', { body: { id, usuario_id } });
   }
 }

@@ -45,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'success' => true,
                 'message' => 'Inicio de sesión exitoso',    
                 'usuario_id' => $usuario_id,
+                'token' => $jwt
             ]);
         } else {
             echo json_encode(['success' => false, 'message' => 'Contraseña incorrecta']);
